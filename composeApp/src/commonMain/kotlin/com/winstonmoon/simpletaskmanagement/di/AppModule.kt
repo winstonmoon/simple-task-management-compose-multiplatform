@@ -6,9 +6,3 @@ import org.koin.dsl.module
 val appModule = module {
 
 }
-
-fun initializeKoin() {
-    startKoin {
-        modules(appModule)
-    }
-}
