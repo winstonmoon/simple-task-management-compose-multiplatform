@@ -47,7 +47,11 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
 
             implementation(libs.koin.core)
+            implementation(libs.koin.compose)
             implementation(libs.navigation.compose)
+
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
         }
     }
 }
