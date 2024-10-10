@@ -19,7 +19,12 @@ fun App() {
             setSingletonImageLoaderFactory { context ->
                 ImageLoader.Builder(context)
                     .components {
-                        add(NetworkFetcher.Factory())
+                        add(
+                            NetworkFetcher.Factory(
+                            networkClient = TODO(),
+                            cacheStrategy = TODO()
+                            )
+                        )
                     }
                     .build()
             }
