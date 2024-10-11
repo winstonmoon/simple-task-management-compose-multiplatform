@@ -5,9 +5,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.winstonmoon.simpletaskmanagement.data.local.APP_DATASTORE
 import kotlinx.coroutines.flow.first
-
-const val APP_DATASTORE = "com.razzaghi.shoppingbykmp"
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(APP_DATASTORE)
 
