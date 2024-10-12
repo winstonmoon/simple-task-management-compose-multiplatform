@@ -1,5 +1,9 @@
 package com.winstonmoon.simpletaskmanagement
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import com.winstonmoon.simpletaskmanagement.navigation.SimpleTaskManagementNavGraph
 import com.winstonmoon.simpletaskmanagement.ui.theme.SimpleTaskManagementTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -7,7 +11,12 @@ import coil3.ImageLoader
 import coil3.annotation.ExperimentalCoilApi
 import coil3.compose.setSingletonImageLoaderFactory
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import coil3.network.NetworkFetcher
+import com.winstonmoon.simpletaskmanagement.ui.component.BottomNavigation
+import com.winstonmoon.simpletaskmanagement.ui.screen.TaskRoute
 import org.koin.compose.KoinContext
 
 @OptIn(ExperimentalCoilApi::class)
@@ -30,6 +39,20 @@ fun App() {
             }
 
             SimpleTaskManagementNavGraph()
+            val navBottomBarController = rememberNavController()
+            Scaffold(bottomBar = {
+                BottomNavigation(navController = navBottomBarController)
+            }) { innerPadding ->
+                Box(modifier = Modifier.padding(innerPadding)) {
+                    NavHost(
+                        startDestination = TaskRoute,
+                        navController = navBottomBarController,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+
+                    }
+                }
+            }
         }
     }
 //    MaterialTheme {
