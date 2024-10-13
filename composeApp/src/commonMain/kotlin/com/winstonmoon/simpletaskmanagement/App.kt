@@ -13,6 +13,7 @@ import coil3.compose.setSingletonImageLoaderFactory
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil3.network.NetworkFetcher
 import com.winstonmoon.simpletaskmanagement.ui.component.BottomNavigation
@@ -49,7 +50,9 @@ fun App() {
                         navController = navBottomBarController,
                         modifier = Modifier.fillMaxSize()
                     ) {
-
+                        composable<TaskRoute> {
+                            TaskRoute()
+                        }
                     }
                 }
             }
