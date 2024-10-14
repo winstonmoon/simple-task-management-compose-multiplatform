@@ -19,28 +19,14 @@ fun BottomNavigation(
     navController: NavController,
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination
+    val currentRoute = navBackStackEntry?.destination?.route
 
-    Card(
-        colors = CardColors(
-            containerColor = MaterialTheme.colorScheme.background,
-            contentColor = MaterialTheme.colorScheme.onBackground,
-            disabledContainerColor = MaterialTheme.colorScheme.background,
-            disabledContentColor = MaterialTheme.colorScheme.onBackground,
-        ),
+    NavigationBar(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(10.dp),
-        shape = RoundedCornerShape(
-            topStart = 16.dp,
-            topEnd = 16.dp
-        )
+        containerColor = MaterialTheme.colorScheme.background,
+        contentColor = MaterialTheme.colorScheme.background,
+        tonalElevation = 8.dp
     ) {
-        NavigationBar(
-            containerColor = MaterialTheme.colorScheme.background,
-            contentColor = MaterialTheme.colorScheme.background,
-            tonalElevation = 8.dp
-        ) {
-
-        }
+        
     }
 }
