@@ -17,6 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil3.network.NetworkFetcher
 import com.winstonmoon.simpletaskmanagement.ui.component.BottomNavigation
+import com.winstonmoon.simpletaskmanagement.ui.screen.AchievementRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.TaskRoute
 import org.koin.compose.KoinContext
 
@@ -41,9 +42,11 @@ fun App() {
 
             SimpleTaskManagementNavGraph()
             val navBottomBarController = rememberNavController()
-            Scaffold(bottomBar = {
-                BottomNavigation(navController = navBottomBarController)
-            }) { innerPadding ->
+            Scaffold(
+                bottomBar = {
+                    BottomNavigation(navController = navBottomBarController)
+                }
+            ) { innerPadding ->
                 Box(modifier = Modifier.padding(innerPadding)) {
                     NavHost(
                         startDestination = TaskRoute,
@@ -53,6 +56,10 @@ fun App() {
                         composable<TaskRoute> {
                             TaskRoute()
                         }
+                        composable<AchievementRoute> {
+                            AchievementRoute()
+                        }
+
                     }
                 }
             }
