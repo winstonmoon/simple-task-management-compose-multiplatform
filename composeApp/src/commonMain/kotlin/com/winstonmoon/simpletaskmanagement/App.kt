@@ -33,8 +33,10 @@ import androidx.navigation.compose.rememberNavController
 import coil3.ImageLoader
 import coil3.annotation.ExperimentalCoilApi
 import coil3.compose.setSingletonImageLoaderFactory
+import coil3.network.CacheStrategy
 import coil3.network.NetworkFetcher
 import com.winstonmoon.simpletaskmanagement.ui.screen.AchievementRoute
+import com.winstonmoon.simpletaskmanagement.ui.screen.InputTaskRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.SettingsRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.TaskRoute
 import com.winstonmoon.simpletaskmanagement.ui.theme.SimpleTaskManagementTheme
@@ -62,7 +64,6 @@ fun App() {
                     .build()
             }
 
-//            SimpleTaskManagementNavGraph()
             val navController = rememberNavController()
             val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
             val scope = rememberCoroutineScope()
@@ -77,30 +78,6 @@ fun App() {
                             }
                             navController.navigate(route)
                         }
-//                        NavigationDrawerItem(
-//                            label = { Text("") },
-//                            icon = { Icon(Icons.Default.Add, null) },
-//                            selected = false,
-//                            onClick = {
-//                            },
-//                            modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-//                        )
-//                        NavigationDrawerItem(
-//                            label = { Text("") },
-//                            icon = { Icon(Icons.Default.Settings, null) },
-//                            selected = false,
-//                            onClick = {
-//                            },
-//                            modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-//                        )
-//                        NavigationDrawerItem(
-//                            label = { Text("") },
-//                            icon = { Icon(Icons.Default.Settings, null) },
-//                            selected = false,
-//                            onClick = {
-//                            },
-//                            modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
-//                        )
                     }
                 }
             ) {
@@ -110,13 +87,21 @@ fun App() {
                     modifier = Modifier.fillMaxSize()
                 ) {
                     composable<TaskRoute> {
-                        TaskRoute(drawerState)
+                        TaskRoute(
+                            drawerState,
+                            onClickAddButton = {
+                                navController.navigate(InputTaskRoute)
+                            }
+                        )
                     }
                     composable<AchievementRoute> {
                         AchievementRoute(drawerState)
                     }
                     composable<SettingsRoute> {
                         SettingsRoute()
+                    }
+                    composable<InputTaskRoute> {
+                        InputTaskRoute()
                     }
                 }
             }
