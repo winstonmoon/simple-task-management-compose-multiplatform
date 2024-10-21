@@ -22,10 +22,12 @@ data object TaskRoute
 @Composable
 fun TaskRoute(
     drawerState: DrawerState,
+    onClickAddButton: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     TaskScreen(
-        drawerState= drawerState,
+        drawerState = drawerState,
+        onClickAddButton = onClickAddButton,
         modifier = modifier,
     )
 }
@@ -33,6 +35,7 @@ fun TaskRoute(
 @Composable
 internal fun TaskScreen(
     drawerState: DrawerState,
+    onClickAddButton: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -50,6 +53,7 @@ internal fun TaskScreen(
         ) {
             FloatingActionButton(
                 onClick = {
+                    onClickAddButton()
                 },
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
