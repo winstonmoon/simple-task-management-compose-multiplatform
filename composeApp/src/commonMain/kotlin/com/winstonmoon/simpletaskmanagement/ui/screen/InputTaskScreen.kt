@@ -5,19 +5,19 @@ import androidx.compose.ui.Modifier
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object SettingsRoute
+data object InputTaskRoute
 
 @Composable
-fun SettingsRoute(
+fun InputTaskRoute(
     modifier: Modifier = Modifier,
 ) {
-    SettingsDialog(
+    InputTaskScreen(
         modifier = modifier,
     )
 }
 
 @Composable
-internal fun SettingsDialog(
+internal fun InputTaskScreen(
     modifier: Modifier = Modifier,
 ) {
 
