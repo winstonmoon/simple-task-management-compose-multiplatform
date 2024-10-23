@@ -27,6 +27,7 @@ internal fun AchievementScreen(
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
+        modifier = modifier,
         topBar = {
             CustomAppBar(
                 drawerState = drawerState,

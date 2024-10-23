@@ -39,17 +39,18 @@ internal fun TaskScreen(
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
+        modifier = modifier,
         topBar = {
             CustomAppBar(
                 drawerState = drawerState,
                 title = "Task"
             )
-        }
+        },
     ) { paddingValues ->
         BoxWithConstraints(
             modifier = Modifier
                 .padding(paddingValues)
-                .fillMaxSize()
+                .fillMaxSize(),
         ) {
             FloatingActionButton(
                 onClick = {

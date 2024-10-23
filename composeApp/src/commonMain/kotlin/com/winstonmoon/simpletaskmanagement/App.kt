@@ -33,7 +33,6 @@ import androidx.navigation.compose.rememberNavController
 import coil3.ImageLoader
 import coil3.annotation.ExperimentalCoilApi
 import coil3.compose.setSingletonImageLoaderFactory
-import coil3.network.CacheStrategy
 import coil3.network.NetworkFetcher
 import com.winstonmoon.simpletaskmanagement.ui.screen.AchievementRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.InputTaskRoute
@@ -76,6 +75,17 @@ fun App() {
                             scope.launch {
                                 drawerState.close()
                             }
+                            when (route) {
+                                DrawerMenu.Task -> {
+                                    navController.navigate(TaskRoute)
+                                }
+                                DrawerMenu.Achievement -> {
+                                    navController.navigate(AchievementRoute)
+                                }
+                                DrawerMenu.Settings -> {
+                                    navController.navigate(SettingsRoute)
+                                }
+                            }
                             navController.navigate(route)
                         }
                     }
@@ -111,7 +121,7 @@ fun App() {
 
 @Composable
 private fun DrawerContent(
-    onMenuClick: (KClass<*>) -> Unit
+    onMenuClick: (DrawerMenu) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
@@ -136,7 +146,7 @@ private fun DrawerContent(
                 icon = { Icon(imageVector = it.icon, contentDescription = null) },
                 selected = false,
                 onClick = {
-                    onMenuClick(it.route)
+                    onMenuClick(it)
                 }
             )
         }
