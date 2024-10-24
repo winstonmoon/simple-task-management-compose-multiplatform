@@ -101,11 +101,16 @@ fun App() {
                             drawerState,
                             onClickAddButton = {
                                 navController.navigate(InputTaskRoute)
-                            }
+                            },
                         )
                     }
                     composable<AchievementRoute> {
-                        AchievementRoute(drawerState)
+                        AchievementRoute(
+                            drawerState,
+                            onClickAddButton = {
+                                navController.navigate(InputTaskRoute)
+                            },
+                        )
                     }
                     composable<SettingsRoute> {
                         SettingsRoute()
