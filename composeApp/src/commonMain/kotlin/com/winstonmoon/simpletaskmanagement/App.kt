@@ -42,7 +42,6 @@ import com.winstonmoon.simpletaskmanagement.ui.theme.SimpleTaskManagementTheme
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinContext
-import kotlin.reflect.KClass
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
@@ -68,28 +67,21 @@ fun App() {
             val scope = rememberCoroutineScope()
             ModalNavigationDrawer(
                 drawerState = drawerState,
-                gesturesEnabled = drawerState.isOpen,
                 drawerContent = {
                     ModalDrawerSheet {
-                        DrawerContent { route ->
-                            scope.launch {
-                                drawerState.close()
-                            }
-                            when (route) {
-                                DrawerMenu.Task -> {
-                                    navController.navigate(TaskRoute)
-                                }
-                                DrawerMenu.Achievement -> {
-                                    navController.navigate(AchievementRoute)
-                                }
-                                DrawerMenu.Settings -> {
-                                    navController.navigate(SettingsRoute)
+                        DrawerContent(
+                            onMenuClick = { route ->
+                                scope.launch { drawerState.close() }
+                                when (route) {
+                                    DrawerMenu.Task -> navController.navigate(TaskRoute)
+                                    DrawerMenu.Achievement -> navController.navigate(AchievementRoute)
+                                    DrawerMenu.Settings -> navController.navigate(SettingsRoute)
                                 }
                             }
-                            navController.navigate(route)
-                        }
+                        )
                     }
-                }
+                },
+                gesturesEnabled = drawerState.isOpen
             ) {
                 NavHost(
                     startDestination = TaskRoute,
@@ -161,21 +153,17 @@ private fun DrawerContent(
 enum class DrawerMenu(
     val icon: ImageVector,
     val title: String,
-    val route: KClass<*>,
 ) {
     Task(
         icon = Icons.Filled.Add,
         title = "Task",
-        route = TaskRoute::class
     ),
     Achievement(
         icon = Icons.Filled.ThumbUp,
         title = "Achievement",
-        route = AchievementRoute::class
     ),
     Settings(
         icon = Icons.Filled.Settings,
         title = "Settings",
-        route = SettingsRoute::class
     )
 }
