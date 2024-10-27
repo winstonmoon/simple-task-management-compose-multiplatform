@@ -34,6 +34,7 @@ import coil3.ImageLoader
 import coil3.annotation.ExperimentalCoilApi
 import coil3.compose.setSingletonImageLoaderFactory
 import coil3.network.NetworkFetcher
+import com.winstonmoon.simpletaskmanagement.di.appModule
 import com.winstonmoon.simpletaskmanagement.ui.screen.AchievementRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.InputTaskRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.SettingsRoute
@@ -41,27 +42,30 @@ import com.winstonmoon.simpletaskmanagement.ui.screen.TaskRoute
 import com.winstonmoon.simpletaskmanagement.ui.theme.SimpleTaskManagementTheme
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.KoinApplication
 import org.koin.compose.KoinContext
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
 @Preview
-fun App() {
-    SimpleTaskManagementTheme {
-        KoinContext {
-            setSingletonImageLoaderFactory { context ->
-                ImageLoader.Builder(context)
-                    .components {
-                        add(
-                            NetworkFetcher.Factory(
-                            networkClient = TODO(),
-                            cacheStrategy = TODO()
-                            )
-                        )
-                    }
-                    .build()
-            }
+fun App(context: Context) {
 
+    KoinApplication(application = {
+        modules(appModule(context))
+    }) {
+
+//        setSingletonImageLoaderFactory { context ->
+//            ImageLoader.Builder(context)
+//                .components {
+//                    add(NetworkFetcher.Factory(
+//                        networkClient = TODO(),
+//                        cacheStrategy = TODO()
+//                    ))
+//                }
+//                .build()
+//        }
+
+        SimpleTaskManagementTheme {
             val navController = rememberNavController()
             val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
             val scope = rememberCoroutineScope()
@@ -114,6 +118,73 @@ fun App() {
             }
         }
     }
+//    SimpleTaskManagementTheme {
+//        KoinContext {
+//            setSingletonImageLoaderFactory { context ->
+//                ImageLoader.Builder(context)
+//                    .components {
+//                        add(
+//                            NetworkFetcher.Factory(
+//                            networkClient = TODO(),
+//                            cacheStrategy = TODO()
+//                            )
+//                        )
+//                    }
+//                    .build()
+//            }
+//
+//            val navController = rememberNavController()
+//            val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+//            val scope = rememberCoroutineScope()
+//            ModalNavigationDrawer(
+//                drawerState = drawerState,
+//                drawerContent = {
+//                    ModalDrawerSheet {
+//                        DrawerContent(
+//                            onMenuClick = { route ->
+////                                scope.launch { drawerState.close() }
+//                                when (route) {
+//                                    DrawerMenu.Task -> navController.navigate(TaskRoute)
+//                                    DrawerMenu.Achievement -> navController.navigate(AchievementRoute)
+//                                    DrawerMenu.Settings -> navController.navigate(SettingsRoute)
+//                                }
+//                            }
+//                        )
+//                    }
+//                },
+//                gesturesEnabled = drawerState.isOpen
+//            ) {
+//                NavHost(
+//                    startDestination = TaskRoute,
+//                    navController = navController,
+//                    modifier = Modifier.fillMaxSize()
+//                ) {
+//                    composable<TaskRoute> {
+//                        TaskRoute(
+//                            drawerState,
+//                            onClickAddButton = {
+//                                navController.navigate(InputTaskRoute)
+//                            },
+//                        )
+//                    }
+//                    composable<AchievementRoute> {
+//                        AchievementRoute(
+//                            drawerState,
+//                            onClickAddButton = {
+//                                navController.navigate(InputTaskRoute)
+//                            },
+//                        )
+//                    }
+//                    composable<SettingsRoute> {
+//                        SettingsRoute()
+//                    }
+//                    composable<InputTaskRoute> {
+//                        InputTaskRoute()
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
 
 @Composable
