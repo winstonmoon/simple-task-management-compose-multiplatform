@@ -10,9 +10,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ThumbUp
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
@@ -88,7 +88,7 @@ fun App(context: Context) {
                 NavHost(
                     startDestination = TaskRoute,
                     navController = navController,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
                 ) {
                     composable<TaskRoute> {
                         TaskRoute(
@@ -107,10 +107,18 @@ fun App(context: Context) {
                         )
                     }
                     composable<SettingsRoute> {
-                        SettingsRoute()
+                        SettingsRoute(
+                            onClickBack = {
+                                navController.popBackStack()
+                            }
+                        )
                     }
                     composable<InputTaskRoute> {
-                        InputTaskRoute()
+                        InputTaskRoute(
+                            onClickBack = {
+                                navController.popBackStack()
+                            }
+                        )
                     }
                 }
             }
@@ -158,7 +166,7 @@ enum class DrawerMenu(
     val title: String,
 ) {
     Task(
-        icon = Icons.Filled.Add,
+        icon = Icons.Outlined.Edit,
         title = "Task",
     ),
     Achievement(

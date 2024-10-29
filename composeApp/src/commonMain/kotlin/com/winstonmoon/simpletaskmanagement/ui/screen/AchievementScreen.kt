@@ -43,7 +43,7 @@ internal fun AchievementScreen(
         topBar = {
             CustomAppBar(
                 drawerState = drawerState,
-                title = "Achievement"
+                title = "Achievement",
             )
         }
     ) { paddingValues ->

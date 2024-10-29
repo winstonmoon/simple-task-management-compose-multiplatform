@@ -43,7 +43,7 @@ internal fun TaskScreen(
         topBar = {
             CustomAppBar(
                 drawerState = drawerState,
-                title = "Task"
+                title = "Task",
             )
         },
     ) { paddingValues ->
