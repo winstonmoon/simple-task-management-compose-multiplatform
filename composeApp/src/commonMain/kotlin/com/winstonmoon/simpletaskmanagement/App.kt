@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -137,17 +139,12 @@ private fun DrawerContent(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp),
-            contentAlignment = Alignment.Center
+                .heightIn(min = 56.dp)
+                .padding(horizontal = 16.dp, vertical = 18.dp),
+            contentAlignment = Alignment.CenterStart,
         ) {
-            Image(
-                modifier = Modifier.size(150.dp),
-                imageVector = Icons.Filled.AccountCircle,
-                contentScale = ContentScale.Crop,
-                contentDescription = null
-            )
+            Text(text = "Simple Task Management")
         }
-        Spacer(modifier = Modifier.height(12.dp))
         DrawerMenu.entries.forEach {
             NavigationDrawerItem(
                 label = { Text(text = it.title) },
