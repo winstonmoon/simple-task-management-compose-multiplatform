@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import kotlinx.serialization.Serializable
+import simpletaskmanagement.composeapp.generated.resources.Res
+import simpletaskmanagement.composeapp.generated.resources.achievement_title
 
 @Serializable
 data object AchievementRoute
@@ -43,7 +45,7 @@ internal fun AchievementScreen(
         topBar = {
             CustomAppBar(
                 drawerState = drawerState,
-                title = "Achievement",
+                title = Res.string.achievement_title,
             )
         }
     ) { paddingValues ->
