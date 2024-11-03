@@ -1,22 +1,18 @@
 package com.winstonmoon.simpletaskmanagement
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
@@ -27,7 +23,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -40,8 +35,15 @@ import com.winstonmoon.simpletaskmanagement.ui.screen.SettingsRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.TaskRoute
 import com.winstonmoon.simpletaskmanagement.ui.theme.SimpleTaskManagementTheme
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
+import simpletaskmanagement.composeapp.generated.resources.Res
+import simpletaskmanagement.composeapp.generated.resources.achievement_title
+import simpletaskmanagement.composeapp.generated.resources.app_name
+import simpletaskmanagement.composeapp.generated.resources.settings_title
+import simpletaskmanagement.composeapp.generated.resources.task_title
 
 @OptIn(ExperimentalCoilApi::class)
 @Composable
@@ -64,7 +66,7 @@ fun App(context: Context) {
 //                .build()
 //        }
 
-        SimpleTaskManagementTheme {
+        MaterialTheme {
             val navController = rememberNavController()
             val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
             val scope = rememberCoroutineScope()
@@ -139,15 +141,15 @@ private fun DrawerContent(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .heightIn(min = 56.dp)
+                .heightIn(56.dp)
                 .padding(horizontal = 16.dp, vertical = 18.dp),
             contentAlignment = Alignment.CenterStart,
         ) {
-            Text(text = "Simple Task Management")
+            Text(text = stringResource(Res.string.app_name))
         }
         DrawerMenu.entries.forEach {
             NavigationDrawerItem(
-                label = { Text(text = it.title) },
+                label = { Text(text = stringResource(it.title)) },
                 icon = { Icon(imageVector = it.icon, contentDescription = null) },
                 selected = false,
                 onClick = {
@@ -160,18 +162,18 @@ private fun DrawerContent(
 
 enum class DrawerMenu(
     val icon: ImageVector,
-    val title: String,
+    val title: StringResource,
 ) {
     Task(
         icon = Icons.Outlined.Edit,
-        title = "Task",
+        title = Res.string.task_title,
     ),
     Achievement(
         icon = Icons.Filled.ThumbUp,
-        title = "Achievement",
+        title = Res.string.achievement_title,
     ),
     Settings(
         icon = Icons.Filled.Settings,
-        title = "Settings",
+        title = Res.string.settings_title,
     )
 }

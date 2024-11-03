@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Simple Task Management</string>
+    <string name="task_title">Title</string>
+    <string name="achievement_title">Achievement</string>
+    <string name="settings_title">Settings</string>
+    <string name="input_task_title">InputTask</string>
+</resources>

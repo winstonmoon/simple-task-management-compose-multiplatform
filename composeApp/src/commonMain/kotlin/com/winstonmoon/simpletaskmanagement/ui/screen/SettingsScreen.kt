@@ -16,6 +16,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import kotlinx.serialization.Serializable
+import simpletaskmanagement.composeapp.generated.resources.Res
+import simpletaskmanagement.composeapp.generated.resources.settings_title
 
 @Serializable
 data object SettingsRoute
@@ -40,7 +42,7 @@ internal fun SettingsScreen(
         modifier = modifier,
         topBar = {
             CustomAppBar(
-                title = "Settings",
+                title = Res.string.settings_title,
                 onClickBack = onClickBack,
             )
         },

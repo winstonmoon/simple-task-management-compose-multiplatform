@@ -10,6 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import kotlinx.serialization.Serializable
+import simpletaskmanagement.composeapp.generated.resources.Res
+import simpletaskmanagement.composeapp.generated.resources.input_task_title
+import simpletaskmanagement.composeapp.generated.resources.task_title
 
 @Serializable
 data object InputTaskRoute
@@ -34,7 +37,7 @@ internal fun InputTaskScreen(
         modifier = modifier,
         topBar = {
             CustomAppBar(
-                title = "InputTask",
+                title = Res.string.input_task_title,
                 onClickBack = onClickBack,
             )
         },
