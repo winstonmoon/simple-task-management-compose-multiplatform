@@ -12,7 +12,6 @@ import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
@@ -27,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import coil3.annotation.ExperimentalCoilApi
 import com.winstonmoon.simpletaskmanagement.di.appModule
 import com.winstonmoon.simpletaskmanagement.ui.screen.AchievementRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.InputTaskRoute
@@ -45,7 +43,6 @@ import simpletaskmanagement.composeapp.generated.resources.app_name
 import simpletaskmanagement.composeapp.generated.resources.settings_title
 import simpletaskmanagement.composeapp.generated.resources.task_title
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 @Preview
 fun App(context: Context) {
@@ -66,7 +63,7 @@ fun App(context: Context) {
 //                .build()
 //        }
 
-        MaterialTheme {
+        SimpleTaskManagementTheme {
             val navController = rememberNavController()
             val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
             val scope = rememberCoroutineScope()
