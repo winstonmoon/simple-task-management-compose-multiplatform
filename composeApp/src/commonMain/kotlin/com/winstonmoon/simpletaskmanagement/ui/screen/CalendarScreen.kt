@@ -2,7 +2,6 @@ package com.winstonmoon.simpletaskmanagement.ui.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -11,7 +10,6 @@ import androidx.compose.material3.DrawerState
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,15 +21,15 @@ import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.task_title
 
 @Serializable
-data object TaskRoute
+data object CalendarScreen
 
 @Composable
-fun TaskRoute(
+fun CalendarRoute(
     drawerState: DrawerState,
     onClickAddButton: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    TaskScreen(
+    CalendarScreen(
         drawerState = drawerState,
         onClickAddButton = onClickAddButton,
         modifier = modifier,
@@ -39,7 +37,7 @@ fun TaskRoute(
 }
 
 @Composable
-internal fun TaskScreen(
+internal fun CalendarScreen(
     drawerState: DrawerState,
     onClickAddButton: () -> Unit,
     modifier: Modifier = Modifier,
@@ -64,20 +62,13 @@ internal fun TaskScreen(
                 },
                 modifier = Modifier
                     .align(Alignment.BottomEnd)
-                    .padding(12.dp),
-                contentColor = Color(0xFF238636)
-                ) {
-                Row {
-                    Icon(
-                        imageVector = Icons.Filled.Add,
-                        contentDescription = null,
-                        tint = Color.White,
-                    )
-                    Text(
-                        text = "New",
-                        color = Color.White,
-                    )
-                }
+                    .padding(12.dp)
+                    .background(color = Color(0xFF3572A5)),
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = null,
+                )
             }
         }
     }
