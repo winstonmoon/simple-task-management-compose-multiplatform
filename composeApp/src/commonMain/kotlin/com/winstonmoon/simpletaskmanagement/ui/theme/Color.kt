@@ -217,6 +217,17 @@ val surfaceContainerDarkHighContrast = Color(0xFF1D2024)
 val surfaceContainerHighDarkHighContrast = Color(0xFF282A2F)
 val surfaceContainerHighestDarkHighContrast = Color(0xFF33353A)
 
+val screenFill = Color(0xFF0D1117)
+
+val topAppBarContentFill = Color(0xFF161B22)
+val topAppBarNavIcon = Color(0xFF8B949E)
+val topAppBarDivider = Color(0xFF30363D)
+
+val listContentFill = Color(0xFF0D1117)
+val listTitleLarge = Color(0xFFC9D1D9)
+val listLabelMedium = Color(0xFFC9D1D9)
+val listLabelLarge = Color(0xFF8B949E)
+val listIcon = Color(0x8B949E)
 
 
 
