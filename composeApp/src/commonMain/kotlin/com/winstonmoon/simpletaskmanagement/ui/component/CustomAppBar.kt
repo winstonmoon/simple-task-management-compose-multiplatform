@@ -17,10 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.winstonmoon.simpletaskmanagement.ui.theme.SimpleTaskManagementTheme
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -39,10 +36,8 @@ fun CustomAppBar(
         modifier = modifier,
     ) {
         CenterAlignedTopAppBar(
-            modifier = Modifier
-                .background(color = MaterialTheme.colorScheme.surface),
             navigationIcon = {
-                if (drawerState != null) {
+                drawerState?.let {
                     IconButton(
                         onClick = {
                             coroutineScope.launch {
@@ -55,31 +50,26 @@ fun CustomAppBar(
                             contentDescription = null,
                         )
                     }
-                } else {
-                    if (onClickBack != null) {
-                        IconButton(
-                            onClick = onClickBack
-                        ) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = null,
-                            )
-                        }
+                }
+                onClickBack?.let {
+                    IconButton(
+                        onClick = onClickBack
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = null,
+                        )
                     }
                 }
             },
             title = {
-                Text(
-                    text = stringResource(title),
-                    style = MaterialTheme.typography.bodyLarge,
-                )
+                Text(text = stringResource(title))
             }
         )
         HorizontalDivider(
             modifier = Modifier
                 .align(Alignment.BottomStart),
             thickness = 1.dp,
-            color = Color(0xFF30363D)
         )
     }
 }

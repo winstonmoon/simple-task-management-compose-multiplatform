@@ -1,13 +1,12 @@
 package com.winstonmoon.simpletaskmanagement.ui.screen
 
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.DrawerState
-import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -54,30 +53,30 @@ internal fun TaskScreen(
     ) { paddingValues ->
         BoxWithConstraints(
             modifier = Modifier
-                .padding(paddingValues)
+                .padding(
+                    horizontal = 16.dp,
+                    vertical = 12.dp,
+                )
+                .padding(paddingValues = paddingValues)
                 .fillMaxSize(),
         ) {
-            FloatingActionButton(
-                onClick = {
-                    onClickAddButton()
+            ExtendedFloatingActionButton(
+                modifier = Modifier.align(Alignment.BottomEnd),
+                text = {
+                    Text(
+                        text = "New",
+                        color = Color.White,
+                    )
                 },
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(12.dp),
-                contentColor = Color(0xFF238636)
-                ) {
-                Row {
+                icon = {
                     Icon(
                         imageVector = Icons.Filled.Add,
                         contentDescription = null,
                         tint = Color.White,
                     )
-                    Text(
-                        text = "New",
-                        color = Color.White,
-                    )
-                }
-            }
+                },
+                onClick = onClickAddButton,
+            )
         }
     }
 }
