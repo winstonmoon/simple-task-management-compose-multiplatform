@@ -6,15 +6,20 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
+import com.winstonmoon.simpletaskmanagement.ui.theme.SimpleTaskManagementTheme
 import kotlinx.serialization.Serializable
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.settings_title
@@ -55,26 +60,76 @@ internal fun SettingsScreen(
                 .padding(paddingValues)
                 .fillMaxSize(),
             state = scrollState,
+            verticalArrangement = Arrangement.spacedBy(32.dp)
         ) {
-            items(20) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(8.dp)
-                        .clickable {
-
-                        },
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    Text(
-                        text = "Theme",
-                    )
-                    Text(
-                        text = "system default"
-                    )
-                }
-                HorizontalDivider()
-            }
+            General()
         }
+    }
+}
+
+private fun LazyListScope.General(
+
+) {
+    item {
+        Title("")
+    }
+    // TODO
+//    items(General) {
+//
+//    }
+    item {
+        HorizontalDivider()
+    }
+}
+
+
+
+@Composable
+private fun Title(
+    title: String,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+            .padding(all = 16.dp),
+    ) {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.bodyLarge,
+        )
+    }
+}
+
+@Composable
+private fun ListItem(
+    configTitle: String,
+    selectedConfig: String,
+    // TODO
+    selectableConfig: List<String>,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    Column(
+        modifier = modifier
+            .padding(
+                horizontal = 16.dp,
+                vertical = 8.dp,
+            )
+            .clickable {
+                onClick()
+            },
+    ) {
+        Text(
+            text = configTitle,
+            // TODO: change color
+            color = Color.White,
+            style = MaterialTheme.typography.bodyLarge,
+        )
+        Text(
+            text = selectedConfig,
+            // TODO: change color
+            color = Color.Gray,
+            style = MaterialTheme.typography.bodyLarge,
+        )
     }
 }
