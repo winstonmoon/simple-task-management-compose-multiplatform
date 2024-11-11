@@ -63,6 +63,7 @@ internal fun SettingsScreen(
             verticalArrangement = Arrangement.spacedBy(32.dp)
         ) {
             General()
+            MoreOptions()
         }
     }
 }
@@ -78,11 +79,28 @@ private fun LazyListScope.General(
 //
 //    }
     item {
-        HorizontalDivider()
+        HorizontalDivider(
+            thickness = 1.dp
+        )
     }
 }
 
+private fun LazyListScope.MoreOptions(
 
+) {
+    item {
+        Title("")
+    }
+    // TODO
+//    items(General) {
+//
+//    }
+    item {
+        HorizontalDivider(
+            thickness = 1.dp
+        )
+    }
+}
 
 @Composable
 private fun Title(
