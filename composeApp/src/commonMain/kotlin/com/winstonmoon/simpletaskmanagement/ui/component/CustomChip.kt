@@ -1,27 +1,33 @@
 package com.winstonmoon.simpletaskmanagement.ui.component
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.AssistChip
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ChipElevation
+import androidx.compose.material3.Icon
+import androidx.compose.material3.InputChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.winstonmoon.simpletaskmanagement.ui.theme.SimpleTaskManagementTheme
 
 @Composable
 fun CustomChip(
     modifier: Modifier = Modifier
 ) {
     AssistChip(
-        onClick = {},
-        label = { Text(text = "test") },
         modifier = modifier,
-        enabled = true,
-        leadingIcon = { },
-        trailingIcon = TODO(),
-        shape = TODO(),
-        colors = TODO(),
-        elevation = TODO(),
-        border = TODO()
+        onClick = {
+        },
+        label = {
+            Text(text = "test")
+        },
+        trailingIcon = {
+            Icon(
+                imageVector = Icons.Filled.Add,
+                contentDescription = null,
+            )
+        },
     )
 }
