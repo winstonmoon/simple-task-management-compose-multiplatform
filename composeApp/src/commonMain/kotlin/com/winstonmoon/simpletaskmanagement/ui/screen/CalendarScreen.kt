@@ -16,8 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
+import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
 import kotlinx.serialization.Serializable
 import simpletaskmanagement.composeapp.generated.resources.Res
+import simpletaskmanagement.composeapp.generated.resources.calendar_title
 import simpletaskmanagement.composeapp.generated.resources.task_title
 
 @Serializable
@@ -47,29 +49,23 @@ internal fun CalendarScreen(
         topBar = {
             CustomAppBar(
                 drawerState = drawerState,
-                title = Res.string.task_title,
+                title = Res.string.calendar_title,
             )
         },
     ) { paddingValues ->
         BoxWithConstraints(
             modifier = Modifier
-                .padding(paddingValues)
+                .padding(
+                    horizontal = 16.dp,
+                    vertical = 12.dp,
+                )
+                .padding(paddingValues = paddingValues)
                 .fillMaxSize(),
         ) {
-            FloatingActionButton(
-                onClick = {
-                    onClickAddButton()
-                },
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(12.dp)
-                    .background(color = Color(0xFF3572A5)),
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = null,
-                )
-            }
+            CustomFloatingActionButton(
+                modifier = Modifier.align(Alignment.BottomEnd),
+                onClick = onClickAddButton
+            )
         }
     }
 }

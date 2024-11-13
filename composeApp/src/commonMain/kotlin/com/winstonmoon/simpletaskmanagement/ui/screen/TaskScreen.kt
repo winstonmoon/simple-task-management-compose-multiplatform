@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
+import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
 import kotlinx.serialization.Serializable
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.task_title
@@ -60,22 +61,9 @@ internal fun TaskScreen(
                 .padding(paddingValues = paddingValues)
                 .fillMaxSize(),
         ) {
-            ExtendedFloatingActionButton(
+            CustomFloatingActionButton(
                 modifier = Modifier.align(Alignment.BottomEnd),
-                text = {
-                    Text(
-                        text = "New",
-                        color = Color.White,
-                    )
-                },
-                icon = {
-                    Icon(
-                        imageVector = Icons.Filled.Add,
-                        contentDescription = null,
-                        tint = Color.White,
-                    )
-                },
-                onClick = onClickAddButton,
+                onClick = onClickAddButton
             )
         }
     }
