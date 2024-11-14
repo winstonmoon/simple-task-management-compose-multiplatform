@@ -18,8 +18,7 @@ fun CustomChip(
 ) {
     AssistChip(
         modifier = modifier,
-        onClick = {
-        },
+        onClick = {},
         label = {
             Text(text = "test")
         },
