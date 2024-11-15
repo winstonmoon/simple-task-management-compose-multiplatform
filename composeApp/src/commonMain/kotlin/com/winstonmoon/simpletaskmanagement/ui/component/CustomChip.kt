@@ -1,5 +1,6 @@
 package com.winstonmoon.simpletaskmanagement.ui.component
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.AssistChip
@@ -13,20 +14,37 @@ import androidx.compose.ui.unit.dp
 import com.winstonmoon.simpletaskmanagement.ui.theme.SimpleTaskManagementTheme
 
 @Composable
-fun CustomChip(
-    modifier: Modifier = Modifier
+fun CustomAssistChipWithIcon(
+    label: String,
+    modifier: Modifier = Modifier,
 ) {
     AssistChip(
         modifier = modifier,
         onClick = {},
         label = {
-            Text(text = "test")
+            Text(text = label)
         },
-        trailingIcon = {
+        leadingIcon = {
             Icon(
                 imageVector = Icons.Filled.Add,
                 contentDescription = null,
             )
         },
+        shape = RoundedCornerShape(24.dp),
+    )
+}
+
+@Composable
+fun CustomAssistChip(
+    label: String,
+    modifier: Modifier = Modifier,
+) {
+    AssistChip(
+        modifier = modifier,
+        onClick = {},
+        label = {
+            Text(text = label)
+        },
+        shape = RoundedCornerShape(24.dp),
     )
 }
