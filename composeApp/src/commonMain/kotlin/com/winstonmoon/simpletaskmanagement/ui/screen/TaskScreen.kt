@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
+import com.winstonmoon.simpletaskmanagement.ui.component.CustomAssistChipWithIcon
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
 import kotlinx.serialization.Serializable
 import simpletaskmanagement.composeapp.generated.resources.Res
@@ -61,6 +62,10 @@ internal fun TaskScreen(
                 .padding(paddingValues = paddingValues)
                 .fillMaxSize(),
         ) {
+            CustomAssistChipWithIcon(
+                modifier = Modifier.align(Alignment.CenterStart),
+                label = "test",
+            )
             CustomFloatingActionButton(
                 modifier = Modifier.align(Alignment.BottomEnd),
                 onClick = onClickAddButton
