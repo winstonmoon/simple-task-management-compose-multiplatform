@@ -7,6 +7,7 @@ import androidx.compose.material3.AssistChip
 import androidx.compose.material3.ChipElevation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.InputChip
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,12 +23,17 @@ fun CustomAssistChipWithIcon(
         modifier = modifier,
         onClick = {},
         label = {
-            Text(text = label)
+            Text(
+                text = label,
+                color = MaterialTheme.colorScheme.onSurface,
+                style = MaterialTheme.typography.labelMedium,
+            )
         },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Filled.Add,
                 contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
             )
         },
         shape = RoundedCornerShape(24.dp),
