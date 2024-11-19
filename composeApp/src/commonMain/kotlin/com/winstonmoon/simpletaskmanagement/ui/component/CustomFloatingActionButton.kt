@@ -1,5 +1,6 @@
 package com.winstonmoon.simpletaskmanagement.ui.component
 
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExtendedFloatingActionButton
@@ -9,6 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.painterResource
+import simpletaskmanagement.composeapp.generated.resources.Res
+import simpletaskmanagement.composeapp.generated.resources.ic_edit
 
 @Composable
 fun CustomFloatingActionButton(
@@ -25,10 +30,11 @@ fun CustomFloatingActionButton(
         },
         icon = {
             Icon(
-                // TODO: change icon
-                imageVector = Icons.Filled.Add,
+                modifier = Modifier
+                    .size(24.dp),
+                painter = painterResource(Res.drawable.ic_edit),
                 contentDescription = null,
-                tint = Color.White,
+                tint = Color.White
             )
         },
         onClick = onClick,

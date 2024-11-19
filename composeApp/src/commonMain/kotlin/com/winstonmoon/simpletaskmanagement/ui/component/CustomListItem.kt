@@ -5,6 +5,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
@@ -24,25 +26,28 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun CustomListItem(
     todo: String,
+//    status: Status,
+//    priority: Priority,
+//    dueDate: Date,
     onClickMore: () -> Unit,
     modifier: Modifier = Modifier,
-    
 ) {
     Card(
         modifier = modifier
-            .wrapContentSize()
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .fillMaxSize(),
         shape = RoundedCornerShape(4.dp),
         // TODO change color
-        border = BorderStroke(width = 1.dp, color = Color.White)
+        border = BorderStroke(width = 1.dp, color = Color.White),
     ) {
         Column(
-            modifier = Modifier,
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             Row(
-                modifier = Modifier,
-                horizontalArrangement = Arrangement.SpaceBetween
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
                     text = todo,
@@ -63,7 +68,15 @@ fun CustomListItem(
                 modifier = Modifier,
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                // TODO CustomChip
+                // TODO change
+                CustomAssistChipWithIcon(
+                    label = "Ready",
+                    modifier = Modifier,
+                )
+                CustomAssistChipWithIcon(
+                    label = "High",
+                    modifier = Modifier,
+                )
             }
             Row(
                 modifier = Modifier,
@@ -76,8 +89,9 @@ fun CustomListItem(
                     imageVector = Icons.Filled.Add,
                     contentDescription = null,
                 )
+                // TODO change text
                 Text(
-                    text = "",
+                    text = "22 oct 2024",
                     style = MaterialTheme.typography.bodyMedium,
                 )
             }
