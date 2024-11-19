@@ -1,23 +1,27 @@
 package com.winstonmoon.simpletaskmanagement.ui.screen
 
-import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.DrawerState
-import androidx.compose.material3.ExtendedFloatingActionButton
-import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
-import com.winstonmoon.simpletaskmanagement.ui.component.CustomAssistChipWithIcon
+import com.winstonmoon.simpletaskmanagement.ui.component.CustomAssistChip
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
+import com.winstonmoon.simpletaskmanagement.ui.component.CustomListItem
 import kotlinx.serialization.Serializable
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.task_title
@@ -38,6 +42,7 @@ fun TaskRoute(
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun TaskScreen(
     drawerState: DrawerState,
@@ -52,8 +57,14 @@ internal fun TaskScreen(
                 title = Res.string.task_title,
             )
         },
+        floatingActionButton = {
+            CustomFloatingActionButton(
+                modifier = Modifier,
+                onClick = onClickAddButton
+            )
+        }
     ) { paddingValues ->
-        BoxWithConstraints(
+        Box(
             modifier = Modifier
                 .padding(
                     horizontal = 16.dp,
@@ -62,14 +73,39 @@ internal fun TaskScreen(
                 .padding(paddingValues = paddingValues)
                 .fillMaxSize(),
         ) {
-            CustomAssistChipWithIcon(
-                modifier = Modifier.align(Alignment.CenterStart),
-                label = "test",
-            )
-            CustomFloatingActionButton(
-                modifier = Modifier.align(Alignment.BottomEnd),
-                onClick = onClickAddButton
-            )
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.spacedBy(18.dp),
+            ) {
+                stickyHeader {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(color = Color.Gray),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
+                        Text(
+                            text = "Todo",
+                            color = Color.White,
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.titleLarge,
+                        )
+                        CustomAssistChip(
+                            label = "10"
+                        )
+                    }
+                }
+                listOf("WorkOut", "HomeWork", "Prepare Test", "WorkOut", "HomeWork", "Prepare Test", "WorkOut", "HomeWork", "Prepare Test").forEach {
+                    item {
+                        CustomListItem(
+                            todo = it,
+                            onClickMore = {},
+                            modifier = Modifier,
+                        )
+                    }
+                }
+            }
         }
     }
 }
