@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -21,13 +20,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.painterResource
+import simpletaskmanagement.composeapp.generated.resources.Res
+import simpletaskmanagement.composeapp.generated.resources.ic_calendar_month_18
+import simpletaskmanagement.composeapp.generated.resources.ic_low_priority_18
+import simpletaskmanagement.composeapp.generated.resources.ic_more_vert_24
+import simpletaskmanagement.composeapp.generated.resources.ic_progress_activity_18
+import simpletaskmanagement.composeapp.generated.resources.ic_swap_vert_18
+import simpletaskmanagement.composeapp.generated.resources.priority_label_low
+import simpletaskmanagement.composeapp.generated.resources.status_label_inprogress
 
 
 @Composable
 fun CustomListItem(
     todo: String,
-//    status: Status,
-//    priority: Priority,
+    status: Status,
+    priority: Priority,
 //    dueDate: Date,
     onClickMore: () -> Unit,
     modifier: Modifier = Modifier,
@@ -60,7 +68,7 @@ fun CustomListItem(
                         .clickable {
                             onClickMore()
                         },
-                    imageVector = Icons.Filled.Add,
+                    painter = painterResource(Res.drawable.ic_more_vert_24),
                     contentDescription = null,
                 )
             }
@@ -70,12 +78,16 @@ fun CustomListItem(
             ) {
                 // TODO change
                 CustomAssistChipWithIcon(
-                    label = "Ready",
-                    modifier = Modifier,
+                    label = Res.string.status_label_inprogress,
+                    icon = Res.drawable.ic_progress_activity_18,
+//                    label = status.,
+//                    icon = status.,
                 )
                 CustomAssistChipWithIcon(
-                    label = "High",
-                    modifier = Modifier,
+                    label = Res.string.priority_label_low,
+                    icon = Res.drawable.ic_low_priority_18,
+//                    label = priority,
+//                    icon = priority.,
                 )
             }
             Row(
@@ -86,11 +98,12 @@ fun CustomListItem(
                 Icon(
                     modifier = Modifier
                         .size(18.dp),
-                    imageVector = Icons.Filled.Add,
+                    painter = painterResource(Res.drawable.ic_calendar_month_18),
                     contentDescription = null,
                 )
                 // TODO change text
                 Text(
+//                    text = dueDate,
                     text = "22 oct 2024",
                     style = MaterialTheme.typography.bodyMedium,
                 )

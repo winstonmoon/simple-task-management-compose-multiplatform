@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 import simpletaskmanagement.composeapp.generated.resources.Res
-import simpletaskmanagement.composeapp.generated.resources.ic_edit
+import simpletaskmanagement.composeapp.generated.resources.ic_edit_24
 
 @Composable
 fun CustomFloatingActionButton(
@@ -32,7 +32,7 @@ fun CustomFloatingActionButton(
             Icon(
                 modifier = Modifier
                     .size(24.dp),
-                painter = painterResource(Res.drawable.ic_edit),
+                painter = painterResource(Res.drawable.ic_edit_24),
                 contentDescription = null,
                 tint = Color.White
             )

@@ -5,4 +5,12 @@
     <string name="achievement_title">Achievement</string>
     <string name="settings_title">Settings</string>
     <string name="input_task_title">InputTask</string>
+
+    <string name="status_label_ready">Ready</string>
+    <string name="status_label_inprogress">In progress</string>
+    <string name="status_label_done">Done</string>
+
+    <string name="priority_label_low">Low</string>
+    <string name="priority_label_medium">Medium</string>
+    <string name="priority_label_high">High</string>
 </resources>
