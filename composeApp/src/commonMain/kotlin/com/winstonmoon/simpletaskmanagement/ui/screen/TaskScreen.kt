@@ -22,6 +22,8 @@ import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAssistChip
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomListItem
+import com.winstonmoon.simpletaskmanagement.ui.component.Priority
+import com.winstonmoon.simpletaskmanagement.ui.component.Status
 import kotlinx.serialization.Serializable
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.task_title
@@ -100,8 +102,9 @@ internal fun TaskScreen(
                     item {
                         CustomListItem(
                             todo = it,
+                            status = Status.READY,
+                            priority = Priority.Low,
                             onClickMore = {},
-                            modifier = Modifier,
                         )
                     }
                 }
