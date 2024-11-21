@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -64,7 +65,7 @@ internal fun TaskScreen(
                 modifier = Modifier,
                 onClick = onClickAddButton
             )
-        }
+        },
     ) { paddingValues ->
         Box(
             modifier = Modifier
@@ -98,17 +99,38 @@ internal fun TaskScreen(
                         )
                     }
                 }
-                listOf("WorkOut", "HomeWork", "Prepare Test", "WorkOut", "HomeWork", "Prepare Test", "WorkOut", "HomeWork", "Prepare Test").forEach {
-                    item {
-                        CustomListItem(
-                            todo = it,
-                            status = Status.READY,
-                            priority = Priority.Low,
-                            onClickMore = {},
-                        )
-                    }
+                items(
+                    listOf("WorkOut", "HomeWork", "Prepare Test", "WorkOut", "HomeWork", "Prepare Test", "WorkOut", "HomeWork", "Prepare Test")
+                ) {
+                    CustomListItem(
+                        todo = it,
+                        status = Status.READY,
+                        priority = Priority.Low,
+                        onClickMore = {},
+                    )
+                }
+                stickyHeader {
+
+                }
+                items(listOf("WorkOut", "HomeWork", "Prepare Test", "WorkOut", "HomeWork", "Prepare Test", "WorkOut", "HomeWork", "Prepare Test")) {
+
+                }
+                stickyHeader {
+
+                }
+                items(listOf("WorkOut", "HomeWork", "Prepare Test", "WorkOut", "HomeWork", "Prepare Test", "WorkOut", "HomeWork", "Prepare Test")) {
+
                 }
             }
         }
     }
+}
+
+@Composable
+private fun Title(
+    status: Status,
+    number: Int,
+    isExpended: Boolean,
+) {
+
 }
