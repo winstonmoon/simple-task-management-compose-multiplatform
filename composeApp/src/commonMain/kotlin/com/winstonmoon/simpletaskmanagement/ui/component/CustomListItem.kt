@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -23,12 +21,7 @@ import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.ic_calendar_month_18
-import simpletaskmanagement.composeapp.generated.resources.ic_low_priority_18
 import simpletaskmanagement.composeapp.generated.resources.ic_more_vert_24
-import simpletaskmanagement.composeapp.generated.resources.ic_progress_activity_18
-import simpletaskmanagement.composeapp.generated.resources.ic_swap_vert_18
-import simpletaskmanagement.composeapp.generated.resources.priority_label_low
-import simpletaskmanagement.composeapp.generated.resources.status_label_inprogress
 
 
 @Composable
@@ -76,25 +69,19 @@ fun CustomListItem(
                 modifier = Modifier,
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                // TODO change
                 CustomAssistChipWithIcon(
-                    label = Res.string.status_label_inprogress,
-                    icon = Res.drawable.ic_progress_activity_18,
-//                    label = status.,
-//                    icon = status.,
+                    label = status.label,
+                    icon = status.icon,
                 )
                 CustomAssistChipWithIcon(
-                    label = Res.string.priority_label_low,
-                    icon = Res.drawable.ic_low_priority_18,
-//                    label = priority,
-//                    icon = priority.,
+                    label = priority.label,
+                    icon = priority.icon,
                 )
             }
             Row(
                 modifier = Modifier,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
-                // TODO change icon
                 Icon(
                     modifier = Modifier
                         .size(18.dp),
