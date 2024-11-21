@@ -29,8 +29,8 @@ import simpletaskmanagement.composeapp.generated.resources.status_label_inprogre
 import simpletaskmanagement.composeapp.generated.resources.status_label_ready
 
 enum class Status(
-    icon: DrawableResource,
-    label: StringResource,
+    val icon: DrawableResource,
+    val label: StringResource,
 ) {
     READY(
         icon = Res.drawable.ic_check_box_outline_blank_18,
@@ -47,8 +47,8 @@ enum class Status(
 }
 
 enum class Priority(
-    icon: DrawableResource,
-    label: StringResource,
+    val icon: DrawableResource,
+    val label: StringResource,
 ) {
     Low(
       icon = Res.drawable.ic_low_priority_18,
@@ -73,6 +73,7 @@ fun CustomAssistChipWithIcon(
     AssistChip(
         modifier = modifier,
         onClick = {},
+        enabled = false,
         label = {
             Text(
                 text = stringResource(label),
@@ -100,11 +101,12 @@ fun CustomAssistChip(
     AssistChip(
         modifier = modifier,
         onClick = {},
+        enabled = false,
         label = {
             Text(
                 text = label,
                 color = Color.White,
-                style = MaterialTheme.typography.labelMedium
+                style = MaterialTheme.typography.labelMedium,
             )
         },
         shape = RoundedCornerShape(24.dp),

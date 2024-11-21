@@ -1,5 +1,6 @@
 package com.winstonmoon.simpletaskmanagement.ui.screen
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -45,8 +46,14 @@ internal fun CalendarScreen(
                 title = Res.string.calendar_title,
             )
         },
+        floatingActionButton = {
+            CustomFloatingActionButton(
+                modifier = Modifier,
+                onClick = onClickAddButton
+            )
+        },
     ) { paddingValues ->
-        BoxWithConstraints(
+        Box(
             modifier = Modifier
                 .padding(
                     horizontal = 16.dp,
@@ -55,10 +62,7 @@ internal fun CalendarScreen(
                 .padding(paddingValues = paddingValues)
                 .fillMaxSize(),
         ) {
-            CustomFloatingActionButton(
-                modifier = Modifier.align(Alignment.BottomEnd),
-                onClick = onClickAddButton
-            )
+
         }
     }
 }

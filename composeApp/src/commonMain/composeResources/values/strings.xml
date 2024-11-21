@@ -13,4 +13,6 @@
     <string name="priority_label_low">Low</string>
     <string name="priority_label_medium">Medium</string>
     <string name="priority_label_high">High</string>
+
+    <string name="floating_action_button_label">New</string>
 </resources>
