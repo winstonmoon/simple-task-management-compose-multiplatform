@@ -24,6 +24,19 @@ import kotlinx.serialization.Serializable
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.settings_title
 
+sealed class General
+data class Theme(
+    val dark: Int,
+    val light: Int,
+    val followSystem: Int,
+): General()
+data class Language(
+    val english: Int,
+    val korean: Int,
+    val japanese: Int,
+    val chinese: Int,
+): General()
+
 @Serializable
 data object SettingsRoute
 
