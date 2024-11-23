@@ -4,43 +4,50 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
-import com.winstonmoon.simpletaskmanagement.ui.theme.SimpleTaskManagementTheme
 import kotlinx.serialization.Serializable
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.settings_title
 
-enum class Theme {
-    DARK,
-    LIGHT,
-    FOLLOW_SYSTEM,
+sealed interface Settings {
+    val title: String
+    val configs: List<String>
 }
 
-enum class Language {
-    ENGLISH,
-    KOREAN,
-    JAPANESE,
-    CHINESE,
-}
+data class Theme(
+    override val title: String = "Theme",
+    override val configs: List<String> = listOf("Dark", "Light", "Follow System"),
+) : Settings
 
-enum class ConnectGoogleTasks {
-    ON,
-    OFF,
-}
+data class Language(
+    override val title: String = "Language",
+    override val configs: List<String> = listOf("English", "Korean", "Japanese", "Chinese")
+) : Settings
+
+data class ConnectGoogleTasks(
+    override val title: String = "ConnectGoogleTasks",
+    override val configs: List<String> = listOf("On", "Off")
+) : Settings
 
 @Serializable
 data object SettingsRoute
@@ -56,11 +63,15 @@ fun SettingsRoute(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SettingsScreen(
     onClickBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val sheetState = rememberModalBottomSheetState()
+    var showBottomSheet by remember { mutableStateOf(false) }
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -70,7 +81,6 @@ internal fun SettingsScreen(
             )
         },
     ) { paddingValues ->
-
         val scrollState = rememberLazyListState()
 
         LazyColumn(
@@ -80,22 +90,55 @@ internal fun SettingsScreen(
             state = scrollState,
             verticalArrangement = Arrangement.spacedBy(32.dp)
         ) {
-            general()
-            moreOptions()
+            general(
+                onClickListItem = {
+                    showBottomSheet = true
+                }
+            )
+            moreOptions(
+                onClickListItem = {
+                    showBottomSheet = true
+                }
+            )
+        }
+
+        if (showBottomSheet) {
+            ModalBottomSheet(
+                onDismissRequest = {
+                    showBottomSheet = false
+                },
+                sheetState = sheetState
+            ) {
+                Text(
+                    text = "test"
+                )
+            }
         }
     }
 }
 
 private fun LazyListScope.general(
-
+    onClickListItem: () -> Unit,
 ) {
     item {
-        Title("")
+        SectionTitle("General")
     }
-    // TODO
-//    items(General) {
-//
-//    }
+    item {
+        SectionListItem(
+            configTitle = Theme().title,
+            selectedConfig = "Follow System",
+            selectableConfig = Theme().configs,
+            onClick = onClickListItem
+        )
+    }
+    item {
+        SectionListItem(
+            configTitle = Language().title,
+            selectedConfig = "Follow System",
+            selectableConfig = Language().configs,
+            onClick = onClickListItem
+        )
+    }
     item {
         HorizontalDivider(
             thickness = 1.dp
@@ -104,15 +147,19 @@ private fun LazyListScope.general(
 }
 
 private fun LazyListScope.moreOptions(
-
+    onClickListItem: () -> Unit,
 ) {
     item {
-        Title("")
+        SectionTitle("More Options")
     }
-    // TODO
-//    items(General) {
-//
-//    }
+    item {
+        SectionListItem(
+            configTitle = ConnectGoogleTasks().title,
+            selectedConfig = "Off",
+            selectableConfig = ConnectGoogleTasks().configs,
+            onClick = onClickListItem
+        )
+    }
     item {
         HorizontalDivider(
             thickness = 1.dp
@@ -121,7 +168,7 @@ private fun LazyListScope.moreOptions(
 }
 
 @Composable
-private fun Title(
+private fun SectionTitle(
     title: String,
     modifier: Modifier = Modifier,
 ) {
@@ -137,7 +184,7 @@ private fun Title(
 }
 
 @Composable
-private fun ListItem(
+private fun SectionListItem(
     configTitle: String,
     selectedConfig: String,
     // TODO
@@ -147,13 +194,14 @@ private fun ListItem(
 ) {
     Column(
         modifier = modifier
+            .fillMaxWidth()
+            .clickable {
+                onClick()
+            }
             .padding(
                 horizontal = 16.dp,
                 vertical = 8.dp,
-            )
-            .clickable {
-                onClick()
-            },
+            ),
     ) {
         Text(
             text = configTitle,
