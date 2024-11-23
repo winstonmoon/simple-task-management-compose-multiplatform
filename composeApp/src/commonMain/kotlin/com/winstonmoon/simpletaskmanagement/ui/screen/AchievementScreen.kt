@@ -1,5 +1,6 @@
 package com.winstonmoon.simpletaskmanagement.ui.screen
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -24,12 +25,10 @@ data object AchievementRoute
 @Composable
 fun AchievementRoute(
     drawerState: DrawerState,
-    onClickAddButton: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     AchievementScreen(
         drawerState = drawerState,
-        onClickAddButton = onClickAddButton,
         modifier = modifier,
     )
 }
@@ -37,7 +36,6 @@ fun AchievementRoute(
 @Composable
 internal fun AchievementScreen(
     drawerState: DrawerState,
-    onClickAddButton: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -49,24 +47,11 @@ internal fun AchievementScreen(
             )
         }
     ) { paddingValues ->
-        BoxWithConstraints(
+        Box(
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize(),
         ) {
-            FloatingActionButton(
-                onClick = {
-                    onClickAddButton()
-                },
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(12.dp),
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = null,
-                )
-            }
         }
     }
 }

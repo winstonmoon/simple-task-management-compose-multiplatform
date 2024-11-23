@@ -24,18 +24,23 @@ import kotlinx.serialization.Serializable
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.settings_title
 
-sealed class General
-data class Theme(
-    val dark: Int,
-    val light: Int,
-    val followSystem: Int,
-): General()
-data class Language(
-    val english: Int,
-    val korean: Int,
-    val japanese: Int,
-    val chinese: Int,
-): General()
+enum class Theme {
+    DARK,
+    LIGHT,
+    FOLLOW_SYSTEM,
+}
+
+enum class Language {
+    ENGLISH,
+    KOREAN,
+    JAPANESE,
+    CHINESE,
+}
+
+enum class ConnectGoogleTasks {
+    ON,
+    OFF,
+}
 
 @Serializable
 data object SettingsRoute
@@ -75,13 +80,13 @@ internal fun SettingsScreen(
             state = scrollState,
             verticalArrangement = Arrangement.spacedBy(32.dp)
         ) {
-            General()
-            MoreOptions()
+            general()
+            moreOptions()
         }
     }
 }
 
-private fun LazyListScope.General(
+private fun LazyListScope.general(
 
 ) {
     item {
@@ -98,7 +103,7 @@ private fun LazyListScope.General(
     }
 }
 
-private fun LazyListScope.MoreOptions(
+private fun LazyListScope.moreOptions(
 
 ) {
     item {
