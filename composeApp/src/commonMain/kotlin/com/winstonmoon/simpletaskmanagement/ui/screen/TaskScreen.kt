@@ -4,14 +4,14 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.DrawerState
@@ -23,8 +23,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.modifier.modifierLocalOf
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAssistChip
@@ -37,6 +35,8 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.ic_arrow_drop_down_24
+import simpletaskmanagement.composeapp.generated.resources.ic_list_24
+import simpletaskmanagement.composeapp.generated.resources.ic_swap_vert_18
 import simpletaskmanagement.composeapp.generated.resources.task_title
 
 @Serializable
@@ -82,19 +82,27 @@ internal fun TaskScreen(
                 .padding(paddingValues = paddingValues)
                 .fillMaxSize(),
         ) {
-            SectionTitle(
-                status = Status.READY,
-                number = 10,
-                isExpended = true,
-            )
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth(),
-                verticalArrangement = Arrangement.spacedBy(18.dp),
             ) {
+                stickyHeader {
+                    TitleSection(
+                        status = Status.READY,
+                        number = 3,
+                        isExpended = true,
+                    )
+                }
+                item {
+                    SortSection()
+                }
                 items(
-                    listOf("WorkOut", "HomeWork", "Prepare Test", "WorkOut", "HomeWork", "Prepare Test", "WorkOut", "HomeWork", "Prepare Test")
+                    listOf("WorkOut", "HomeWork", "Prepare Test")
                 ) {
+                    Spacer(
+                        modifier = Modifier
+                            .height(18.dp)
+                    )
                     CustomListItem(
                         modifier = Modifier
                             .padding(horizontal = 16.dp),
@@ -107,44 +115,89 @@ internal fun TaskScreen(
                         onClickDelete = {},
                     )
                 }
+                stickyHeader {
+                    TitleSection(
+                        status = Status.IN_PROGRESS,
+                        number = 2,
+                        isExpended = true,
+                    )
+                }
+                item {
+                    SortSection()
+                }
+                items(
+                    listOf("WorkOut", "HomeWork")
+                ) {
+                    Spacer(
+                        modifier = Modifier
+                            .height(18.dp)
+                    )
+                    CustomListItem(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp),
+                        todo = it,
+                        status = Status.READY,
+                        priority = Priority.Low,
+                        onClickAdd = {},
+                        onClickEdit = {},
+                        onClickDuplicate = {},
+                        onClickDelete = {},
+                    )
+                }
+                stickyHeader {
+                    TitleSection(
+                        status = Status.DONE,
+                        number = 2,
+                        isExpended = true,
+                    )
+                }
+                items(
+                    listOf("WorkOut", "HomeWork")
+                ) {
+                    CustomListItem(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp),
+                        todo = it,
+                        status = Status.DONE,
+                        priority = Priority.Low,
+                        onClickAdd = {},
+                        onClickEdit = {},
+                        onClickDuplicate = {},
+                        onClickDelete = {},
+                    )
+                    Spacer(
+                        modifier = Modifier
+                            .height(18.dp)
+                    )
+                }
             }
-            SectionTitle(
-                status = Status.IN_PROGRESS,
-                number = 10,
-                isExpended = true,
-            )
-            SectionTitle(
-                status = Status.DONE,
-                number = 10,
-                isExpended = true,
-            )
         }
     }
 }
 
 @Composable
-private fun SectionTitle(
+private fun TitleSection(
     status: Status,
     number: Int,
     isExpended: Boolean,
     modifier: Modifier = Modifier,
 ) {
-    BoxWithConstraints(
+    Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 12.dp)
             .background(color = MaterialTheme.colorScheme.background),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(
             modifier = Modifier
-                .wrapContentSize()
-                .align(Alignment.CenterStart),
+                .padding(start = 16.dp, top = 8.dp, bottom = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = stringResource(status.label),
                 color = Color.White,
-                textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.titleLarge,
             )
             CustomAssistChip(
@@ -154,11 +207,55 @@ private fun SectionTitle(
         }
         Icon(
             modifier = Modifier
-                .align(Alignment.CenterEnd)
+                .padding(end = 16.dp)
                 .clickable {
 
                 },
             painter = painterResource(Res.drawable.ic_arrow_drop_down_24),
+            contentDescription = null,
+        )
+    }
+}
+
+@Composable
+private fun SortSection(
+
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(color = MaterialTheme.colorScheme.background),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(start = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Icon(
+                modifier = Modifier
+                    .size(18.dp),
+                painter = painterResource(Res.drawable.ic_swap_vert_18),
+                contentDescription = null,
+            )
+            Text(
+                // TODO use parameter
+                text = "Priority",
+                // TODO change color
+                color = Color.White,
+                style = MaterialTheme.typography.labelLarge,
+            )
+        }
+        Icon(
+            modifier = Modifier
+                .padding(end = 16.dp)
+                .clickable {
+
+                },
+            painter = painterResource(Res.drawable.ic_list_24),
             contentDescription = null,
         )
     }
