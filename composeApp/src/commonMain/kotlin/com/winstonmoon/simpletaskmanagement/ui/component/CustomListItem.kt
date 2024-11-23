@@ -3,6 +3,7 @@ package com.winstonmoon.simpletaskmanagement.ui.component
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,15 +12,26 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import simpletaskmanagement.composeapp.generated.resources.Res
+import simpletaskmanagement.composeapp.generated.resources.dropdown_menu_add
+import simpletaskmanagement.composeapp.generated.resources.dropdown_menu_delete
+import simpletaskmanagement.composeapp.generated.resources.dropdown_menu_duplicate
+import simpletaskmanagement.composeapp.generated.resources.dropdown_menu_edit
 import simpletaskmanagement.composeapp.generated.resources.ic_calendar_month_18
 import simpletaskmanagement.composeapp.generated.resources.ic_more_vert_24
 
@@ -30,9 +42,14 @@ fun CustomListItem(
     status: Status,
     priority: Priority,
 //    dueDate: Date,
-    onClickMore: () -> Unit,
+    onClickAdd: () -> Unit,
+    onClickEdit: () -> Unit,
+    onClickDuplicate: () -> Unit,
+    onClickDelete: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    var isDropDownMenuExpanded by remember { mutableStateOf(false) }
+
     Card(
         modifier = modifier
             .fillMaxSize(),
@@ -54,16 +71,53 @@ fun CustomListItem(
                     text = todo,
                     style = MaterialTheme.typography.bodyLarge,
                 )
-                // TODO change icon
-                Icon(
-                    modifier = Modifier
-                        .size(24.dp)
-                        .clickable {
-                            onClickMore()
-                        },
-                    painter = painterResource(Res.drawable.ic_more_vert_24),
-                    contentDescription = null,
-                )
+                Box {
+                    Icon(
+                        modifier = Modifier
+                            .size(24.dp)
+                            .clickable { isDropDownMenuExpanded = true },
+                        painter = painterResource(Res.drawable.ic_more_vert_24),
+                        contentDescription = null,
+                    )
+                    DropdownMenu(
+                        expanded = isDropDownMenuExpanded,
+                        onDismissRequest = { isDropDownMenuExpanded = false },
+                    ) {
+                        // TODO
+                        DropdownMenuItem(
+                            text = {
+                                Text(
+                                    text = stringResource(Res.string.dropdown_menu_add),
+                                )
+                            },
+                            onClick = onClickAdd
+                        )
+                        DropdownMenuItem(
+                            text = {
+                                Text(
+                                    text = stringResource(Res.string.dropdown_menu_edit),
+                                )
+                            },
+                            onClick = onClickEdit
+                        )
+                        DropdownMenuItem(
+                            text = {
+                                Text(
+                                    text = stringResource(Res.string.dropdown_menu_duplicate)
+                                )
+                            },
+                            onClick = onClickDuplicate
+                        )
+                        DropdownMenuItem(
+                            text = {
+                                Text(
+                                    text = stringResource(Res.string.dropdown_menu_delete)
+                                )
+                            },
+                            onClick = onClickDelete
+                        )
+                    }
+                }
             }
             Row(
                 modifier = Modifier,

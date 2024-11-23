@@ -15,4 +15,9 @@
     <string name="priority_label_high">High</string>
 
     <string name="floating_action_button_label">New</string>
+
+    <string name="dropdown_menu_add">Add</string>
+    <string name="dropdown_menu_edit">Edit</string>
+    <string name="dropdown_menu_duplicate">Duplicate</string>
+    <string name="dropdown_menu_delete">Delete</string>
 </resources>
