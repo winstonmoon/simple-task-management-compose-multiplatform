@@ -28,6 +28,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.winstonmoon.simpletaskmanagement.di.appModule
 import com.winstonmoon.simpletaskmanagement.ui.screen.AchievementRoute
+import com.winstonmoon.simpletaskmanagement.ui.screen.CalendarRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.InputTaskRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.SettingsRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.TaskRoute
@@ -40,6 +41,7 @@ import org.koin.compose.KoinApplication
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.achievement_title
 import simpletaskmanagement.composeapp.generated.resources.app_name
+import simpletaskmanagement.composeapp.generated.resources.calendar_title
 import simpletaskmanagement.composeapp.generated.resources.settings_title
 import simpletaskmanagement.composeapp.generated.resources.task_title
 
@@ -76,6 +78,7 @@ fun App(context: Context) {
                                 scope.launch { drawerState.close() }
                                 when (route) {
                                     DrawerMenu.Task -> navController.navigate(TaskRoute)
+                                    DrawerMenu.Calendar -> navController.navigate(CalendarRoute)
                                     DrawerMenu.Achievement -> navController.navigate(AchievementRoute)
                                     DrawerMenu.Settings -> navController.navigate(SettingsRoute)
                                 }
@@ -99,12 +102,17 @@ fun App(context: Context) {
                             },
                         )
                     }
-                    composable<AchievementRoute> {
-                        AchievementRoute(
+                    composable<CalendarRoute> {
+                        CalendarRoute(
                             drawerState,
                             onClickAddButton = {
                                 navController.navigate(InputTaskRoute)
                             },
+                        )
+                    }
+                    composable<AchievementRoute> {
+                        AchievementRoute(
+                            drawerState,
                         )
                     }
                     composable<SettingsRoute> {
@@ -164,6 +172,10 @@ enum class DrawerMenu(
     Task(
         icon = Icons.Outlined.Edit,
         title = Res.string.task_title,
+    ),
+    Calendar(
+        icon = Icons.Filled.ThumbUp,
+        title = Res.string.calendar_title,
     ),
     Achievement(
         icon = Icons.Filled.ThumbUp,
