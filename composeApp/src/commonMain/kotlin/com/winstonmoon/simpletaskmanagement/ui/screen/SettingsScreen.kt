@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
+import com.winstonmoon.simpletaskmanagement.ui.component.CustomModalBottomSheet
 import kotlinx.serialization.Serializable
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.settings_title
@@ -103,8 +104,8 @@ internal fun SettingsScreen(
         }
 
         if (showBottomSheet) {
-            ModalBottomSheet(
-                onDismissRequest = {
+            CustomModalBottomSheet(
+                onDismissRequest =  {
                     showBottomSheet = false
                 },
                 sheetState = sheetState
