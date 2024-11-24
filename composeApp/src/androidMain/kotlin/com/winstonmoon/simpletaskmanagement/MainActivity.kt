@@ -1,14 +1,9 @@
 package com.winstonmoon.simpletaskmanagement
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.winstonmoon.simpletaskmanagement.di.appModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
-import org.koin.dsl.module
+import androidx.core.view.WindowCompat
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +18,8 @@ class MainActivity : ComponentActivity() {
 //                }
 //            )
 //        }
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         setContent {
             App(application)
         }
