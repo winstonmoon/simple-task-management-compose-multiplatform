@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -27,8 +26,11 @@ import androidx.compose.ui.unit.dp
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomModalBottomSheet
 import kotlinx.serialization.Serializable
+import org.jetbrains.compose.resources.StringResource
 import simpletaskmanagement.composeapp.generated.resources.Res
-import simpletaskmanagement.composeapp.generated.resources.settings_title
+import simpletaskmanagement.composeapp.generated.resources.settings_screen_title
+import simpletaskmanagement.composeapp.generated.resources.settings_screen_general
+import simpletaskmanagement.composeapp.generated.resources.settings_screen_more_options
 
 sealed interface Settings {
     val title: String
@@ -77,7 +79,7 @@ internal fun SettingsScreen(
         modifier = modifier,
         topBar = {
             CustomAppBar(
-                title = Res.string.settings_title,
+                title = Res.string.settings_screen_title,
                 onClickBack = onClickBack,
             )
         },
@@ -122,7 +124,7 @@ private fun LazyListScope.general(
     onClickListItem: () -> Unit,
 ) {
     item {
-        SectionTitle("General")
+        SectionTitle(Res.string.settings_screen_general)
     }
     item {
         SectionListItem(
@@ -151,7 +153,7 @@ private fun LazyListScope.moreOptions(
     onClickListItem: () -> Unit,
 ) {
     item {
-        SectionTitle("More Options")
+        SectionTitle(Res.string.settings_screen_more_options)
     }
     item {
         SectionListItem(
@@ -170,7 +172,7 @@ private fun LazyListScope.moreOptions(
 
 @Composable
 private fun SectionTitle(
-    title: String,
+    title: StringResource,
     modifier: Modifier = Modifier,
 ) {
     Column(

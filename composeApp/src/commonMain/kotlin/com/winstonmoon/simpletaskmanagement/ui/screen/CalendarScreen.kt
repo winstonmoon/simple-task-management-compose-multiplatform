@@ -12,7 +12,7 @@ import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
 import kotlinx.serialization.Serializable
 import simpletaskmanagement.composeapp.generated.resources.Res
-import simpletaskmanagement.composeapp.generated.resources.calendar_title
+import simpletaskmanagement.composeapp.generated.resources.calendar_screen_title
 
 @Serializable
 data object CalendarRoute
@@ -41,7 +41,7 @@ internal fun CalendarScreen(
         topBar = {
             CustomAppBar(
                 drawerState = drawerState,
-                title = Res.string.calendar_title,
+                title = Res.string.calendar_screen_title,
             )
         },
         floatingActionButton = {

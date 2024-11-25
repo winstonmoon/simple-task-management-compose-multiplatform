@@ -37,7 +37,7 @@ import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.ic_arrow_drop_down_24
 import simpletaskmanagement.composeapp.generated.resources.ic_list_24
 import simpletaskmanagement.composeapp.generated.resources.ic_swap_vert_18
-import simpletaskmanagement.composeapp.generated.resources.task_title
+import simpletaskmanagement.composeapp.generated.resources.task_screen_title
 
 @Serializable
 data object TaskRoute
@@ -67,7 +67,7 @@ internal fun TaskScreen(
         topBar = {
             CustomAppBar(
                 drawerState = drawerState,
-                title = Res.string.task_title,
+                title = Res.string.task_screen_title,
             )
         },
         floatingActionButton = {

@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">Simple Task Management</string>
-    <string name="task_title">Task</string>
-    <string name="calendar_title">Calendar</string>
-    <string name="achievement_title">Achievement</string>
-    <string name="settings_title">Settings</string>
-    <string name="input_task_title">InputTask</string>
+    <string name="task_screen_title">Task</string>
+    <string name="calendar_screen_title">Calendar</string>
+    <string name="achievement_screen_title">Achievement</string>
+    <string name="input_task_screen_title">InputTask</string>
+
+    <string name="settings_screen_title">Settings</string>
+    <string name="settings_screen_general">General</string>
+    <string name="settings_screen_more_options">More Options</string>
 
     <string name="status_label_ready">Ready</string>
     <string name="status_label_inprogress">In progress</string>
@@ -16,8 +19,8 @@
 
     <string name="floating_action_button_label">New</string>
 
-    <string name="dropdown_menu_add">Add</string>
     <string name="dropdown_menu_edit">Edit</string>
     <string name="dropdown_menu_duplicate">Duplicate</string>
     <string name="dropdown_menu_delete">Delete</string>
+
 </resources>
