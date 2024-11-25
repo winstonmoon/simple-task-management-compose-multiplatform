@@ -39,11 +39,11 @@ import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
 import simpletaskmanagement.composeapp.generated.resources.Res
-import simpletaskmanagement.composeapp.generated.resources.achievement_title
+import simpletaskmanagement.composeapp.generated.resources.achievement_screen_title
 import simpletaskmanagement.composeapp.generated.resources.app_name
-import simpletaskmanagement.composeapp.generated.resources.calendar_title
-import simpletaskmanagement.composeapp.generated.resources.settings_title
-import simpletaskmanagement.composeapp.generated.resources.task_title
+import simpletaskmanagement.composeapp.generated.resources.calendar_screen_title
+import simpletaskmanagement.composeapp.generated.resources.settings_screen_title
+import simpletaskmanagement.composeapp.generated.resources.task_screen_title
 
 @Composable
 @Preview
@@ -171,18 +171,18 @@ enum class DrawerMenu(
 ) {
     Task(
         icon = Icons.Outlined.Edit,
-        title = Res.string.task_title,
+        title = Res.string.task_screen_title,
     ),
     Calendar(
         icon = Icons.Filled.ThumbUp,
-        title = Res.string.calendar_title,
+        title = Res.string.calendar_screen_title,
     ),
     Achievement(
         icon = Icons.Filled.ThumbUp,
-        title = Res.string.achievement_title,
+        title = Res.string.achievement_screen_title,
     ),
     Settings(
         icon = Icons.Filled.Settings,
-        title = Res.string.settings_title,
+        title = Res.string.settings_screen_title,
     )
 }

@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import simpletaskmanagement.composeapp.generated.resources.Res
-import simpletaskmanagement.composeapp.generated.resources.dropdown_menu_add
 import simpletaskmanagement.composeapp.generated.resources.dropdown_menu_delete
 import simpletaskmanagement.composeapp.generated.resources.dropdown_menu_duplicate
 import simpletaskmanagement.composeapp.generated.resources.dropdown_menu_edit
@@ -84,14 +83,6 @@ fun CustomListItem(
                         onDismissRequest = { isDropDownMenuExpanded = false },
                     ) {
                         // TODO
-                        DropdownMenuItem(
-                            text = {
-                                Text(
-                                    text = stringResource(Res.string.dropdown_menu_add),
-                                )
-                            },
-                            onClick = onClickAdd
-                        )
                         DropdownMenuItem(
                             text = {
                                 Text(
