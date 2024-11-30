@@ -62,11 +62,17 @@ data object SettingsRoute
 @Composable
 fun SettingsRoute(
     onClickBack: () -> Unit,
+    onChangeTheme: (String) -> Unit,
+    onChangeLanguage: (String) -> Unit,
+    onChangeConnectGoogleTasks: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     SettingsScreen(
         modifier = modifier,
-        onClickBack = onClickBack
+        onClickBack = onClickBack,
+        onChangeTheme = onChangeTheme,
+        onChangeLanguage = onChangeLanguage,
+        onChangeConnectGoogleTasks = onChangeConnectGoogleTasks,
     )
 }
 
@@ -74,6 +80,9 @@ fun SettingsRoute(
 @Composable
 internal fun SettingsScreen(
     onClickBack: () -> Unit,
+    onChangeTheme: (String) -> Unit,
+    onChangeLanguage: (String) -> Unit,
+    onChangeConnectGoogleTasks: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val sheetState = rememberModalBottomSheetState()
