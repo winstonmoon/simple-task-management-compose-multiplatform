@@ -119,7 +119,13 @@ fun App(context: Context) {
                         SettingsRoute(
                             onClickBack = {
                                 navController.popBackStack()
-                            }
+                            },
+                            onChangeTheme = {
+                            },
+                            onChangeLanguage = {
+                            },
+                            onChangeConnectGoogleTasks = {
+                            },
                         )
                     }
                     composable<InputTaskRoute> {
