@@ -87,6 +87,7 @@ internal fun SettingsScreen(
 ) {
     val sheetState = rememberModalBottomSheetState()
     var showBottomSheet by remember { mutableStateOf(false) }
+    var configs by remember { mutableStateOf(emptyList<String>()) }
 
     Scaffold(
         modifier = modifier,
@@ -108,11 +109,13 @@ internal fun SettingsScreen(
         ) {
             general(
                 onClickListItem = {
+                    configs = it
                     showBottomSheet = true
                 }
             )
             moreOptions(
                 onClickListItem = {
+                    configs = it
                     showBottomSheet = true
                 }
             )
@@ -126,15 +129,15 @@ internal fun SettingsScreen(
                 },
                 sheetState = sheetState
             ) {
-                listOf("Dark", "Light", "Fowllow system").forEach {
+                configs.forEach {
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         RadioButton(
                             selected = it.length == 4,
-                            onClick = {},
-
-                            )
+                            onClick = {
+                            },
+                        )
                         Text(
                             text = it
                         )
@@ -146,25 +149,29 @@ internal fun SettingsScreen(
 }
 
 private fun LazyListScope.general(
-    onClickListItem: () -> Unit,
+    onClickListItem: (List<String>) -> Unit,
 ) {
     item {
         SectionTitle(Res.string.settings_screen_general)
     }
     item {
         SectionListItem(
-            configTitle = Theme().title,
+            settings = Theme(),
             selectedConfig = "Follow System",
             selectableConfig = Theme().configs,
-            onClick = onClickListItem
+            onClick = {
+                onClickListItem(Theme().configs)
+            }
         )
     }
     item {
         SectionListItem(
-            configTitle = Language().title,
+            settings = Language(),
             selectedConfig = "Follow System",
             selectableConfig = Language().configs,
-            onClick = onClickListItem
+            onClick = {
+                onClickListItem(Language().configs)
+            }
         )
     }
     item {
@@ -175,17 +182,19 @@ private fun LazyListScope.general(
 }
 
 private fun LazyListScope.moreOptions(
-    onClickListItem: () -> Unit,
+    onClickListItem: (List<String>) -> Unit,
 ) {
     item {
         SectionTitle(Res.string.settings_screen_more_options)
     }
     item {
         SectionListItem(
-            configTitle = ConnectGoogleTasks().title,
+            settings = ConnectGoogleTasks(),
             selectedConfig = "Off",
             selectableConfig = ConnectGoogleTasks().configs,
-            onClick = onClickListItem
+            onClick = {
+                onClickListItem(ConnectGoogleTasks().configs)
+            }
         )
     }
     item {
@@ -213,18 +222,18 @@ private fun SectionTitle(
 
 @Composable
 private fun SectionListItem(
-    configTitle: String,
+    settings: Settings,
     selectedConfig: String,
     // TODO
     selectableConfig: List<String>,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit,
+    onClick: (List<String>) -> Unit,
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .clickable {
-                onClick()
+                onClick(settings.configs)
             }
             .padding(
                 horizontal = 16.dp,
@@ -232,7 +241,7 @@ private fun SectionListItem(
             ),
     ) {
         Text(
-            text = configTitle,
+            text = settings.title,
             // TODO: change color
             color = Color.White,
             style = MaterialTheme.typography.bodyLarge,
