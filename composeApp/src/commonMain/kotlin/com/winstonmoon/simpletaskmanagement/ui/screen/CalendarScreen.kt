@@ -1,13 +1,15 @@
 package com.winstonmoon.simpletaskmanagement.ui.screen
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,14 +20,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
+import com.winstonmoon.simpletaskmanagement.ui.component.CustomListItem
+import com.winstonmoon.simpletaskmanagement.ui.component.Priority
+import com.winstonmoon.simpletaskmanagement.ui.component.Status
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.calendar_screen_title
 import simpletaskmanagement.composeapp.generated.resources.ic_arrow_back_ios_18
@@ -68,16 +73,38 @@ internal fun CalendarScreen(
             )
         },
     ) { paddingValues ->
-        Box(
+        Column(
             modifier = Modifier
-                .padding(
-                    horizontal = 16.dp,
-                    vertical = 12.dp,
-                )
                 .padding(paddingValues = paddingValues)
                 .fillMaxSize(),
+            // TODO check
+            verticalArrangement = Arrangement.spacedBy(22.dp)
         ) {
-
+            Calendar()
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth(),
+            ) {
+                items(
+                    listOf("WorkOut", "HomeWork")
+                ) {
+                    CustomListItem(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp),
+                        todo = it,
+                        status = Status.DONE,
+                        priority = Priority.Low,
+                        onClickAdd = {},
+                        onClickEdit = {},
+                        onClickDuplicate = {},
+                        onClickDelete = {},
+                    )
+                    Spacer(
+                        modifier = Modifier
+                            .height(18.dp)
+                    )
+                }
+            }
         }
     }
 }
@@ -85,20 +112,28 @@ internal fun CalendarScreen(
 // TODO
 @Composable
 private fun Calendar(
-
+    modifier: Modifier = Modifier,
 ) {
-    Column {
-        Row {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
             Icon(
                 modifier = Modifier
-                    .padding(end = 16.dp)
                     .clickable {
 
                     },
                 painter = painterResource(Res.drawable.ic_arrow_back_ios_18),
                 contentDescription = null,
             )
-            Column {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
                 Text(
 //                    text = stringResource(),
                     text = "December",
@@ -114,7 +149,6 @@ private fun Calendar(
             }
             Icon(
                 modifier = Modifier
-                    .padding(end = 16.dp)
                     .clickable {
 
                     },
@@ -125,7 +159,7 @@ private fun Calendar(
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            items(listOf(Pair("Sun", "31"), Pair("Mon", "1"), Pair("Tue", "2"), Pair("Wed", "3"), Pair("Thu", "4"), Pair("Fri", "5"), Pair("Sat", "6"))) {
+            items(listOf(Pair("Sun", "31"), Pair("Mon", "1"), Pair("Tue", "2"), Pair("Wed", "3"), Pair("Thu", "4"), Pair("Fri", "5"), Pair("Sat", "6"), Pair("Sun", "31"), Pair("Mon", "1"), Pair("Tue", "2"), Pair("Wed", "3"), Pair("Thu", "4"), Pair("Fri", "5"), Pair("Sat", "6"))) {
                 Card(
                     modifier = Modifier
                         .weight(1f),
