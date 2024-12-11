@@ -11,6 +11,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -156,29 +159,31 @@ private fun Calendar(
                 contentDescription = null,
             )
         }
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            items(listOf(Pair("Sun", "31"), Pair("Mon", "1"), Pair("Tue", "2"), Pair("Wed", "3"), Pair("Thu", "4"), Pair("Fri", "5"), Pair("Sat", "6"), Pair("Sun", "31"), Pair("Mon", "1"), Pair("Tue", "2"), Pair("Wed", "3"), Pair("Thu", "4"), Pair("Fri", "5"), Pair("Sat", "6"))) {
-                Card(
-                    modifier = Modifier
-                        .weight(1f),
-                    shape = RoundedCornerShape(6.dp),
-                ) {
-                    Column {
-                        Text(
-                            text = it.first,
-                            color = Color.White,
-                            style = MaterialTheme.typography.labelLarge,
-                        )
-                        Text(
-                            text = it.second,
-                            color = Color.White,
-                            style = MaterialTheme.typography.labelLarge,
-                        )
+        LazyHorizontalGrid(
+            rows = GridCells.Fixed(7),
+            horizontalArrangement = Arrangement.spacedBy(10.dp),
+            content = {
+                items(listOf(Pair("Sun", "31"), Pair("Mon", "1"), Pair("Tue", "2"), Pair("Wed", "3"), Pair("Thu", "4"), Pair("Fri", "5"), Pair("Sat", "6"), Pair("Sun", "31"), Pair("Mon", "1"), Pair("Tue", "2"), Pair("Wed", "3"), Pair("Thu", "4"), Pair("Fri", "5"), Pair("Sat", "6"))) {
+                    Card(
+                        modifier = Modifier
+                            .weight(1f),
+                        shape = RoundedCornerShape(6.dp),
+                    ) {
+                        Column {
+                            Text(
+                                text = it.first,
+                                color = Color.White,
+                                style = MaterialTheme.typography.labelLarge,
+                            )
+                            Text(
+                                text = it.second,
+                                color = Color.White,
+                                style = MaterialTheme.typography.labelLarge,
+                            )
+                        }
                     }
                 }
             }
-        }
+        )
     }
 }
