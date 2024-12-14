@@ -9,11 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -23,9 +21,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
@@ -117,9 +121,18 @@ internal fun CalendarScreen(
 private fun Calendar(
     modifier: Modifier = Modifier,
 ) {
+    val localDensity = LocalDensity.current
+
+    var itemWidthDp by remember {
+        mutableStateOf(0.dp)
+    }
+
     Column(
         modifier = modifier
             .fillMaxWidth()
+            .onGloballyPositioned { layoutCoordinates ->
+                itemWidthDp = with(localDensity) { layoutCoordinates.size.width.toDp() / 8 }
+            }
     ) {
         Row(
             modifier = Modifier
@@ -159,31 +172,49 @@ private fun Calendar(
                 contentDescription = null,
             )
         }
-        LazyHorizontalGrid(
-            rows = GridCells.Fixed(7),
-            horizontalArrangement = Arrangement.spacedBy(10.dp),
-            content = {
-                items(listOf(Pair("Sun", "31"), Pair("Mon", "1"), Pair("Tue", "2"), Pair("Wed", "3"), Pair("Thu", "4"), Pair("Fri", "5"), Pair("Sat", "6"), Pair("Sun", "31"), Pair("Mon", "1"), Pair("Tue", "2"), Pair("Wed", "3"), Pair("Thu", "4"), Pair("Fri", "5"), Pair("Sat", "6"))) {
-                    Card(
-                        modifier = Modifier
-                            .weight(1f),
-                        shape = RoundedCornerShape(6.dp),
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            items(
+                listOf(
+                    Pair("Sun", "31"),
+                    Pair("Mon", "1"),
+                    Pair("Tue", "2"),
+                    Pair("Wed", "3"),
+                    Pair("Thu", "4"),
+                    Pair("Fri", "5"),
+                    Pair("Sat", "6"),
+                    Pair("Sun", "31"),
+                    Pair("Mon", "1"),
+                    Pair("Tue", "2"),
+                    Pair("Wed", "3"),
+                    Pair("Thu", "4"),
+                    Pair("Fri", "5"),
+                    Pair("Sat", "6")),
+            ) {
+                Card(
+                    modifier = Modifier
+                        .width(itemWidthDp),
+                    shape = RoundedCornerShape(6.dp),
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        Column {
-                            Text(
-                                text = it.first,
-                                color = Color.White,
-                                style = MaterialTheme.typography.labelLarge,
-                            )
-                            Text(
-                                text = it.second,
-                                color = Color.White,
-                                style = MaterialTheme.typography.labelLarge,
-                            )
-                        }
+                        Text(
+                            text = it.first,
+                            color = Color.White,
+                            style = MaterialTheme.typography.labelLarge,
+                        )
+                        Text(
+                            text = it.second,
+                            color = Color.White,
+                            style = MaterialTheme.typography.labelLarge,
+                        )
                     }
                 }
             }
-        )
+        }
     }
 }
