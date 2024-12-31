@@ -91,7 +91,8 @@ val listLabelMedium = Color(0xFFC9D1D9)
 val listLabelLarge = Color(0xFF8B949E)
 val listIcon = Color(0x8B949E)
 
-
+val white = Color(0xFFFFFFFF)
+val lightOnSurface = Color(0xFF47505B)
 
 
 
