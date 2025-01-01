@@ -92,7 +92,12 @@ val listLabelLarge = Color(0xFF8B949E)
 val listIcon = Color(0x8B949E)
 
 val white = Color(0xFFFFFFFF)
-val lightOnSurface = Color(0xFF47505B)
+val DavysGrey = Color(0xFF47505B)
+val LightPeriwinkle = Color(0xFFC7D0D8)
+val EerieBlack = Color(0xFF181A1E)
+val Cultured = Color(0xFFF4F6F8)
+val JapaneseLaurel = Color(0xFF1D782E)
+val NewCar = Color(0xFF1456D2)
 
 
 
