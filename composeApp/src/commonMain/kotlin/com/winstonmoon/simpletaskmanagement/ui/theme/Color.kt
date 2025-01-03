@@ -96,9 +96,15 @@ val DavysGrey = Color(0xFF47505B)
 val LightPeriwinkle = Color(0xFFC7D0D8)
 val EerieBlack = Color(0xFF181A1E)
 val Cultured = Color(0xFFF4F6F8)
-val JapaneseLaurel = Color(0xFF1D782E)
+val JapaneseLaurelLight = Color(0xFF1D782E)
 val NewCar = Color(0xFF1456D2)
 
-
+val VampireBlack = Color(0xFF04080A)
+val DarkJungleGreen = Color(0xFF191E24)
+val Crayola = Color(0xFF2E353C)
+val AliceBlue = Color(0xFFEDF4FC)
+val RomanSilver = Color(0xFF7F8590)
+val JapaneseLaurelDark = Color(0xFF1F7629)
+val BleuDeFrance = Color(0xFF377CF6)
 
 
