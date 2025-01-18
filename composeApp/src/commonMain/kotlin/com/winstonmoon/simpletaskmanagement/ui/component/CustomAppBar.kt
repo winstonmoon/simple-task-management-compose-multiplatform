@@ -10,12 +10,14 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.winstonmoon.simpletaskmanagement.ui.theme.RomanSilver
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -46,6 +48,7 @@ fun CustomAppBar(
                         Icon(
                             imageVector = Icons.Filled.Menu,
                             contentDescription = null,
+                            tint = RomanSilver,
                         )
                     }
                 }
@@ -56,18 +59,23 @@ fun CustomAppBar(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = null,
+                            tint = RomanSilver,
                         )
                     }
                 }
             },
             title = {
-                Text(text = stringResource(title))
+                Text(
+                    text = stringResource(title),
+                    style = MaterialTheme.typography.titleLarge,
+                    color = RomanSilver,
+                )
             }
         )
         HorizontalDivider(
-            modifier = Modifier
-                .align(Alignment.BottomStart),
+            modifier = Modifier.align(Alignment.BottomStart),
             thickness = 1.dp,
+            color = RomanSilver,
         )
     }
 }
