@@ -100,6 +100,7 @@ val JapaneseLaurelLight = Color(0xFF1D782E)
 val NewCar = Color(0xFF1456D2)
 
 val VampireBlack = Color(0xFF04080A)
+val ChineseBlack = Color(0xFF0C0E13)
 val DarkJungleGreen = Color(0xFF191E24)
 val Crayola = Color(0xFF2E353C)
 val AliceBlue = Color(0xFFEDF4FC)
