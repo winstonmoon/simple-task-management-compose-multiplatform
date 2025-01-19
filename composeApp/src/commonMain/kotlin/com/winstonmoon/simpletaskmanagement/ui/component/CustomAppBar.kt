@@ -13,6 +13,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -35,10 +37,16 @@ fun CustomAppBar(
     val coroutineScope = rememberCoroutineScope()
 
     BoxWithConstraints(
-        modifier = modifier
-            .background(color = ChineseBlack),
+        modifier = modifier,
     ) {
         CenterAlignedTopAppBar(
+            title = {
+                Text(
+                    text = stringResource(title),
+                    style = MaterialTheme.typography.titleLarge,
+                    color = RomanSilver,
+                )
+            },
             navigationIcon = {
                 drawerState?.let {
                     IconButton(
@@ -67,13 +75,7 @@ fun CustomAppBar(
                     }
                 }
             },
-            title = {
-                Text(
-                    text = stringResource(title),
-                    style = MaterialTheme.typography.titleLarge,
-                    color = RomanSilver,
-                )
-            }
+            colors = TopAppBarDefaults.centerAlignedTopAppBarColors().copy(containerColor = ChineseBlack),
         )
         HorizontalDivider(
             modifier = Modifier.align(Alignment.BottomStart),
