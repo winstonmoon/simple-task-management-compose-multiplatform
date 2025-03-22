@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -36,6 +35,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
+            implementation(libs.sqlDelight.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -56,9 +56,11 @@ kotlin {
 
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
+
+            implementation(libs.sqlDelight.coroutinesExt)
         }
         iosMain.dependencies {
-
+            implementation(libs.sqlDelight.native)
         }
     }
 }
