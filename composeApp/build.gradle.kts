@@ -102,3 +102,8 @@ android {
     }
 }
 
+sqldelight {
+    databases.create("SimpleTaskManagementDatabase") {
+        packageName.set("com.winstonmoon.simpletaskmanagement.cache")
+    }
+}

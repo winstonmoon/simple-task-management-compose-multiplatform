@@ -36,7 +36,6 @@ import com.winstonmoon.simpletaskmanagement.ui.theme.SimpleTaskManagementTheme
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.KoinApplication
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.achievement_screen_title
@@ -46,7 +45,6 @@ import simpletaskmanagement.composeapp.generated.resources.settings_screen_title
 import simpletaskmanagement.composeapp.generated.resources.task_screen_title
 
 @Composable
-@Preview
 fun App(context: Context) {
 
     KoinApplication(
