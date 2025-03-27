@@ -4,7 +4,9 @@ import com.winstonmoon.simpletaskmanagement.Context
 import com.winstonmoon.simpletaskmanagement.data.local.AppDataStore
 import com.winstonmoon.simpletaskmanagement.data.local.AppDataStoreManager
 import com.winstonmoon.simpletaskmanagement.data.local.DatabaseHelper
+import com.winstonmoon.simpletaskmanagement.repository.TaskRepository
 import com.winstonmoon.simpletaskmanagement.ui.screen.AchievementViewModel
+import com.winstonmoon.simpletaskmanagement.ui.screen.CalendarViewModel
 import com.winstonmoon.simpletaskmanagement.ui.screen.InputTaskViewModel
 import com.winstonmoon.simpletaskmanagement.ui.screen.SettingsViewModel
 import com.winstonmoon.simpletaskmanagement.ui.screen.TaskViewModel
@@ -19,8 +21,12 @@ fun appModule(context: Context) = module {
             Dispatchers.Default,
         )
     }
+    single {
+        TaskRepository(get())
+    }
     factory { AchievementViewModel() }
-    factory { InputTaskViewModel() }
+    factory { CalendarViewModel(get()) }
+    factory { InputTaskViewModel(get()) }
     factory { SettingsViewModel() }
-    factory { TaskViewModel() }
+    factory { TaskViewModel(get()) }
 }
