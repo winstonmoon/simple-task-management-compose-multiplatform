@@ -1,5 +1,6 @@
 package com.winstonmoon.simpletaskmanagement.ui.screen
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,8 +14,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PageSize
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -116,7 +121,7 @@ internal fun CalendarScreen(
     }
 }
 
-// TODO
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun Calendar(
     modifier: Modifier = Modifier,
@@ -127,6 +132,10 @@ private fun Calendar(
         mutableStateOf(0.dp)
     }
 
+    val pagerState = rememberPagerState(pageCount = {
+        30
+    })
+
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -135,8 +144,7 @@ private fun Calendar(
             }
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Icon(
@@ -172,47 +180,36 @@ private fun Calendar(
                 contentDescription = null,
             )
         }
-        LazyRow(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            items(
-                listOf(
-                    Pair("Sun", "31"),
-                    Pair("Mon", "1"),
-                    Pair("Tue", "2"),
-                    Pair("Wed", "3"),
-                    Pair("Thu", "4"),
-                    Pair("Fri", "5"),
-                    Pair("Sat", "6"),
-                    Pair("Sun", "31"),
-                    Pair("Mon", "1"),
-                    Pair("Tue", "2"),
-                    Pair("Wed", "3"),
-                    Pair("Thu", "4"),
-                    Pair("Fri", "5"),
-                    Pair("Sat", "6")),
+
+        HorizontalPager(
+            state = pagerState,
+            pageSize = PageSize.Fixed(itemWidthDp),
+            pageSpacing = 10.dp,
+        ) { page ->
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(6.dp),
+                colors = CardColors(
+                    contentColor = Color.Gray,
+                    containerColor = Color.White,
+                    disabledContentColor = Color.White,
+                    disabledContainerColor = Color.White,
+                )
             ) {
-                Card(
-                    modifier = Modifier
-                        .width(itemWidthDp),
-                    shape = RoundedCornerShape(6.dp),
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Text(
-                            text = it.first,
-                            color = Color.White,
-                            style = MaterialTheme.typography.labelLarge,
-                        )
-                        Text(
-                            text = it.second,
-                            color = Color.White,
-                            style = MaterialTheme.typography.labelLarge,
-                        )
-                    }
+                    Text(
+                        text = "$page",
+                        color = Color.White,
+                        style = MaterialTheme.typography.labelLarge,
+                    )
+                    Text(
+                        text = "$page",
+                        color = Color.White,
+                        style = MaterialTheme.typography.labelLarge,
+                    )
                 }
             }
         }
