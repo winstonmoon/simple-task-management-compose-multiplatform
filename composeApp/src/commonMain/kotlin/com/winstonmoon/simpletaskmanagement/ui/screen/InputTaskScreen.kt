@@ -1,11 +1,25 @@
 package com.winstonmoon.simpletaskmanagement.ui.screen
 
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import kotlinx.serialization.Serializable
 import simpletaskmanagement.composeapp.generated.resources.Res
@@ -30,6 +44,8 @@ internal fun InputTaskScreen(
     onClickBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val focusManager = LocalFocusManager.current
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -42,9 +58,32 @@ internal fun InputTaskScreen(
         Column(
             modifier = Modifier
                 .padding(paddingValues)
-                .fillMaxSize(),
+                .fillMaxSize()
+                .addFocusCleaner(focusManager),
         ) {
-
+            var text by remember { mutableStateOf("") }
+            TextField(
+                value = text,
+                onValueChange = { text = it },
+                placeholder = { Text("Task") },
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Done,
+                ),
+                keyboardActions = KeyboardActions(onDone = {
+                    focusManager.clearFocus()
+                })
+            )
         }
+    }
+}
+
+private fun Modifier.addFocusCleaner(
+    focusManager: FocusManager,
+    doOnClear: () -> Unit = {}): Modifier {
+    return this.pointerInput(Unit) {
+        detectTapGestures(onTap = {
+            doOnClear()
+            focusManager.clearFocus()
+        })
     }
 }
