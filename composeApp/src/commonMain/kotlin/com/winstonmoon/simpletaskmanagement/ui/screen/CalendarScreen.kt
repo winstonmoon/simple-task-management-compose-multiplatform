@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
@@ -140,7 +141,7 @@ private fun Calendar(
         modifier = modifier
             .fillMaxWidth()
             .onGloballyPositioned { layoutCoordinates ->
-                itemWidthDp = with(localDensity) { layoutCoordinates.size.width.toDp() / 8 }
+                itemWidthDp = with(localDensity) { (layoutCoordinates.size.width.toDp() - 80.dp) / 7 }
             }
     ) {
         Row(
@@ -198,16 +199,17 @@ private fun Calendar(
                 )
             ) {
                 Column(
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(
                         text = "$page",
-                        color = Color.White,
+                        color = Color.Black,
                         style = MaterialTheme.typography.labelLarge,
                     )
                     Text(
                         text = "$page",
-                        color = Color.White,
+                        color = Color.Black,
                         style = MaterialTheme.typography.labelLarge,
                     )
                 }
