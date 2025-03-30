@@ -4,8 +4,11 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -62,6 +65,8 @@ internal fun InputTaskScreen(
                 .addFocusCleaner(focusManager),
         ) {
             var text by remember { mutableStateOf("") }
+            var expanded by remember { mutableStateOf(false) }
+
             TextField(
                 value = text,
                 onValueChange = { text = it },
@@ -73,6 +78,54 @@ internal fun InputTaskScreen(
                     focusManager.clearFocus()
                 })
             )
+
+            Text(
+                text = "Status"
+            )
+
+            DropdownMenu(
+                modifier = Modifier
+                    .wrapContentSize(),
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                DropdownMenuItem(
+                    text = { Text(text = "Ready") },
+                    onClick = {}
+                )
+                DropdownMenuItem(
+                    text = { Text(text = "In Progress") },
+                    onClick = {}
+                )
+                DropdownMenuItem(
+                    text = { Text(text = "Done") },
+                    onClick = {}
+                )
+            }
+
+            Text(
+                text = "priority"
+            )
+
+            DropdownMenu(
+                modifier = Modifier
+                    .wrapContentSize(),
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                DropdownMenuItem(
+                    text = { Text(text = "Low") },
+                    onClick = {}
+                )
+                DropdownMenuItem(
+                    text = { Text(text = "Medium") },
+                    onClick = {}
+                )
+                DropdownMenuItem(
+                    text = { Text(text = "High") },
+                    onClick = {}
+                )
+            }
         }
     }
 }
