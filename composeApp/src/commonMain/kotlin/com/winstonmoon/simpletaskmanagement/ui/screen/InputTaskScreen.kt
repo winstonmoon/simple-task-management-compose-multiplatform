@@ -22,8 +22,8 @@ import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardCapitalization
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
+import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
 import kotlinx.serialization.Serializable
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.input_task_screen_title
@@ -34,10 +34,12 @@ data object InputTaskRoute
 @Composable
 fun InputTaskRoute(
     onClickBack: () -> Unit,
+    onClickRegisterButton: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     InputTaskScreen(
         modifier = modifier,
+        onClickRegisterButton = onClickRegisterButton,
         onClickBack = onClickBack,
     )
 }
@@ -45,6 +47,7 @@ fun InputTaskRoute(
 @Composable
 internal fun InputTaskScreen(
     onClickBack: () -> Unit,
+    onClickRegisterButton: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val focusManager = LocalFocusManager.current
@@ -55,6 +58,12 @@ internal fun InputTaskScreen(
             CustomAppBar(
                 title = Res.string.input_task_screen_title,
                 onClickBack = onClickBack,
+            )
+        },
+        floatingActionButton = {
+            CustomFloatingActionButton(
+                modifier = Modifier,
+                onClick = onClickRegisterButton
             )
         },
     ) { paddingValues ->
