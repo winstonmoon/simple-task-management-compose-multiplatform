@@ -22,9 +22,9 @@ WHERE id = ?;
 selectAllTasks:
 SELECT * FROM Task;
 
-selectTaskById:
+selectTaskByDueDate:
 SELECT * FROM Task
-WHERE id = ?;
+WHERE dueDate = ?;
 
 selectAllTasksOrderByProgress:
 SELECT * FROM Task

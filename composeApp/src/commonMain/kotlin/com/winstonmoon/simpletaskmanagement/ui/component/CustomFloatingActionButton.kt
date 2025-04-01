@@ -17,6 +17,7 @@ import simpletaskmanagement.composeapp.generated.resources.ic_edit_24
 
 @Composable
 fun CustomFloatingActionButton(
+    // TODO
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
