@@ -63,7 +63,8 @@ internal fun InputTaskScreen(
         floatingActionButton = {
             CustomFloatingActionButton(
                 modifier = Modifier,
-                onClick = onClickRegisterButton
+                onClick = onClickRegisterButton,
+                title = Res.string.floating_action_button_label_register,
             )
         },
     ) { paddingValues ->
