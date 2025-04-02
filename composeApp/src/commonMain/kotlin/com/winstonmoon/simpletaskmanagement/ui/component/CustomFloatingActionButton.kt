@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import simpletaskmanagement.composeapp.generated.resources.Res
@@ -17,15 +18,15 @@ import simpletaskmanagement.composeapp.generated.resources.ic_edit_24
 
 @Composable
 fun CustomFloatingActionButton(
-    // TODO
     onClick: () -> Unit,
+    title : StringResource,
     modifier: Modifier = Modifier,
 ) {
     ExtendedFloatingActionButton(
         modifier = modifier,
         text = {
             Text(
-                text = stringResource(Res.string.floating_action_button_label),
+                text = stringResource(title),
                 color = Color.White,
             )
         },

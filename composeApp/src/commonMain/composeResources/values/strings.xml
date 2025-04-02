@@ -17,7 +17,8 @@
     <string name="priority_label_medium">Medium</string>
     <string name="priority_label_high">High</string>
 
-    <string name="floating_action_button_label">New</string>
+    <string name="floating_action_button_label_new">New</string>
+    <string name="floating_action_button_label_register">Register</string>
 
     <string name="dropdown_menu_edit">Edit</string>
     <string name="dropdown_menu_duplicate">Duplicate</string>

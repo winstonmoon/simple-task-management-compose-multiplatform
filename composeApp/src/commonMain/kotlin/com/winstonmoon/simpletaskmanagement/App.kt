@@ -130,6 +130,9 @@ fun App(context: Context) {
                         InputTaskRoute(
                             onClickBack = {
                                 navController.popBackStack()
+                            },
+                            onClickRegisterButton = {
+
                             }
                         )
                     }

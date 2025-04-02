@@ -34,6 +34,7 @@ import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import simpletaskmanagement.composeapp.generated.resources.Res
+import simpletaskmanagement.composeapp.generated.resources.floating_action_button_label
 import simpletaskmanagement.composeapp.generated.resources.ic_arrow_drop_down_24
 import simpletaskmanagement.composeapp.generated.resources.ic_list_24
 import simpletaskmanagement.composeapp.generated.resources.ic_swap_vert_18
@@ -73,7 +74,8 @@ internal fun TaskScreen(
         floatingActionButton = {
             CustomFloatingActionButton(
                 modifier = Modifier,
-                onClick = onClickAddButton
+                onClick = onClickAddButton,
+                title = Res.string.floating_action_button_label_new,
             )
         },
     ) { paddingValues ->
