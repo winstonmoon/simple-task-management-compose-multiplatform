@@ -13,7 +13,6 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import simpletaskmanagement.composeapp.generated.resources.Res
-import simpletaskmanagement.composeapp.generated.resources.floating_action_button_label
 import simpletaskmanagement.composeapp.generated.resources.ic_edit_24
 
 @Composable

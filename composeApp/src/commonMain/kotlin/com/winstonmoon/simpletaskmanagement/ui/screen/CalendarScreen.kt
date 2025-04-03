@@ -46,7 +46,7 @@ import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.painterResource
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.calendar_screen_title
-import simpletaskmanagement.composeapp.generated.resources.floating_action_button_label
+import simpletaskmanagement.composeapp.generated.resources.floating_action_button_label_new
 import simpletaskmanagement.composeapp.generated.resources.ic_arrow_back_ios_18
 import simpletaskmanagement.composeapp.generated.resources.ic_arrow_forward_ios_18
 
