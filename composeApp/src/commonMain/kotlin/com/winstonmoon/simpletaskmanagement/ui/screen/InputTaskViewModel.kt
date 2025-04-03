@@ -1,9 +1,50 @@
 package com.winstonmoon.simpletaskmanagement.ui.screen
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.winstonmoon.simpletaskmanagement.repository.TaskRepository
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 
 class InputTaskViewModel(
     private val taskRepository: TaskRepository,
 ) : ViewModel() {
+
+    private val _title = MutableStateFlow("")
+    val title: StateFlow<String> = _title
+
+    private val _status = MutableStateFlow("")
+    val status: StateFlow<String> = _status
+
+    private val _priority = MutableStateFlow("")
+    val priority: StateFlow<String> = _priority
+
+    fun setTitle(title: String) {
+        _title.value = title
+    }
+
+    fun setStatus(status: String) {
+        _status.value = status
+    }
+
+    fun setPriority(priority: String) {
+        _priority.value = priority
+    }
+
+    fun updateTask(
+        title: String,
+        status: String,
+        priority: String,
+        dueDate: Long,
+    ) {
+        viewModelScope.launch {
+            taskRepository.insertTask(
+                title = title,
+                status = status,
+                priority = priority,
+                dueDate = dueDate,
+            )
+        }
+    }
 }
