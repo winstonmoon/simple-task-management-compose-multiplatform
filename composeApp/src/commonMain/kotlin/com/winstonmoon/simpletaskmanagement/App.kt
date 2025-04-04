@@ -23,6 +23,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -37,6 +39,7 @@ import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.KoinApplication
+import org.koin.compose.currentKoinScope
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.achievement_screen_title
 import simpletaskmanagement.composeapp.generated.resources.app_name
@@ -133,7 +136,7 @@ fun App(context: Context) {
                             },
                             onClickRegisterButton = {
 
-                            }
+                            },
                         )
                     }
                 }
@@ -169,6 +172,14 @@ private fun DrawerContent(
                 }
             )
         }
+    }
+}
+
+@Composable
+inline fun <reified T : ViewModel> koinViewModel(): T {
+    val scope = currentKoinScope()
+    return viewModel {
+        scope.get<T>()
     }
 }
 
