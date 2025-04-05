@@ -28,7 +28,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.winstonmoon.simpletaskmanagement.di.appModule
+import com.winstonmoon.simpletaskmanagement.di.commonModule
+import com.winstonmoon.simpletaskmanagement.di.platformModule
 import com.winstonmoon.simpletaskmanagement.ui.screen.AchievementRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.CalendarRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.InputTaskRoute
@@ -52,7 +53,13 @@ fun App(context: Context) {
 
     KoinApplication(
         application = {
-            modules(appModule(context))
+            modules(
+                listOf(
+                    commonModule(context)),
+                platformModule(),
+
+
+                )
         }
     ) {
 //        setSingletonImageLoaderFactory { context ->
