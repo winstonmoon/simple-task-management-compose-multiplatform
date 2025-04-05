@@ -29,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
-import com.winstonmoon.simpletaskmanagement.ui.component.Priority
 import kotlinx.serialization.Serializable
 import org.koin.compose.koinInject
 import simpletaskmanagement.composeapp.generated.resources.Res
