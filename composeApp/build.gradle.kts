@@ -52,6 +52,7 @@ kotlin {
 
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
+            implementation(libs.koin.composeVM)
             implementation(libs.navigation.compose)
 
             implementation(libs.coil.compose)

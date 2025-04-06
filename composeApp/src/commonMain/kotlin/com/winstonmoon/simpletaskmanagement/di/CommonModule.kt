@@ -12,10 +12,12 @@ import com.winstonmoon.simpletaskmanagement.ui.screen.SettingsViewModel
 import com.winstonmoon.simpletaskmanagement.ui.screen.TaskViewModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
-fun commonModule(context: Context) = module {
-    single<AppDataStore> { AppDataStoreManager(context) }
+//val commonModule(context: Context) = module {
+val commonModule = module {
+//    single<AppDataStore> { AppDataStoreManager(context) }
     single {
         DatabaseHelper(
             get(),
@@ -25,9 +27,11 @@ fun commonModule(context: Context) = module {
     single {
         TaskRepository(get())
     }
-    factory { AchievementViewModel() }
-    factory { CalendarViewModel(get()) }
-    factory { InputTaskViewModel(get()) }
-    factory { SettingsViewModel() }
-    factory { TaskViewModel(get()) }
+    viewModel { AchievementViewModel() }
+    viewModel { CalendarViewModel(get()) }
+    viewModel { InputTaskViewModel(get()) }
+    viewModel { SettingsViewModel() }
+    viewModel { TaskViewModel(get()) }
 }
+
+expect val platformModule: Module
