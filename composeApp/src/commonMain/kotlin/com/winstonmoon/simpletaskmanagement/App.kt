@@ -33,6 +33,7 @@ import com.winstonmoon.simpletaskmanagement.di.platformModule
 import com.winstonmoon.simpletaskmanagement.ui.screen.AchievementRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.CalendarRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.InputTaskRoute
+import com.winstonmoon.simpletaskmanagement.ui.screen.InputTaskViewModel
 import com.winstonmoon.simpletaskmanagement.ui.screen.SettingsRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.TaskRoute
 import com.winstonmoon.simpletaskmanagement.ui.theme.SimpleTaskManagementTheme
@@ -54,12 +55,9 @@ fun App(context: Context) {
     KoinApplication(
         application = {
             modules(
-                listOf(
-                    commonModule(context)),
-                platformModule(),
-
-
-                )
+                commonModule,
+                platformModule,
+            )
         }
     ) {
 //        setSingletonImageLoaderFactory { context ->

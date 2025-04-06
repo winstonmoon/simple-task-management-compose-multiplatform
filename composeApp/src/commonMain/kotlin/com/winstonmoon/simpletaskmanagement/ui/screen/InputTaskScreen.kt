@@ -31,6 +31,7 @@ import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
 import kotlinx.serialization.Serializable
 import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.floating_action_button_label_register
 import simpletaskmanagement.composeapp.generated.resources.input_task_screen_title
@@ -42,7 +43,7 @@ data object InputTaskRoute
 fun InputTaskRoute(
     onClickBack: () -> Unit,
     onClickRegisterButton: () -> Unit,
-    viewModel: InputTaskViewModel = koinInject(),
+    viewModel: InputTaskViewModel = koinViewModel<InputTaskViewModel>(),
     modifier: Modifier = Modifier,
 ) {
     val title by viewModel.title.collectAsStateWithLifecycle()
