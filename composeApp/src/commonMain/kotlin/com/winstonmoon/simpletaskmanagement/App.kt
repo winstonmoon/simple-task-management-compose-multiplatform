@@ -55,8 +55,8 @@ fun App(context: Context) {
     KoinApplication(
         application = {
             modules(
-                commonModule,
-                platformModule,
+                commonModule(context),
+                platformModule(context),
             )
         }
     ) {

@@ -15,9 +15,8 @@ import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
-//val commonModule(context: Context) = module {
-val commonModule = module {
-//    single<AppDataStore> { AppDataStoreManager(context) }
+fun commonModule(context: Context) = module {
+    single<AppDataStore> { AppDataStoreManager(context) }
     single {
         DatabaseHelper(
             get(),
@@ -34,4 +33,4 @@ val commonModule = module {
     viewModel { TaskViewModel(get()) }
 }
 
-expect val platformModule: Module
+expect fun platformModule(context: Context): Module

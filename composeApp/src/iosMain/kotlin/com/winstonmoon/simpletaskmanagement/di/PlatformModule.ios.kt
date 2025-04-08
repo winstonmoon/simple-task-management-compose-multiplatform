@@ -4,7 +4,8 @@ import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.native.NativeSqliteDriver
 import com.winstonmoon.simpletaskmanagement.cache.SimpleTaskManagementDatabase
 import org.koin.dsl.module
+import com.winstonmoon.simpletaskmanagement.Context
 
-actual val platformModule = module {
+actual fun platformModule(context: Context) = module {
     single<SqlDriver> { NativeSqliteDriver(SimpleTaskManagementDatabase.Schema, "SimpleTaskManagementDatabase") }
 }
