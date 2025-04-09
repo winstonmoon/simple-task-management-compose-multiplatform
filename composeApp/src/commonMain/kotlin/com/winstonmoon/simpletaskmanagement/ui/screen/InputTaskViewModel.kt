@@ -20,6 +20,9 @@ class InputTaskViewModel(
     private val _priority = MutableStateFlow("")
     val priority: StateFlow<String> = _priority
 
+    private val _date = MutableStateFlow(0L)
+    val date: StateFlow<Long> = _date
+
     fun setTitle(title: String) {
         _title.value = title
     }
@@ -30,6 +33,12 @@ class InputTaskViewModel(
 
     fun setPriority(priority: String) {
         _priority.value = priority
+    }
+
+    fun setDate(date: Long?) {
+        date?.let {
+            _date.value = it
+        }
     }
 
     fun updateTask(

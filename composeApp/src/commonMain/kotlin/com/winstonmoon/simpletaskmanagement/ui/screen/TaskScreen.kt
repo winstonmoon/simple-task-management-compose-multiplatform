@@ -33,6 +33,7 @@ import com.winstonmoon.simpletaskmanagement.ui.component.Status
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.floating_action_button_label_new
 import simpletaskmanagement.composeapp.generated.resources.ic_arrow_drop_down_24
@@ -48,6 +49,7 @@ fun TaskRoute(
     drawerState: DrawerState,
     onClickAddButton: () -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: TaskViewModel = koinViewModel<TaskViewModel>(),
 ) {
     TaskScreen(
         drawerState = drawerState,

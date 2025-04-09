@@ -10,11 +10,16 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,8 +48,8 @@ data object InputTaskRoute
 fun InputTaskRoute(
     onClickBack: () -> Unit,
     onClickRegisterButton: () -> Unit,
-    viewModel: InputTaskViewModel = koinViewModel<InputTaskViewModel>(),
     modifier: Modifier = Modifier,
+    viewModel: InputTaskViewModel = koinViewModel<InputTaskViewModel>(),
 ) {
     val title by viewModel.title.collectAsStateWithLifecycle()
     val status by viewModel.status.collectAsStateWithLifecycle()
@@ -63,9 +68,13 @@ fun InputTaskRoute(
         onClickPriority = {
             viewModel.setPriority(it)
         },
+        onDateSelected = {
+            viewModel.setDate(it)
+        }
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun InputTaskScreen(
     title: String,
@@ -75,6 +84,7 @@ internal fun InputTaskScreen(
     onClickRegisterButton: () -> Unit,
     onClickStatus: (String) -> Unit,
     onClickPriority: (String) -> Unit,
+    onDateSelected: (Long?) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val focusManager = LocalFocusManager.current
@@ -104,6 +114,7 @@ internal fun InputTaskScreen(
             var text by remember { mutableStateOf("") }
             var statusExpanded by remember { mutableStateOf(false) }
             var priorityExpanded by remember { mutableStateOf(false) }
+
 
             TextField(
                 value = text,
@@ -183,6 +194,29 @@ internal fun InputTaskScreen(
                         onClick = { onClickPriority("High") }
                     )
                 }
+            }
+
+            val datePickerState = rememberDatePickerState()
+
+            DatePickerDialog(
+                onDismissRequest = {},
+//                onDismissRequest = onDismiss,
+                confirmButton = {
+                    TextButton(onClick = {
+                        onDateSelected(datePickerState.selectedDateMillis)
+//                        onDismiss()
+                    }) {
+                        Text("OK")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = {}) {
+//                    TextButton(onClick = onDismiss) {
+                        Text("Cancel")
+                    }
+                }
+            ) {
+                DatePicker(state = datePickerState)
             }
         }
     }
