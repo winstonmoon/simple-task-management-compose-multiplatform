@@ -33,7 +33,6 @@ import com.winstonmoon.simpletaskmanagement.di.platformModule
 import com.winstonmoon.simpletaskmanagement.ui.screen.AchievementRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.CalendarRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.InputTaskRoute
-import com.winstonmoon.simpletaskmanagement.ui.screen.InputTaskViewModel
 import com.winstonmoon.simpletaskmanagement.ui.screen.SettingsRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.TaskRoute
 import com.winstonmoon.simpletaskmanagement.ui.theme.SimpleTaskManagementTheme
@@ -177,14 +176,6 @@ private fun DrawerContent(
                 }
             )
         }
-    }
-}
-
-@Composable
-inline fun <reified T : ViewModel> koinViewModel(): T {
-    val scope = currentKoinScope()
-    return viewModel {
-        scope.get<T>()
     }
 }
 
