@@ -30,12 +30,14 @@ import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
 import kotlinx.serialization.Serializable
-import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.floating_action_button_label_register
@@ -54,12 +56,14 @@ fun InputTaskRoute(
     val title by viewModel.title.collectAsStateWithLifecycle()
     val status by viewModel.status.collectAsStateWithLifecycle()
     val priority by viewModel.priority.collectAsStateWithLifecycle()
+    val date by viewModel.date.collectAsStateWithLifecycle()
 
     InputTaskScreen(
         modifier = modifier,
         title = title,
         status = status,
         priority = priority,
+        date = date,
         onClickRegisterButton = onClickRegisterButton,
         onClickBack = onClickBack,
         onClickStatus = {
@@ -80,6 +84,7 @@ internal fun InputTaskScreen(
     title: String,
     status: String,
     priority: String,
+    date: Long,
     onClickBack: () -> Unit,
     onClickRegisterButton: () -> Unit,
     onClickStatus: (String) -> Unit,
@@ -114,7 +119,12 @@ internal fun InputTaskScreen(
             var text by remember { mutableStateOf("") }
             var statusExpanded by remember { mutableStateOf(false) }
             var priorityExpanded by remember { mutableStateOf(false) }
-
+            var shouldShowDatePicker by remember { mutableStateOf(false) }
+            val datePickerState = rememberDatePickerState()
+            val formattedDate = remember(date) {
+                val dateFormat = SimpleDateFormat("YYYY/MM/dd", Locale.getDefault())
+                dateFormat.format(Date(date))
+            }
 
             TextField(
                 value = text,
@@ -196,27 +206,37 @@ internal fun InputTaskScreen(
                 }
             }
 
-            val datePickerState = rememberDatePickerState()
-
-            DatePickerDialog(
-                onDismissRequest = {},
-//                onDismissRequest = onDismiss,
-                confirmButton = {
-                    TextButton(onClick = {
-                        onDateSelected(datePickerState.selectedDateMillis)
-//                        onDismiss()
-                    }) {
-                        Text("OK")
-                    }
-                },
-                dismissButton = {
-                    TextButton(onClick = {}) {
-//                    TextButton(onClick = onDismiss) {
-                        Text("Cancel")
-                    }
+            // TODO
+            Button(
+                onClick = {
+                    shouldShowDatePicker = true
                 }
             ) {
-                DatePicker(state = datePickerState)
+                Text(text = "date:$date")
+            }
+
+            if (shouldShowDatePicker) {
+                DatePickerDialog(
+                    onDismissRequest = { shouldShowDatePicker = false },
+//                onDismissRequest = onDismiss,
+                    confirmButton = {
+                        TextButton(onClick = {
+                            onDateSelected(datePickerState.selectedDateMillis)
+                            shouldShowDatePicker = false
+//                        onDismiss()
+                        }) {
+                            Text("OK")
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = {  shouldShowDatePicker = false }) {
+//                    TextButton(onClick = onDismiss) {
+                            Text("Cancel")
+                        }
+                    }
+                ) {
+                    DatePicker(state = datePickerState)
+                }
             }
         }
     }
