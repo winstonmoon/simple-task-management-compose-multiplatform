@@ -30,13 +30,13 @@ import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
 import simpletaskmanagement.composeapp.generated.resources.Res
@@ -121,10 +121,25 @@ internal fun InputTaskScreen(
             var priorityExpanded by remember { mutableStateOf(false) }
             var shouldShowDatePicker by remember { mutableStateOf(false) }
             val datePickerState = rememberDatePickerState()
+//            val formattedDate = remember(date) {
+//                val dateFormat = SimpleDateFormat("YYYY/MM/dd", Locale.getDefault())
+//                dateFormat.format(Date(date))
+//            }
+//            val instant = Instant.fromEpochMilliseconds(date)
+//            val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+//            val year = localDateTime.year.toString().padStart(4, '0')
+//            val month = localDateTime.monthNumber.toString().padStart(2, '0')
+//            val day = localDateTime.dayOfMonth.toString().padStart(2, '0')
             val formattedDate = remember(date) {
-                val dateFormat = SimpleDateFormat("YYYY/MM/dd", Locale.getDefault())
-                dateFormat.format(Date(date))
+                val instant = Instant.fromEpochMilliseconds(date)
+                val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+                val year = localDateTime.year.toString().padStart(4, '0')
+                val month = localDateTime.monthNumber.toString().padStart(2, '0')
+                val day = localDateTime.dayOfMonth.toString().padStart(2, '0')
+                "$year/$month/$day"
             }
+
+
 
             TextField(
                 value = text,
@@ -212,7 +227,7 @@ internal fun InputTaskScreen(
                     shouldShowDatePicker = true
                 }
             ) {
-                Text(text = "date:$date")
+                Text(text = "date:$formattedDate")
             }
 
             if (shouldShowDatePicker) {
