@@ -22,6 +22,10 @@ WHERE id = ?;
 selectAllTasks:
 SELECT * FROM Task;
 
+selectTaskByStatus:
+SELECT * FROM Task
+WHERE status = ?;
+
 selectTaskByDueDate:
 SELECT * FROM Task
 WHERE dueDate = ?;
