@@ -63,4 +63,10 @@ class DatabaseHelper(
         .asFlow()
         .mapToList(Dispatchers.Default)
         .flowOn(backgroundDispatcher)
+
+    fun selectTaskByStatus(status: String): Flow<List<Task>> = dbRef.simpleTaskManagementDatabaseQueries
+        .selectTaskByStatus(status = status)
+        .asFlow()
+        .mapToList(Dispatchers.Default)
+        .flowOn(backgroundDispatcher)
 }

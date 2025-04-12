@@ -42,4 +42,8 @@ class TaskRepository(
     }
 
     fun getTasks(): Flow<List<Task>> = dbHelper.selectAllTasks()
+
+    fun getTasksByStatus(status: String): Flow<List<Task>> =
+        dbHelper.selectTaskByStatus(status = status)
+
 }
