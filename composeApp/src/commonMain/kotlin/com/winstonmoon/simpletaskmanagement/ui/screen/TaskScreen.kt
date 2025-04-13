@@ -20,15 +20,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.winstonmoon.simpletaskmanagement.cache.Task
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAssistChip
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomListItem
-import com.winstonmoon.simpletaskmanagement.ui.component.Priority
 import com.winstonmoon.simpletaskmanagement.ui.component.Status
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.painterResource
@@ -51,7 +53,14 @@ fun TaskRoute(
     modifier: Modifier = Modifier,
     viewModel: TaskViewModel = koinViewModel<TaskViewModel>(),
 ) {
+    val readyTasks by viewModel.readyTasks.collectAsStateWithLifecycle()
+    val inProgressTasks by viewModel.inProgressTasks.collectAsStateWithLifecycle()
+    val doneTasks by viewModel.doneTasks.collectAsStateWithLifecycle()
+
     TaskScreen(
+        readyTasks = readyTasks,
+        inProgressTasks = inProgressTasks,
+        doneTasks = doneTasks,
         drawerState = drawerState,
         onClickAddButton = onClickAddButton,
         modifier = modifier,
@@ -61,6 +70,9 @@ fun TaskRoute(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun TaskScreen(
+    readyTasks: List<Task>,
+    inProgressTasks: List<Task>,
+    doneTasks: List<Task>,
     drawerState: DrawerState,
     onClickAddButton: () -> Unit,
     modifier: Modifier = Modifier,
@@ -101,23 +113,27 @@ internal fun TaskScreen(
                     SortSection()
                 }
                 items(
-                    listOf("WorkOut", "HomeWork", "Prepare Test")
+                    readyTasks
                 ) {
-                    Spacer(
-                        modifier = Modifier
-                            .height(18.dp)
-                    )
-                    CustomListItem(
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp),
-                        todo = it,
-                        status = Status.READY,
-                        priority = Priority.Low,
-                        onClickAdd = {},
-                        onClickEdit = {},
-                        onClickDuplicate = {},
-                        onClickDelete = {},
-                    )
+                    if (readyTasks.isEmpty()) {
+                        Text("No Task")
+                    } else {
+                        Spacer(
+                            modifier = Modifier
+                                .height(18.dp)
+                        )
+                        CustomListItem(
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp),
+                            todo = it.title,
+                            status = it.status,
+                            priority = it.priority,
+                            onClickAdd = {},
+                            onClickEdit = {},
+                            onClickDuplicate = {},
+                            onClickDelete = {},
+                        )
+                    }
                 }
                 stickyHeader {
                     TitleSection(
@@ -130,23 +146,27 @@ internal fun TaskScreen(
                     SortSection()
                 }
                 items(
-                    listOf("WorkOut", "HomeWork")
+                    inProgressTasks
                 ) {
-                    Spacer(
-                        modifier = Modifier
-                            .height(18.dp)
-                    )
-                    CustomListItem(
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp),
-                        todo = it,
-                        status = Status.READY,
-                        priority = Priority.Low,
-                        onClickAdd = {},
-                        onClickEdit = {},
-                        onClickDuplicate = {},
-                        onClickDelete = {},
-                    )
+                    if (inProgressTasks.isEmpty()) {
+                        Text("No Task")
+                    } else {
+                        Spacer(
+                            modifier = Modifier
+                                .height(18.dp)
+                        )
+                        CustomListItem(
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp),
+                            todo = it.title,
+                            status = it.status,
+                            priority = it.priority,
+                            onClickAdd = {},
+                            onClickEdit = {},
+                            onClickDuplicate = {},
+                            onClickDelete = {},
+                        )
+                    }
                 }
                 stickyHeader {
                     TitleSection(
@@ -156,23 +176,27 @@ internal fun TaskScreen(
                     )
                 }
                 items(
-                    listOf("WorkOut", "HomeWork")
+                    doneTasks
                 ) {
-                    CustomListItem(
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp),
-                        todo = it,
-                        status = Status.DONE,
-                        priority = Priority.Low,
-                        onClickAdd = {},
-                        onClickEdit = {},
-                        onClickDuplicate = {},
-                        onClickDelete = {},
-                    )
-                    Spacer(
-                        modifier = Modifier
-                            .height(18.dp)
-                    )
+                    if (doneTasks.isEmpty()) {
+                        Text("No Task")
+                    } else {
+                        CustomListItem(
+                            modifier = Modifier
+                                .padding(horizontal = 16.dp),
+                            todo = it.title,
+                            status = it.status,
+                            priority = it.priority,
+                            onClickAdd = {},
+                            onClickEdit = {},
+                            onClickDuplicate = {},
+                            onClickDelete = {},
+                        )
+                        Spacer(
+                            modifier = Modifier
+                                .height(18.dp)
+                        )
+                    }
                 }
             }
         }

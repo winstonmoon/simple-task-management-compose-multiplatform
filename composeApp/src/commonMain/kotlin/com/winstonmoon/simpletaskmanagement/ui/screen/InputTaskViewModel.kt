@@ -41,18 +41,13 @@ class InputTaskViewModel(
         }
     }
 
-    fun updateTask(
-        title: String,
-        status: String,
-        priority: String,
-        dueDate: Long,
-    ) {
+    fun updateTask() {
         viewModelScope.launch {
             taskRepository.insertTask(
-                title = title,
-                status = status,
-                priority = priority,
-                dueDate = dueDate,
+                title = title.value,
+                status = status.value,
+                priority = priority.value,
+                dueDate = date.value,
             )
         }
     }
