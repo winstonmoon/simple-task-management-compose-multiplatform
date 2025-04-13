@@ -49,7 +49,6 @@ data object InputTaskRoute
 @Composable
 fun InputTaskRoute(
     onClickBack: () -> Unit,
-    onClickRegisterButton: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: InputTaskViewModel = koinViewModel<InputTaskViewModel>(),
 ) {
@@ -64,7 +63,9 @@ fun InputTaskRoute(
         status = status,
         priority = priority,
         date = date,
-        onClickRegisterButton = onClickRegisterButton,
+        onClickRegisterButton = {
+            viewModel.updateTask()
+        },
         onClickBack = onClickBack,
         onClickStatus = {
             viewModel.setStatus(it)
@@ -121,15 +122,6 @@ internal fun InputTaskScreen(
             var priorityExpanded by remember { mutableStateOf(false) }
             var shouldShowDatePicker by remember { mutableStateOf(false) }
             val datePickerState = rememberDatePickerState()
-//            val formattedDate = remember(date) {
-//                val dateFormat = SimpleDateFormat("YYYY/MM/dd", Locale.getDefault())
-//                dateFormat.format(Date(date))
-//            }
-//            val instant = Instant.fromEpochMilliseconds(date)
-//            val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
-//            val year = localDateTime.year.toString().padStart(4, '0')
-//            val month = localDateTime.monthNumber.toString().padStart(2, '0')
-//            val day = localDateTime.dayOfMonth.toString().padStart(2, '0')
             val formattedDate = remember(date) {
                 val instant = Instant.fromEpochMilliseconds(date)
                 val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
@@ -138,8 +130,6 @@ internal fun InputTaskScreen(
                 val day = localDateTime.dayOfMonth.toString().padStart(2, '0')
                 "$year/$month/$day"
             }
-
-
 
             TextField(
                 value = text,

@@ -3,16 +3,22 @@ package com.winstonmoon.simpletaskmanagement.model
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Serializable
+enum class Progress {
+    READY,
+    IN_PROGRESS,
+    COMPLETED,
+}
+
+enum class Priority {
+    HIGH,
+    MEDIUM,
+    LOW,
+}
+
 data class Task(
-    @SerialName("id")
     val id: Long,
-    @SerialName("title")
     val title: String,
-    @SerialName("status")
-    val status: String,
-    @SerialName("priority")
-    val priority: String,
-    @SerialName("dueDate")
+    val status: Progress,
+    val priority: Priority,
     val dueDate: Long?,
 )
