@@ -2,22 +2,21 @@ package com.winstonmoon.simpletaskmanagement.repository
 
 import com.winstonmoon.simpletaskmanagement.cache.Task
 import com.winstonmoon.simpletaskmanagement.data.local.DatabaseHelper
+import com.winstonmoon.simpletaskmanagement.model.Priority
+import com.winstonmoon.simpletaskmanagement.model.Status
 import kotlinx.coroutines.flow.Flow
 
 class TaskRepository(
     private val dbHelper: DatabaseHelper,
 ) {
     suspend fun insertTask(
-        title: String,
-        status: String,
-        priority: String,
-        dueDate: Long?,
+        task: com.winstonmoon.simpletaskmanagement.model.Task
     ) {
         dbHelper.insertTask(
-            title = title,
-            status = status,
-            priority = priority,
-            dueDate = dueDate,
+            title = task.title,
+            status = task.status.name,
+            priority = task.priority.name,
+            dueDate = task.dueDate,
         )
     }
 
@@ -46,4 +45,11 @@ class TaskRepository(
     fun getTasksByStatus(status: String): Flow<List<Task>> =
         dbHelper.selectTaskByStatus(status = status)
 
+    private fun Task.toDomain(): com.winstonmoon.simpletaskmanagement.model.Task = com.winstonmoon.simpletaskmanagement.model.Task(
+        id = id,
+        title = title,
+        status = Status.valueOf(status),
+        priority = Priority.valueOf(priority),
+        dueDate = dueDate,
+    )
 }

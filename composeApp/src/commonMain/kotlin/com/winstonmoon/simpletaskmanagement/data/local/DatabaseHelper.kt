@@ -6,6 +6,8 @@ import app.cash.sqldelight.db.SqlDriver
 import com.winstonmoon.simpletaskmanagement.cache.SimpleTaskManagementDatabase
 import com.winstonmoon.simpletaskmanagement.cache.composeApp.newInstance
 import com.winstonmoon.simpletaskmanagement.cache.Task
+import com.winstonmoon.simpletaskmanagement.model.Priority
+import com.winstonmoon.simpletaskmanagement.model.Status
 import com.winstonmoon.simpletaskmanagement.sqldelight.transactionWithContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -58,15 +60,27 @@ class DatabaseHelper(
         }
     }
 
-    fun selectAllTasks(): Flow<List<Task>> = dbRef.simpleTaskManagementDatabaseQueries
+    fun selectAllTasks(): List<com.winstonmoon.simpletaskmanagement.model.Task> = dbRef.simpleTaskManagementDatabaseQueries
         .selectAllTasks()
-        .asFlow()
-        .mapToList(Dispatchers.Default)
-        .flowOn(backgroundDispatcher)
+        .executeAsList()
+        .map {
+            it.toDomain()
+        }
+//        .asFlow()
+//        .mapToList(Dispatchers.Default)
+//        .flowOn(backgroundDispatcher)
 
     fun selectTaskByStatus(status: String): Flow<List<Task>> = dbRef.simpleTaskManagementDatabaseQueries
         .selectTaskByStatus(status = status)
         .asFlow()
         .mapToList(Dispatchers.Default)
         .flowOn(backgroundDispatcher)
+
+    private fun Task.toDomain(): com.winstonmoon.simpletaskmanagement.model.Task = com.winstonmoon.simpletaskmanagement.model.Task(
+        id = id,
+        title = title,
+        status = Status.valueOf(status),
+        priority = Priority.valueOf(priority),
+        dueDate = dueDate,
+    )
 }
