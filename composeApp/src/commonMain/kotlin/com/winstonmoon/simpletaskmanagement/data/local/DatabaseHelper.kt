@@ -1,18 +1,16 @@
 package com.winstonmoon.simpletaskmanagement.data.local
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.db.SqlDriver
 import com.winstonmoon.simpletaskmanagement.cache.SimpleTaskManagementDatabase
-import com.winstonmoon.simpletaskmanagement.cache.composeApp.newInstance
 import com.winstonmoon.simpletaskmanagement.cache.Task
+import com.winstonmoon.simpletaskmanagement.cache.composeApp.newInstance
 import com.winstonmoon.simpletaskmanagement.model.Priority
 import com.winstonmoon.simpletaskmanagement.model.Status
+import com.winstonmoon.simpletaskmanagement.model.TaskModel
 import com.winstonmoon.simpletaskmanagement.sqldelight.transactionWithContext
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.flowOf
 
 class DatabaseHelper(
     sqlDriver: SqlDriver,
@@ -60,27 +58,33 @@ class DatabaseHelper(
         }
     }
 
-    fun selectAllTasks(): List<com.winstonmoon.simpletaskmanagement.model.Task> = dbRef.simpleTaskManagementDatabaseQueries
+    fun selectAllTasks(): Flow<List<TaskModel>> = dbRef.simpleTaskManagementDatabaseQueries
         .selectAllTasks()
         .executeAsList()
         .map {
             it.toDomain()
-        }
+        }.asFlow()
 //        .asFlow()
 //        .mapToList(Dispatchers.Default)
 //        .flowOn(backgroundDispatcher)
 
-    fun selectTaskByStatus(status: String): Flow<List<Task>> = dbRef.simpleTaskManagementDatabaseQueries
+    fun selectTaskByStatus(status: String): Flow<List<TaskModel>> = dbRef.simpleTaskManagementDatabaseQueries
         .selectTaskByStatus(status = status)
-        .asFlow()
-        .mapToList(Dispatchers.Default)
-        .flowOn(backgroundDispatcher)
+        .executeAsList()
+        .map {
+            it.toDomain()
+        }.asFlow()
+//        .asFlow()
+//        .mapToList(Dispatchers.Default)
+//        .flowOn(backgroundDispatcher)
 
-    private fun Task.toDomain(): com.winstonmoon.simpletaskmanagement.model.Task = com.winstonmoon.simpletaskmanagement.model.Task(
+    private fun Task.toDomain(): TaskModel = TaskModel(
         id = id,
         title = title,
         status = Status.valueOf(status),
         priority = Priority.valueOf(priority),
         dueDate = dueDate,
     )
+
+    private fun <T> List<T>.asFlow(): Flow<List<T>> = flowOf(this)
 }

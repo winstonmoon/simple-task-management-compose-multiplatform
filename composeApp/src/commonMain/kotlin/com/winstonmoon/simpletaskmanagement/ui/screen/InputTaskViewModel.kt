@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.winstonmoon.simpletaskmanagement.model.Priority
 import com.winstonmoon.simpletaskmanagement.model.Status
-import com.winstonmoon.simpletaskmanagement.model.Task
+import com.winstonmoon.simpletaskmanagement.model.TaskModel
 import com.winstonmoon.simpletaskmanagement.repository.TaskRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -47,7 +47,7 @@ class InputTaskViewModel(
     fun updateTask() {
         viewModelScope.launch {
             taskRepository.insertTask(
-                Task(
+                TaskModel(
                     id = 1,
                     title = title.value,
                     status = Status.valueOf(status.value),

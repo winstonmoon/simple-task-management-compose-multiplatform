@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.winstonmoon.simpletaskmanagement.cache.Task
+import com.winstonmoon.simpletaskmanagement.model.TaskModel
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAssistChip
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
@@ -70,9 +71,9 @@ fun TaskRoute(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun TaskScreen(
-    readyTasks: List<Task>,
-    inProgressTasks: List<Task>,
-    doneTasks: List<Task>,
+    readyTasks: List<TaskModel>,
+    inProgressTasks: List<TaskModel>,
+    doneTasks: List<TaskModel>,
     drawerState: DrawerState,
     onClickAddButton: () -> Unit,
     modifier: Modifier = Modifier,
@@ -126,7 +127,7 @@ internal fun TaskScreen(
                             modifier = Modifier
                                 .padding(horizontal = 16.dp),
                             todo = it.title,
-                            status = it.status,
+                            status = com.winstonmoon.simpletaskmanagement.model.Status.valueOf(it.status),
                             priority = it.priority,
                             onClickAdd = {},
                             onClickEdit = {},

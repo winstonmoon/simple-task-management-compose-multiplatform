@@ -12,7 +12,7 @@ enum class Priority {
     LOW,
 }
 
-data class Task(
+data class TaskModel(
     val id: Long,
     val title: String,
     val status: Status,
