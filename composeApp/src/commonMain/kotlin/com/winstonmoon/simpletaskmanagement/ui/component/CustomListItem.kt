@@ -25,6 +25,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.winstonmoon.simpletaskmanagement.model.Priority
+import com.winstonmoon.simpletaskmanagement.model.Status
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import simpletaskmanagement.composeapp.generated.resources.Res
@@ -41,7 +43,6 @@ fun CustomListItem(
     status: Status,
     priority: Priority,
 //    dueDate: Date,
-    onClickAdd: () -> Unit,
     onClickEdit: () -> Unit,
     onClickDuplicate: () -> Unit,
     onClickDelete: () -> Unit,

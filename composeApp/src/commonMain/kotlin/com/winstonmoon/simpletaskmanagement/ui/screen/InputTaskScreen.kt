@@ -64,9 +64,12 @@ fun InputTaskRoute(
         priority = priority,
         date = date,
         onClickRegisterButton = {
-            viewModel.updateTask()
+            viewModel.insertTask()
         },
         onClickBack = onClickBack,
+        onTitleChanged = {
+            viewModel.setTitle(it)
+        },
         onClickStatus = {
             viewModel.setStatus(it)
         },
@@ -87,6 +90,7 @@ internal fun InputTaskScreen(
     priority: String,
     date: Long,
     onClickBack: () -> Unit,
+    onTitleChanged: (String) -> Unit,
     onClickRegisterButton: () -> Unit,
     onClickStatus: (String) -> Unit,
     onClickPriority: (String) -> Unit,
@@ -117,7 +121,6 @@ internal fun InputTaskScreen(
                 .fillMaxSize()
                 .addFocusCleaner(focusManager),
         ) {
-            var text by remember { mutableStateOf("") }
             var statusExpanded by remember { mutableStateOf(false) }
             var priorityExpanded by remember { mutableStateOf(false) }
             var shouldShowDatePicker by remember { mutableStateOf(false) }
@@ -132,8 +135,8 @@ internal fun InputTaskScreen(
             }
 
             TextField(
-                value = text,
-                onValueChange = { text = it },
+                value = title,
+                onValueChange = { onTitleChanged(it) },
                 placeholder = { Text("Task") },
                 keyboardOptions = KeyboardOptions(
                     imeAction = ImeAction.Done,
@@ -164,15 +167,15 @@ internal fun InputTaskScreen(
                 ) {
                     DropdownMenuItem(
                         text = { Text(text = "Ready") },
-                        onClick = { onClickStatus("Ready") }
+                        onClick = { onClickStatus("READY") }
                     )
                     DropdownMenuItem(
                         text = { Text(text = "In Progress") },
-                        onClick = { onClickStatus("In Progress") }
+                        onClick = { onClickStatus("IN_PROGRESS") }
                     )
                     DropdownMenuItem(
                         text = { Text(text = "Done") },
-                        onClick = { onClickStatus("Done") }
+                        onClick = { onClickStatus("DONE") }
                     )
                 }
             }
@@ -198,15 +201,15 @@ internal fun InputTaskScreen(
                 ) {
                     DropdownMenuItem(
                         text = { Text(text = "Low") },
-                        onClick = { onClickPriority("Low") }
+                        onClick = { onClickPriority("LOW") }
                     )
                     DropdownMenuItem(
                         text = { Text(text = "Medium") },
-                        onClick = { onClickPriority("Medium") }
+                        onClick = { onClickPriority("MEDIUM") }
                     )
                     DropdownMenuItem(
                         text = { Text(text = "High") },
-                        onClick = { onClickPriority("High") }
+                        onClick = { onClickPriority("HIGH") }
                     )
                 }
             }

@@ -2,11 +2,9 @@ package com.winstonmoon.simpletaskmanagement.data.local
 
 import app.cash.sqldelight.db.SqlDriver
 import com.winstonmoon.simpletaskmanagement.cache.SimpleTaskManagementDatabase
-import com.winstonmoon.simpletaskmanagement.cache.Task
 import com.winstonmoon.simpletaskmanagement.cache.composeApp.newInstance
 import com.winstonmoon.simpletaskmanagement.model.Priority
 import com.winstonmoon.simpletaskmanagement.model.Status
-import com.winstonmoon.simpletaskmanagement.model.TaskModel
 import com.winstonmoon.simpletaskmanagement.sqldelight.transactionWithContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -58,7 +56,7 @@ class DatabaseHelper(
         }
     }
 
-    fun selectAllTasks(): Flow<List<TaskModel>> = dbRef.simpleTaskManagementDatabaseQueries
+    fun selectAllTasks(): Flow<List<com.winstonmoon.simpletaskmanagement.model.Task>> = dbRef.simpleTaskManagementDatabaseQueries
         .selectAllTasks()
         .executeAsList()
         .map {
@@ -68,7 +66,7 @@ class DatabaseHelper(
 //        .mapToList(Dispatchers.Default)
 //        .flowOn(backgroundDispatcher)
 
-    fun selectTaskByStatus(status: String): Flow<List<TaskModel>> = dbRef.simpleTaskManagementDatabaseQueries
+    fun selectTaskByStatus(status: String): Flow<List<com.winstonmoon.simpletaskmanagement.model.Task>> = dbRef.simpleTaskManagementDatabaseQueries
         .selectTaskByStatus(status = status)
         .executeAsList()
         .map {
@@ -78,7 +76,7 @@ class DatabaseHelper(
 //        .mapToList(Dispatchers.Default)
 //        .flowOn(backgroundDispatcher)
 
-    private fun Task.toDomain(): TaskModel = TaskModel(
+    private fun com.winstonmoon.simpletaskmanagement.cache.Task.toDomain(): com.winstonmoon.simpletaskmanagement.model.Task = com.winstonmoon.simpletaskmanagement.model.Task(
         id = id,
         title = title,
         status = Status.valueOf(status),
