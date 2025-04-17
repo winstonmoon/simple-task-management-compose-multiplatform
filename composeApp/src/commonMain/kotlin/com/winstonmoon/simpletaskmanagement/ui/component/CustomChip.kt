@@ -28,42 +28,6 @@ import simpletaskmanagement.composeapp.generated.resources.status_label_done
 import simpletaskmanagement.composeapp.generated.resources.status_label_inprogress
 import simpletaskmanagement.composeapp.generated.resources.status_label_ready
 
-enum class Status(
-    val icon: DrawableResource,
-    val label: StringResource,
-) {
-    READY(
-        icon = Res.drawable.ic_check_box_outline_blank_18,
-        label = Res.string.status_label_ready,
-    ),
-    IN_PROGRESS(
-        icon = Res.drawable.ic_progress_activity_18,
-        label = Res.string.status_label_inprogress,
-    ),
-    DONE(
-        icon = Res.drawable.ic_check_box_18,
-        label = Res.string.status_label_done,
-    ),
-}
-
-enum class Priority(
-    val icon: DrawableResource,
-    val label: StringResource,
-) {
-    Low(
-      icon = Res.drawable.ic_low_priority_18,
-        label = Res.string.priority_label_low,
-    ),
-    Medium(
-        icon = Res.drawable.ic_vertical_align_center_18,
-        label = Res.string.priority_label_medium,
-    ),
-    High(
-        icon = Res.drawable.ic_emergency_home_18,
-        label = Res.string.priority_label_high,
-    ),
-}
-
 @Composable
 fun CustomAssistChipWithIcon(
     label: StringResource,

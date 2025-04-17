@@ -37,11 +37,11 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.winstonmoon.simpletaskmanagement.model.Priority
+import com.winstonmoon.simpletaskmanagement.model.Status
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomListItem
-import com.winstonmoon.simpletaskmanagement.ui.component.Priority
-import com.winstonmoon.simpletaskmanagement.ui.component.Status
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.painterResource
 import simpletaskmanagement.composeapp.generated.resources.Res
@@ -108,7 +108,7 @@ internal fun CalendarScreen(
                             .padding(horizontal = 16.dp),
                         todo = it,
                         status = Status.DONE,
-                        priority = Priority.Low,
+                        priority = Priority.LOW,
                         onClickAdd = {},
                         onClickEdit = {},
                         onClickDuplicate = {},

@@ -138,9 +138,6 @@ fun App(context: Context) {
                             onClickBack = {
                                 navController.popBackStack()
                             },
-                            onClickRegisterButton = {
-
-                            },
                         )
                     }
                 }

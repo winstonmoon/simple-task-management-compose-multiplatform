@@ -1,45 +1,41 @@
 package com.winstonmoon.simpletaskmanagement.repository
 
 import com.winstonmoon.simpletaskmanagement.data.local.DatabaseHelper
-import com.winstonmoon.simpletaskmanagement.model.TaskModel
+import com.winstonmoon.simpletaskmanagement.model.Task
 import kotlinx.coroutines.flow.Flow
 
 class TaskRepository(
     private val dbHelper: DatabaseHelper,
 ) {
     suspend fun insertTask(
-        taskModel: TaskModel
+        task: Task
     ) {
         dbHelper.insertTask(
-            title = taskModel.title,
-            status = taskModel.status.name,
-            priority = taskModel.priority.name,
-            dueDate = taskModel.dueDate,
+            title = task.title,
+            status = task.status.name,
+            priority = task.priority.name,
+            dueDate = task.dueDate,
         )
     }
 
     suspend fun updateTask(
-        id:Long,
-        title: String,
-        status: String,
-        priority: String,
-        dueDate: Long?,
+        task: Task
     ) {
-        dbHelper.updateTask(
-            id = id,
-            title = title,
-            status = status,
-            priority = priority,
-            dueDate = dueDate,
-        )
+        task.id?.let {
+            dbHelper.updateTask(
+                id = it,
+                title = task.title,
+                status = task.status.name,
+                priority = task.priority.name,
+                dueDate = task.dueDate,
+            )
+        }
     }
 
     suspend fun deleteTask(id: Long) {
         dbHelper.deleteTask(id = id)
     }
 
-    fun getTasks(): Flow<List<TaskModel>> = dbHelper.selectAllTasks()
-
-    fun getTasksByStatus(status: String): Flow<List<TaskModel>> =
+    fun getTasksByStatus(status: String): Flow<List<Task>> =
         dbHelper.selectTaskByStatus(status = status)
 }
