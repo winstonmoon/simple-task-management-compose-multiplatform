@@ -63,6 +63,9 @@ fun TaskRoute(
         doneTasks = doneTasks,
         drawerState = drawerState,
         onClickAddButton = onClickAddButton,
+        onClickDuplicate = {
+            // TODO transition to inputtask screen
+        },
         onClickDelete = {
             viewModel.deleteTask(it)
         },
@@ -78,6 +81,7 @@ internal fun TaskScreen(
     doneTasks: List<Task>,
     drawerState: DrawerState,
     onClickAddButton: () -> Unit,
+    onClickDuplicate: (Task) -> Unit,
     onClickDelete: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -133,7 +137,9 @@ internal fun TaskScreen(
                             status = it.status,
                             priority = it.priority,
                             onClickEdit = {},
-                            onClickDuplicate = {},
+                            onClickDuplicate = {
+                                onClickDuplicate(it)
+                            },
                             onClickDelete = {
                                 it.id?.let { id ->
                                     onClickDelete(id)
@@ -169,7 +175,9 @@ internal fun TaskScreen(
                             status = it.status,
                             priority = it.priority,
                             onClickEdit = {},
-                            onClickDuplicate = {},
+                            onClickDuplicate = {
+                                onClickDuplicate(it)
+                            },
                             onClickDelete = {
                                 it.id?.let { id ->
                                     onClickDelete(id)
@@ -198,7 +206,9 @@ internal fun TaskScreen(
                             status = it.status,
                             priority = it.priority,
                             onClickEdit = {},
-                            onClickDuplicate = {},
+                            onClickDuplicate = {
+                                onClickDuplicate(it)
+                            },
                             onClickDelete = {
                                 it.id?.let { id ->
                                     onClickDelete(id)
