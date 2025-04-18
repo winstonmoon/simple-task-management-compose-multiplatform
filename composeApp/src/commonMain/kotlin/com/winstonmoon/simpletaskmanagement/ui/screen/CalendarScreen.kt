@@ -109,7 +109,6 @@ internal fun CalendarScreen(
                         todo = it,
                         status = Status.DONE,
                         priority = Priority.LOW,
-                        onClickAdd = {},
                         onClickEdit = {},
                         onClickDuplicate = {},
                         onClickDelete = {},
