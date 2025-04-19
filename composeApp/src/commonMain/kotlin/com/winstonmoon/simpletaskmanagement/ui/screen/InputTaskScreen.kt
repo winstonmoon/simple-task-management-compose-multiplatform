@@ -32,6 +32,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.winstonmoon.simpletaskmanagement.model.Task
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
 import kotlinx.datetime.Instant
@@ -44,7 +45,7 @@ import simpletaskmanagement.composeapp.generated.resources.floating_action_butto
 import simpletaskmanagement.composeapp.generated.resources.input_task_screen_title
 
 @Serializable
-data object InputTaskRoute
+data class InputTaskRoute(val task: Task?)
 
 @Composable
 fun InputTaskRoute(
