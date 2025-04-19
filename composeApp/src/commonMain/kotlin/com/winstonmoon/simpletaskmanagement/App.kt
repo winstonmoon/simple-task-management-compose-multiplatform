@@ -105,6 +105,9 @@ fun App(context: Context) {
                             onClickAddButton = {
                                 navController.navigate(InputTaskRoute)
                             },
+                            onClickDuplicate = {
+                                navController.navigate(InputTaskRoute(it))
+                            }
                         )
                     }
                     composable<CalendarRoute> {

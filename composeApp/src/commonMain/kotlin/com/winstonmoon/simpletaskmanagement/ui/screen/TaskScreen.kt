@@ -50,6 +50,7 @@ data object TaskRoute
 fun TaskRoute(
     drawerState: DrawerState,
     onClickAddButton: () -> Unit,
+    onClickDuplicate: (Task) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: TaskViewModel = koinViewModel<TaskViewModel>(),
 ) {
@@ -64,7 +65,7 @@ fun TaskRoute(
         drawerState = drawerState,
         onClickAddButton = onClickAddButton,
         onClickDuplicate = {
-            // TODO transition to inputtask screen
+            onClickDuplicate(it)
         },
         onClickDelete = {
             viewModel.deleteTask(it)
