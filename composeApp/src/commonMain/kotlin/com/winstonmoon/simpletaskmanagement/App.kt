@@ -28,6 +28,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.winstonmoon.simpletaskmanagement.di.commonModule
 import com.winstonmoon.simpletaskmanagement.di.platformModule
 import com.winstonmoon.simpletaskmanagement.ui.screen.AchievementRoute
@@ -137,6 +138,7 @@ fun App(context: Context) {
                         )
                     }
                     composable<InputTaskRoute> {
+                        val task = it.toRoute<InputTaskRoute>().task
                         InputTaskRoute(
                             onClickBack = {
                                 navController.popBackStack()
