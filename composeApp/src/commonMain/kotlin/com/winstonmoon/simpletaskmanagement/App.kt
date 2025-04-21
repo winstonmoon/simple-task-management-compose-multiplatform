@@ -140,6 +140,7 @@ fun App(context: Context) {
                     composable<InputTaskRoute> {
                         val task = it.toRoute<InputTaskRoute>().task
                         InputTaskRoute(
+                            task = task,
                             onClickBack = {
                                 navController.popBackStack()
                             },

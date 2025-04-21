@@ -49,10 +49,17 @@ data class InputTaskRoute(val task: Task?)
 
 @Composable
 fun InputTaskRoute(
+    task: Task?,
     onClickBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: InputTaskViewModel = koinViewModel<InputTaskViewModel>(),
 ) {
+    if (task != null) {
+        viewModel.setTitle(task.title)
+        viewModel.setStatus(task.status.name)
+        viewModel.setPriority(task.priority.name)
+        viewModel.setDate(task.dueDate)
+    }
     val title by viewModel.title.collectAsStateWithLifecycle()
     val status by viewModel.status.collectAsStateWithLifecycle()
     val priority by viewModel.priority.collectAsStateWithLifecycle()
