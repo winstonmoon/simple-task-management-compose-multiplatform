@@ -54,6 +54,7 @@ fun InputTaskRoute(
     modifier: Modifier = Modifier,
     viewModel: InputTaskViewModel = koinViewModel<InputTaskViewModel>(),
 ) {
+
     if (task != null) {
         viewModel.setTitle(task.title)
         viewModel.setStatus(task.status.name)

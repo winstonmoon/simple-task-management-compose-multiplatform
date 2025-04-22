@@ -104,7 +104,7 @@ fun App(context: Context) {
                         TaskRoute(
                             drawerState,
                             onClickAddButton = {
-                                navController.navigate(InputTaskRoute)
+                                navController.navigate(InputTaskRoute(null))
                             },
                             onClickDuplicate = {
                                 navController.navigate(InputTaskRoute(it))
@@ -115,7 +115,7 @@ fun App(context: Context) {
                         CalendarRoute(
                             drawerState,
                             onClickAddButton = {
-                                navController.navigate(InputTaskRoute)
+                                navController.navigate(InputTaskRoute(null))
                             },
                         )
                     }
