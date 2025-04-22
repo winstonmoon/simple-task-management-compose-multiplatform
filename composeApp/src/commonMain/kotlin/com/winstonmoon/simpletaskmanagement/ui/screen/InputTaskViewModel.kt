@@ -17,10 +17,10 @@ class InputTaskViewModel(
     private val _title = MutableStateFlow("")
     val title: StateFlow<String> = _title
 
-    private val _status = MutableStateFlow("")
+    private val _status = MutableStateFlow(Status.READY.name)
     val status: StateFlow<String> = _status
 
-    private val _priority = MutableStateFlow("")
+    private val _priority = MutableStateFlow(Priority.LOW.name)
     val priority: StateFlow<String> = _priority
 
     private val _date = MutableStateFlow(0L)
