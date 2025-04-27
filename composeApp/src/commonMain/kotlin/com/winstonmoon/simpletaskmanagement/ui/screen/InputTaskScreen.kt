@@ -32,7 +32,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.winstonmoon.simpletaskmanagement.model.Task
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
 import kotlinx.datetime.Instant
@@ -45,22 +44,36 @@ import simpletaskmanagement.composeapp.generated.resources.floating_action_butto
 import simpletaskmanagement.composeapp.generated.resources.input_task_screen_title
 
 @Serializable
-data class InputTaskRoute(val task: Task?)
+data class InputTaskRoute(
+    val title: String?,
+    val status: String?,
+    val priority: String?,
+    val date: Long?,
+    )
 
 @Composable
 fun InputTaskRoute(
-    task: Task?,
+    titlex: String?,
+    statusx: String?,
+    priorityx: String?,
+    datex: Long?,
     onClickBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: InputTaskViewModel = koinViewModel<InputTaskViewModel>(),
 ) {
-
-    if (task != null) {
-        viewModel.setTitle(task.title)
-        viewModel.setStatus(task.status.name)
-        viewModel.setPriority(task.priority.name)
-        viewModel.setDate(task.dueDate)
+    titlex?.let {
+        viewModel.setTitle(it)
     }
+    statusx?.let {
+        viewModel.setStatus(it)
+    }
+    priorityx?.let {
+        viewModel.setPriority(it)
+    }
+    datex?.let {
+        viewModel.setDate(it)
+    }
+    
     val title by viewModel.title.collectAsStateWithLifecycle()
     val status by viewModel.status.collectAsStateWithLifecycle()
     val priority by viewModel.priority.collectAsStateWithLifecycle()
