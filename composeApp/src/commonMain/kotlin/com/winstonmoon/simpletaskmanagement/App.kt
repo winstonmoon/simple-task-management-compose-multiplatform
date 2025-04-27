@@ -104,10 +104,23 @@ fun App(context: Context) {
                         TaskRoute(
                             drawerState,
                             onClickAddButton = {
-                                navController.navigate(InputTaskRoute(null))
+                                navController.navigate(
+                                    route = InputTaskRoute(
+                                    title = null,
+                                    status = null,
+                                    priority = null,
+                                    date = null,
+                                ))
                             },
                             onClickDuplicate = {
-                                navController.navigate(InputTaskRoute(it))
+                                navController.navigate(
+                                    InputTaskRoute(
+                                        title = it.title,
+                                        status = it.status.name,
+                                        priority = it.priority.name,
+                                        date = it.dueDate,
+                                    )
+                                )
                             }
                         )
                     }
@@ -115,7 +128,13 @@ fun App(context: Context) {
                         CalendarRoute(
                             drawerState,
                             onClickAddButton = {
-                                navController.navigate(InputTaskRoute(null))
+                                navController.navigate(
+                                    route = InputTaskRoute(
+                                        title = null,
+                                        status = null,
+                                        priority = null,
+                                        date = null,
+                                    ))
                             },
                         )
                     }
@@ -138,9 +157,12 @@ fun App(context: Context) {
                         )
                     }
                     composable<InputTaskRoute> {
-                        val task = it.toRoute<InputTaskRoute>().task
+                        val inputTaskRoute: InputTaskRoute = it.toRoute()
                         InputTaskRoute(
-                            task = task,
+                            titlex = inputTaskRoute.title,
+                            statusx = inputTaskRoute.status,
+                            priorityx = inputTaskRoute.priority,
+                            datex = inputTaskRoute.date,
                             onClickBack = {
                                 navController.popBackStack()
                             },
