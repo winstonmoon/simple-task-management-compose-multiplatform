@@ -20,12 +20,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.winstonmoon.simpletaskmanagement.model.Status
 import com.winstonmoon.simpletaskmanagement.model.Task
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
@@ -54,9 +54,9 @@ fun TaskRoute(
     modifier: Modifier = Modifier,
     viewModel: TaskViewModel = koinViewModel<TaskViewModel>(),
 ) {
-    val readyTasks by viewModel.readyTasks.collectAsStateWithLifecycle()
-    val inProgressTasks by viewModel.inProgressTasks.collectAsStateWithLifecycle()
-    val doneTasks by viewModel.doneTasks.collectAsStateWithLifecycle()
+    val readyTasks by viewModel.readyTasks.collectAsState()
+    val inProgressTasks by viewModel.inProgressTasks.collectAsState()
+    val doneTasks by viewModel.doneTasks.collectAsState()
 
     TaskScreen(
         readyTasks = readyTasks,
