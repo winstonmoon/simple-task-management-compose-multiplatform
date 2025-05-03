@@ -8,9 +8,15 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.sqlDelight)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
 
 kotlin {
+    sourceSets.commonMain {
+        kotlin.srcDir("build/generated/ksp/metadata")
+    }
+
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
@@ -36,6 +42,9 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
             implementation(libs.sqlDelight.android)
+            implementation(libs.room.runtime)
+            implementation(libs.room.runtime.android)
+            implementation(libs.room.compiler)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -60,6 +69,7 @@ kotlin {
             implementation(libs.coil.network.ktor)
 
             implementation(libs.sqlDelight.coroutinesExt)
+            implementation(libs.room.runtime)
         }
         iosMain.dependencies {
             implementation(libs.sqlDelight.native)
@@ -107,5 +117,19 @@ android {
 sqldelight {
     databases.create("SimpleTaskManagementDatabase") {
         packageName.set("com.winstonmoon.simpletaskmanagement.cache")
+    }
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
+dependencies {
+    add("kspCommonMainMetadata", libs.room.compiler)
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
+    if (name != "kspCommonMainKotlinMetadata") {
+        dependsOn("kspCommonMainKotlinMetadata")
     }
 }
