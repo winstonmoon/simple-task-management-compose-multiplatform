@@ -1,6 +1,5 @@
 package com.winstonmoon.simpletaskmanagement.model
 
-import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import simpletaskmanagement.composeapp.generated.resources.Res
@@ -53,7 +52,6 @@ enum class Priority(
     ),
 }
 
-@Serializable
 data class Task(
     val id: Long? = null,
     val title: String,

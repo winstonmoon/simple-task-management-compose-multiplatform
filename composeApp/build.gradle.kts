@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.sqlDelight)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
 }
@@ -32,6 +31,7 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            linkerOpts.add("-lsqlite3")
         }
     }
     
@@ -41,7 +41,6 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
-            implementation(libs.sqlDelight.android)
             implementation(libs.room.runtime)
             implementation(libs.room.runtime.android)
             implementation(libs.room.compiler)
@@ -68,11 +67,8 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
 
-            implementation(libs.sqlDelight.coroutinesExt)
             implementation(libs.room.runtime)
-        }
-        iosMain.dependencies {
-            implementation(libs.sqlDelight.native)
+            implementation(libs.sqlite.bundled)
         }
     }
 }
@@ -111,12 +107,6 @@ android {
     }
     dependencies {
         debugImplementation(compose.uiTooling)
-    }
-}
-
-sqldelight {
-    databases.create("SimpleTaskManagementDatabase") {
-        packageName.set("com.winstonmoon.simpletaskmanagement.cache")
     }
 }
 

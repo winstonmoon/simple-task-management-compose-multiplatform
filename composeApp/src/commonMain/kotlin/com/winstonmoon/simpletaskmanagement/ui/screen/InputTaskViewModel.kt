@@ -2,26 +2,27 @@ package com.winstonmoon.simpletaskmanagement.ui.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.winstonmoon.simpletaskmanagement.database.datasource.TaskDataSourceImpl
+import com.winstonmoon.simpletaskmanagement.database.model.TaskEntity
 import com.winstonmoon.simpletaskmanagement.model.Priority
 import com.winstonmoon.simpletaskmanagement.model.Status
 import com.winstonmoon.simpletaskmanagement.model.Task
-import com.winstonmoon.simpletaskmanagement.repository.TaskRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class InputTaskViewModel(
-    private val taskRepository: TaskRepository,
+    private val taskDataSource: TaskDataSourceImpl,
 ) : ViewModel() {
 
     private val _title = MutableStateFlow("")
     val title: StateFlow<String> = _title
 
-    private val _status = MutableStateFlow(Status.READY.name)
-    val status: StateFlow<String> = _status
+    private val _status = MutableStateFlow(Status.READY)
+    val status: StateFlow<Status> = _status
 
-    private val _priority = MutableStateFlow(Priority.LOW.name)
-    val priority: StateFlow<String> = _priority
+    private val _priority = MutableStateFlow(Priority.LOW)
+    val priority: StateFlow<Priority> = _priority
 
     private val _date = MutableStateFlow(0L)
     val date: StateFlow<Long> = _date
@@ -30,11 +31,11 @@ class InputTaskViewModel(
         _title.value = title
     }
 
-    fun setStatus(status: String) {
+    fun setStatus(status: Status) {
         _status.value = status
     }
 
-    fun setPriority(priority: String) {
+    fun setPriority(priority: Priority) {
         _priority.value = priority
     }
 
@@ -46,11 +47,11 @@ class InputTaskViewModel(
 
     fun insertTask() {
         viewModelScope.launch {
-            taskRepository.insertTask(
-                Task(
+            taskDataSource.insertTask(
+                TaskEntity(
                     title = title.value,
-                    status = Status.valueOf(status.value),
-                    priority = Priority.valueOf(priority.value),
+                    status = status.value,
+                    priority = priority.value,
                     dueDate = date.value,
                 )
             )
