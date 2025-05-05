@@ -12,7 +12,7 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            App(application)
+            App()
         }
     }
 }

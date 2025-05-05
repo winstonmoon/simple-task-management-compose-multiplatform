@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.winstonmoon.simpletaskmanagement.database.model.TaskEntity
 import com.winstonmoon.simpletaskmanagement.model.Status
 import com.winstonmoon.simpletaskmanagement.model.Task
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
@@ -51,17 +52,16 @@ data object TaskRoute
 fun TaskRoute(
     drawerState: DrawerState,
     onClickAddButton: () -> Unit,
-    onClickDuplicate: (Task) -> Unit,
+    onClickDuplicate: (TaskEntity) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: TaskViewModel = koinViewModel<TaskViewModel>(),
 ) {
-    val readyTask by viewModel.readyTask.collectAsStateWithLifecycle()
-    val readyTasks by viewModel.readyTasks.collectAsState()
-    val inProgressTasks by viewModel.inProgressTasks.collectAsState()
-    val doneTasks by viewModel.doneTasks.collectAsState()
+    val readyTasks by viewModel.readyTasks.collectAsStateWithLifecycle()
+    val inProgressTasks by viewModel.inProgressTasks.collectAsStateWithLifecycle()
+    val doneTasks by viewModel.doneTasks.collectAsStateWithLifecycle()
 
     TaskScreen(
-        readyTasks = readyTask,
+        readyTasks = readyTasks,
         inProgressTasks = inProgressTasks,
         doneTasks = doneTasks,
         drawerState = drawerState,
@@ -79,12 +79,12 @@ fun TaskRoute(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 internal fun TaskScreen(
-    readyTasks: List<Task>,
-    inProgressTasks: List<Task>,
-    doneTasks: List<Task>,
+    readyTasks: List<TaskEntity>,
+    inProgressTasks: List<TaskEntity>,
+    doneTasks: List<TaskEntity>,
     drawerState: DrawerState,
     onClickAddButton: () -> Unit,
-    onClickDuplicate: (Task) -> Unit,
+    onClickDuplicate: (TaskEntity) -> Unit,
     onClickDelete: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {

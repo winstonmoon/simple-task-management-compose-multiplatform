@@ -23,14 +23,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import com.winstonmoon.simpletaskmanagement.di.commonModule
-import com.winstonmoon.simpletaskmanagement.di.platformModule
 import com.winstonmoon.simpletaskmanagement.ui.screen.AchievementRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.CalendarRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.InputTaskRoute
@@ -40,8 +36,6 @@ import com.winstonmoon.simpletaskmanagement.ui.theme.SimpleTaskManagementTheme
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.KoinApplication
-import org.koin.compose.currentKoinScope
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.achievement_screen_title
 import simpletaskmanagement.composeapp.generated.resources.app_name
@@ -50,124 +44,103 @@ import simpletaskmanagement.composeapp.generated.resources.settings_screen_title
 import simpletaskmanagement.composeapp.generated.resources.task_screen_title
 
 @Composable
-fun App(context: Context) {
-
-    KoinApplication(
-        application = {
-            modules(
-                commonModule(context),
-                platformModule(context),
-            )
-        }
-    ) {
-//        setSingletonImageLoaderFactory { context ->
-//            ImageLoader.Builder(context)
-//                .components {
-//                    add(NetworkFetcher.Factory(
-//                        networkClient = TODO(),
-//                        cacheStrategy = TODO()
-//                    ))
-//                }
-//                .build()
-//        }
-
-        SimpleTaskManagementTheme {
-            val navController = rememberNavController()
-            val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-            val scope = rememberCoroutineScope()
-            ModalNavigationDrawer(
-                drawerContent = {
-                    ModalDrawerSheet {
-                        DrawerContent(
-                            modifier = Modifier,
-                            onMenuClick = { route ->
-                                scope.launch { drawerState.close() }
-                                when (route) {
-                                    DrawerMenu.Task -> navController.navigate(TaskRoute)
-                                    DrawerMenu.Calendar -> navController.navigate(CalendarRoute)
-                                    DrawerMenu.Achievement -> navController.navigate(AchievementRoute)
-                                    DrawerMenu.Settings -> navController.navigate(SettingsRoute)
-                                }
+fun App() {
+    SimpleTaskManagementTheme {
+        val navController = rememberNavController()
+        val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+        val scope = rememberCoroutineScope()
+        ModalNavigationDrawer(
+            drawerContent = {
+                ModalDrawerSheet {
+                    DrawerContent(
+                        modifier = Modifier,
+                        onMenuClick = { route ->
+                            scope.launch { drawerState.close() }
+                            when (route) {
+                                DrawerMenu.Task -> navController.navigate(TaskRoute)
+                                DrawerMenu.Calendar -> navController.navigate(CalendarRoute)
+                                DrawerMenu.Achievement -> navController.navigate(AchievementRoute)
+                                DrawerMenu.Settings -> navController.navigate(SettingsRoute)
                             }
-                        )
-                    }
-                },
-                drawerState = drawerState,
-                gesturesEnabled = drawerState.isOpen
+                        }
+                    )
+                }
+            },
+            drawerState = drawerState,
+            gesturesEnabled = drawerState.isOpen
+        ) {
+            NavHost(
+                startDestination = TaskRoute,
+                navController = navController,
+                modifier = Modifier.fillMaxSize(),
             ) {
-                NavHost(
-                    startDestination = TaskRoute,
-                    navController = navController,
-                    modifier = Modifier.fillMaxSize(),
-                ) {
-                    composable<TaskRoute> {
-                        TaskRoute(
-                            drawerState,
-                            onClickAddButton = {
-                                navController.navigate(
-                                    route = InputTaskRoute(
+                composable<TaskRoute> {
+                    TaskRoute(
+                        drawerState,
+                        onClickAddButton = {
+                            navController.navigate(
+                                route = InputTaskRoute(
                                     title = null,
                                     status = null,
                                     priority = null,
                                     date = null,
                                 ))
-                            },
-                            onClickDuplicate = {
-                                navController.navigate(
-                                    InputTaskRoute(
-                                        title = it.title,
-                                        status = it.status.name,
-                                        priority = it.priority.name,
-                                        date = it.dueDate,
-                                    )
+                        },
+                        onClickDuplicate = {
+                            navController.navigate(
+                                InputTaskRoute(
+                                    title = it.title,
+                                    status = it.status,
+                                    priority = it.priority,
+                                    date = it.dueDate,
                                 )
-                            }
-                        )
-                    }
-                    composable<CalendarRoute> {
-                        CalendarRoute(
-                            drawerState,
-                            onClickAddButton = {
-                                navController.navigate(
-                                    route = InputTaskRoute(
-                                        title = null,
-                                        status = null,
-                                        priority = null,
-                                        date = null,
-                                    ))
-                            },
-                        )
-                    }
-                    composable<AchievementRoute> {
-                        AchievementRoute(
-                            drawerState,
-                        )
-                    }
-                    composable<SettingsRoute> {
-                        SettingsRoute(
-                            onClickBack = {
-                                navController.popBackStack()
-                            },
-                            onChangeTheme = {
-                            },
-                            onChangeLanguage = {
-                            },
-                            onChangeConnectGoogleTasks = {
-                            },
-                        )
-                    }
-                    composable<InputTaskRoute> {
-                        val inputTaskRoute: InputTaskRoute = it.toRoute()
-                        InputTaskRoute(
-                            titlex = inputTaskRoute.title,
-                            statusx = inputTaskRoute.status,
-                            priorityx = inputTaskRoute.priority,
-                            datex = inputTaskRoute.date,
-                            onClickBack = {
-                                navController.popBackStack()
-                            },
-                        )
-                    }
+                            )
+                        }
+                    )
+                }
+                composable<CalendarRoute> {
+                    CalendarRoute(
+                        drawerState,
+                        onClickAddButton = {
+                            navController.navigate(
+                                route = InputTaskRoute(
+                                    title = null,
+                                    status = null,
+                                    priority = null,
+                                    date = null,
+                                ))
+                        },
+                    )
+                }
+                composable<AchievementRoute> {
+                    AchievementRoute(
+                        drawerState,
+                    )
+                }
+                composable<SettingsRoute> {
+                    SettingsRoute(
+                        onClickBack = {
+                            navController.popBackStack()
+                        },
+                        onChangeTheme = {
+                        },
+                        onChangeLanguage = {
+                        },
+                        onChangeConnectGoogleTasks = {
+                        },
+                    )
+                }
+                composable<InputTaskRoute> {
+                    val inputTaskRoute: InputTaskRoute = it.toRoute()
+                    InputTaskRoute(
+                        title = inputTaskRoute.title,
+                        status = inputTaskRoute.status,
+                        priority = inputTaskRoute.priority,
+                        date = inputTaskRoute.date,
+                        onClickBack = {
+                            navController.popBackStack()
+                        },
+                    )
                 }
             }
         }

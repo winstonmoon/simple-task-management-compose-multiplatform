@@ -32,6 +32,8 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.winstonmoon.simpletaskmanagement.model.Priority
+import com.winstonmoon.simpletaskmanagement.model.Status
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
 import kotlinx.datetime.Instant
@@ -46,31 +48,31 @@ import simpletaskmanagement.composeapp.generated.resources.input_task_screen_tit
 @Serializable
 data class InputTaskRoute(
     val title: String?,
-    val status: String?,
-    val priority: String?,
+    val status: Status?,
+    val priority: Priority?,
     val date: Long?,
     )
 
 @Composable
 fun InputTaskRoute(
-    titlex: String?,
-    statusx: String?,
-    priorityx: String?,
-    datex: Long?,
+    title: String?,
+    status: Status?,
+    priority: Priority?,
+    date: Long?,
     onClickBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: InputTaskViewModel = koinViewModel<InputTaskViewModel>(),
 ) {
-    titlex?.let {
+    title?.let {
         viewModel.setTitle(it)
     }
-    statusx?.let {
+    status?.let {
         viewModel.setStatus(it)
     }
-    priorityx?.let {
+    priority?.let {
         viewModel.setPriority(it)
     }
-    datex?.let {
+    date?.let {
         viewModel.setDate(it)
     }
     
@@ -108,14 +110,14 @@ fun InputTaskRoute(
 @Composable
 internal fun InputTaskScreen(
     title: String,
-    status: String,
-    priority: String,
+    status: Status,
+    priority: Priority,
     date: Long,
     onClickBack: () -> Unit,
     onTitleChanged: (String) -> Unit,
     onClickRegisterButton: () -> Unit,
-    onClickStatus: (String) -> Unit,
-    onClickPriority: (String) -> Unit,
+    onClickStatus: (Status) -> Unit,
+    onClickPriority: (Priority) -> Unit,
     onDateSelected: (Long?) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -189,15 +191,15 @@ internal fun InputTaskScreen(
                 ) {
                     DropdownMenuItem(
                         text = { Text(text = "Ready") },
-                        onClick = { onClickStatus("READY") }
+                        onClick = { onClickStatus(Status.READY) }
                     )
                     DropdownMenuItem(
                         text = { Text(text = "In Progress") },
-                        onClick = { onClickStatus("IN_PROGRESS") }
+                        onClick = { onClickStatus(Status.IN_PROGRESS) }
                     )
                     DropdownMenuItem(
                         text = { Text(text = "Done") },
-                        onClick = { onClickStatus("DONE") }
+                        onClick = { onClickStatus(Status.DONE) }
                     )
                 }
             }
@@ -223,15 +225,15 @@ internal fun InputTaskScreen(
                 ) {
                     DropdownMenuItem(
                         text = { Text(text = "Low") },
-                        onClick = { onClickPriority("LOW") }
+                        onClick = { onClickPriority(Priority.LOW) }
                     )
                     DropdownMenuItem(
                         text = { Text(text = "Medium") },
-                        onClick = { onClickPriority("MEDIUM") }
+                        onClick = { onClickPriority(Priority.MEDIUM) }
                     )
                     DropdownMenuItem(
                         text = { Text(text = "High") },
-                        onClick = { onClickPriority("HIGH") }
+                        onClick = { onClickPriority(Priority.HIGH) }
                     )
                 }
             }
