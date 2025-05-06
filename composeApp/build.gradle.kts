@@ -17,7 +17,6 @@ kotlin {
     }
 
     androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
@@ -114,12 +113,8 @@ room {
     schemaDirectory("$projectDir/schemas")
 }
 
-dependencies {
-    add("kspCommonMainMetadata", libs.room.compiler)
-}
-
-tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
-    if (name != "kspCommonMainKotlinMetadata") {
-        dependsOn("kspCommonMainKotlinMetadata")
+configurations.all {
+    resolutionStrategy {
+        force("org.jetbrains:annotations:23.0.0")
     }
 }
