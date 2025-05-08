@@ -9,9 +9,10 @@ import kotlinx.coroutines.Dispatchers
 fun getDatabaseBuilder(
     context: Context
 ): AppDatabase {
-    val dbFile = context.getDatabasePath("simple-task-management.db")
+    val appContext = context.applicationContext
+    val dbFile = appContext.getDatabasePath("simple-task-management.db")
     return Room.databaseBuilder<AppDatabase>(
-        context = context,
+        context = appContext,
         name = dbFile.absolutePath
     ).setDriver(BundledSQLiteDriver())
         .setQueryCoroutineContext(Dispatchers.IO)

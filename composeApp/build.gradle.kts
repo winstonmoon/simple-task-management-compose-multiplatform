@@ -40,11 +40,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
-            implementation(libs.room.runtime)
             implementation(libs.room.runtime.android)
-            implementation(libs.room.compiler.toString()) {
-                exclude(group = "com.intellij", module = "annotations")
-            }
         }
         commonMain.dependencies {
             implementation(compose.runtime)

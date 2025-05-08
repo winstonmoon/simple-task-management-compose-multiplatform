@@ -1,5 +1,6 @@
 package com.winstonmoon.simpletaskmanagement.di
 
+import androidx.room.RoomDatabase
 import com.winstonmoon.simpletaskmanagement.database.AppDatabase
 import com.winstonmoon.simpletaskmanagement.database.getDatabaseBuilder
 import org.koin.dsl.module
