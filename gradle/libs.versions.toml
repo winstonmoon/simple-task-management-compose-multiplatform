@@ -19,7 +19,7 @@ kotlin = "2.1.20"
 kotlinxCoroutinesCore = "1.10.2"
 kotlinxSerializationJson = "1.8.1"
 kotlinx-datetime = "0.6.2"
-navigationCompose = "2.8.0-alpha12"
+navigationCompose = "2.9.0-beta01"
 
 koin = "4.0.2"
 koinComposeMultiplatform = "4.0.2"
