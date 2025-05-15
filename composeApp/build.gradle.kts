@@ -16,6 +16,10 @@ kotlin {
         kotlin.srcDir("build/generated/ksp/metadata")
     }
 
+    compilerOptions {
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
+
     androidTarget {
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
@@ -55,6 +59,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.datetime)
+            implementation(libs.material.icons.core)
 
             implementation(libs.koin.core)
             implementation(libs.koin.compose)
