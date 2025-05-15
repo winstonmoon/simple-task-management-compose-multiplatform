@@ -48,16 +48,16 @@ import simpletaskmanagement.composeapp.generated.resources.input_task_screen_tit
 @Serializable
 data class InputTaskRoute(
     val title: String?,
-    val status: Status?,
-    val priority: Priority?,
+    val status: String?,
+    val priority: String?,
     val date: Long?,
     )
 
 @Composable
 fun InputTaskRoute(
     title: String?,
-    status: Status?,
-    priority: Priority?,
+    status: String?,
+    priority: String?,
     date: Long?,
     onClickBack: () -> Unit,
     modifier: Modifier = Modifier,
@@ -66,12 +66,12 @@ fun InputTaskRoute(
     title?.let {
         viewModel.setTitle(it)
     }
-    status?.let {
-        viewModel.setStatus(it)
-    }
-    priority?.let {
-        viewModel.setPriority(it)
-    }
+//    status?.let {
+//        viewModel.setStatus(it)
+//    }
+//    priority?.let {
+//        viewModel.setPriority(it)
+//    }
     date?.let {
         viewModel.setDate(it)
     }

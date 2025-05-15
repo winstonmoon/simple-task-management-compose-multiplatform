@@ -90,8 +90,8 @@ fun App() {
                             navController.navigate(
                                 InputTaskRoute(
                                     title = it.title,
-                                    status = it.status,
-                                    priority = it.priority,
+                                    status = "",
+                                    priority = "",
                                     date = it.dueDate,
                                 )
                             )
@@ -134,8 +134,8 @@ fun App() {
                     val inputTaskRoute: InputTaskRoute = it.toRoute()
                     InputTaskRoute(
                         title = inputTaskRoute.title,
-                        status = inputTaskRoute.status,
-                        priority = inputTaskRoute.priority,
+                        status = "",
+                        priority = "",
                         date = inputTaskRoute.date,
                         onClickBack = {
                             navController.popBackStack()
