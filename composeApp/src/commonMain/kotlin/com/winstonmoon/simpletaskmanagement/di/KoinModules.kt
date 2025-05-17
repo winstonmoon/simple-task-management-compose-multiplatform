@@ -10,6 +10,7 @@ import com.winstonmoon.simpletaskmanagement.ui.screen.TaskViewModel
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.bind
@@ -27,11 +28,11 @@ fun initKoin(config: KoinAppDeclaration? = null) = startKoin {
 }
 
 val provideViewModelModule = module {
-    viewModelOf(::AchievementViewModel)
-    viewModelOf(::CalendarViewModel)
-    viewModelOf(::InputTaskViewModel)
-    viewModelOf(::SettingsViewModel)
-    viewModelOf(::TaskViewModel)
+    viewModel { AchievementViewModel()}
+    viewModel { CalendarViewModel(get())}
+    viewModel { InputTaskViewModel(get())}
+    viewModel { SettingsViewModel()}
+    viewModel { TaskViewModel(get())}
 }
 
 val provideDataSourceModule = module {
