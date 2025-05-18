@@ -28,4 +28,12 @@ interface TaskDao {
         """
     )
     fun getTasksByStatus(status: Status): Flow<List<TaskEntity>>
+
+    @Query(
+        value = """
+            SELECT * FROM task_entity
+            WHERE dueDate in (:dueDate)
+        """
+    )
+    fun getTaskByDueDate(dueDate: Long): Flow<List<TaskEntity>>
 }

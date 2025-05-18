@@ -110,13 +110,12 @@ internal fun TaskScreen(
                 .fillMaxSize(),
         ) {
             LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 stickyHeader {
                     TitleSection(
                         status = Status.READY,
-                        number = 3,
+                        number = readyTasks.size,
                         isExpended = true,
                     )
                 }
@@ -130,8 +129,7 @@ internal fun TaskScreen(
                         Text("No Task")
                     } else {
                         Spacer(
-                            modifier = Modifier
-                                .height(18.dp)
+                            modifier = Modifier.height(18.dp)
                         )
                         CustomListItem(
                             modifier = Modifier
@@ -144,9 +142,7 @@ internal fun TaskScreen(
                                 onClickDuplicate(it)
                             },
                             onClickDelete = {
-                                it.id?.let { id ->
-                                    onClickDelete(id)
-                                }
+                                onClickDelete(it.id)
                             },
                         )
                     }
@@ -154,7 +150,7 @@ internal fun TaskScreen(
                 stickyHeader {
                     TitleSection(
                         status = Status.IN_PROGRESS,
-                        number = 2,
+                        number = inProgressTasks.size,
                         isExpended = true,
                     )
                 }
@@ -168,8 +164,7 @@ internal fun TaskScreen(
                         Text("No Task")
                     } else {
                         Spacer(
-                            modifier = Modifier
-                                .height(18.dp)
+                            modifier = Modifier.height(18.dp)
                         )
                         CustomListItem(
                             modifier = Modifier
@@ -182,9 +177,7 @@ internal fun TaskScreen(
                                 onClickDuplicate(it)
                             },
                             onClickDelete = {
-                                it.id?.let { id ->
-                                    onClickDelete(id)
-                                }
+                                onClickDelete(it.id)
                             },
                         )
                     }
@@ -192,7 +185,7 @@ internal fun TaskScreen(
                 stickyHeader {
                     TitleSection(
                         status = Status.DONE,
-                        number = 2,
+                        number = doneTasks.size,
                         isExpended = true,
                     )
                 }
@@ -213,14 +206,11 @@ internal fun TaskScreen(
                                 onClickDuplicate(it)
                             },
                             onClickDelete = {
-                                it.id?.let { id ->
-                                    onClickDelete(id)
-                                }
+                                onClickDelete(it.id)
                             },
                         )
                         Spacer(
-                            modifier = Modifier
-                                .height(18.dp)
+                            modifier = Modifier.height(18.dp)
                         )
                     }
                 }

@@ -10,9 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PageSize
@@ -35,8 +33,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.winstonmoon.simpletaskmanagement.database.model.TaskEntity
 import com.winstonmoon.simpletaskmanagement.model.Priority
 import com.winstonmoon.simpletaskmanagement.model.Status
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
@@ -44,6 +43,7 @@ import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionBut
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomListItem
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.viewmodel.koinViewModel
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.calendar_screen_title
 import simpletaskmanagement.composeapp.generated.resources.floating_action_button_label_new
@@ -58,8 +58,12 @@ fun CalendarRoute(
     drawerState: DrawerState,
     onClickAddButton: () -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: CalendarViewModel = koinViewModel<CalendarViewModel>()
 ) {
+    val tasks by viewModel.tasks.collectAsStateWithLifecycle()
+
     CalendarScreen(
+        tasks = tasks,
         drawerState = drawerState,
         onClickAddButton = onClickAddButton,
         modifier = modifier,
@@ -68,6 +72,7 @@ fun CalendarRoute(
 
 @Composable
 internal fun CalendarScreen(
+    tasks: List<TaskEntity>,
     drawerState: DrawerState,
     onClickAddButton: () -> Unit,
     modifier: Modifier = Modifier,

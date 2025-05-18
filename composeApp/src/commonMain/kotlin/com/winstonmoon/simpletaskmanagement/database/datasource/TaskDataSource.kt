@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface TaskDataSource {
     fun getTasksByStatus(status: Status): Flow<List<TaskEntity>>
+    fun getTasksByDueDate(dueDate: Long): Flow<List<TaskEntity>>
     suspend fun insertTask(taskEntity: TaskEntity)
     suspend fun deleteTask(id: Long)
 }

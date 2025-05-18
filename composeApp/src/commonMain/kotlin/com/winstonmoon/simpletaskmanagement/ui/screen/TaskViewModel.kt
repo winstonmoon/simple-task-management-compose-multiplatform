@@ -5,11 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.winstonmoon.simpletaskmanagement.database.datasource.TaskDataSourceImpl
 import com.winstonmoon.simpletaskmanagement.database.model.TaskEntity
 import com.winstonmoon.simpletaskmanagement.model.Status
-import com.winstonmoon.simpletaskmanagement.model.Task
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
