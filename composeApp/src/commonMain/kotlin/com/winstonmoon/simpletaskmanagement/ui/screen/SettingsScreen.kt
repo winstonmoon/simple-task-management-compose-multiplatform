@@ -37,22 +37,22 @@ import simpletaskmanagement.composeapp.generated.resources.settings_screen_more_
 import simpletaskmanagement.composeapp.generated.resources.settings_screen_title
 
 sealed interface Settings {
-    val title: String
+    val title: StringResource
     val configs: List<String>
 }
 
 data class Theme(
-    override val title: String = "Theme",
+    override val title = Res.string.settings_label_theme,
     override val configs: List<String> = listOf("Dark", "Light", "Follow System"),
 ) : Settings
 
 data class Language(
-    override val title: String = "Language",
+    override val title = Res.string.settings_label_language,
     override val configs: List<String> = listOf("English", "Korean", "Japanese", "Chinese")
 ) : Settings
 
 data class ConnectGoogleTasks(
-    override val title: String = "ConnectGoogleTasks",
+    override val title = Res.string.settings_label_connect_google_tasks,
     override val configs: List<String> = listOf("On", "Off")
 ) : Settings
 
@@ -241,7 +241,7 @@ private fun SectionListItem(
             ),
     ) {
         Text(
-            text = settings.title,
+            text = stringResource(settings.title),
             // TODO: change color
             color = Color.White,
             style = MaterialTheme.typography.bodyLarge,

@@ -9,6 +9,10 @@
     <string name="settings_screen_general">General</string>
     <string name="settings_screen_more_options">More Options</string>
 
+    <string name="settings_label_theme">Theme</string>
+    <string name="settings_label_language">Language</string>
+    <string name="settings_label_connect_google_tasks">Connect Google Tasks</string>
+
     <string name="status_label_ready">Ready</string>
     <string name="status_label_inprogress">In progress</string>
     <string name="status_label_done">Done</string>
