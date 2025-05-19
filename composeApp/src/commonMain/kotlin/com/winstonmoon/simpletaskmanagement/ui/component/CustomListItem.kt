@@ -27,6 +27,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.winstonmoon.simpletaskmanagement.model.Priority
 import com.winstonmoon.simpletaskmanagement.model.Status
+import com.winstonmoon.simpletaskmanagement.ui.theme.RomanSilver
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import simpletaskmanagement.composeapp.generated.resources.Res
@@ -42,13 +46,22 @@ fun CustomListItem(
     todo: String,
     status: Status,
     priority: Priority,
-//    dueDate: Date,
+    dueDate: Long,
     onClickEdit: () -> Unit,
     onClickDuplicate: () -> Unit,
     onClickDelete: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var isDropDownMenuExpanded by remember { mutableStateOf(false) }
+    val formattedDate = remember(dueDate) {
+        val instant = Instant.fromEpochMilliseconds(dueDate)
+        val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+        val year = localDateTime.year.toString().padStart(4, '0')
+        val month = localDateTime.month.toString().substring(0, 1).uppercase() +
+                localDateTime.month.toString().substring(1, 3).lowercase()
+        val day = localDateTime.dayOfMonth.toString().padStart(2, '0')
+        "$day $month $year"
+    }
 
     Card(
         modifier = modifier
@@ -134,10 +147,9 @@ fun CustomListItem(
                     painter = painterResource(Res.drawable.ic_calendar_month_18),
                     contentDescription = null,
                 )
-                // TODO change text
                 Text(
-//                    text = dueDate,
-                    text = "22 oct 2024",
+                    text = formattedDate,
+                    color = RomanSilver,
                     style = MaterialTheme.typography.bodyMedium,
                 )
             }
