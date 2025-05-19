@@ -32,6 +32,9 @@ import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import simpletaskmanagement.composeapp.generated.resources.Res
+import simpletaskmanagement.composeapp.generated.resources.settings_label_connect_google_tasks
+import simpletaskmanagement.composeapp.generated.resources.settings_label_language
+import simpletaskmanagement.composeapp.generated.resources.settings_label_theme
 import simpletaskmanagement.composeapp.generated.resources.settings_screen_general
 import simpletaskmanagement.composeapp.generated.resources.settings_screen_more_options
 import simpletaskmanagement.composeapp.generated.resources.settings_screen_title
@@ -42,17 +45,17 @@ sealed interface Settings {
 }
 
 data class Theme(
-    override val title = Res.string.settings_label_theme,
+    override val title: StringResource = Res.string.settings_label_theme,
     override val configs: List<String> = listOf("Dark", "Light", "Follow System"),
 ) : Settings
 
 data class Language(
-    override val title = Res.string.settings_label_language,
+    override val title: StringResource = Res.string.settings_label_language,
     override val configs: List<String> = listOf("English", "Korean", "Japanese", "Chinese")
 ) : Settings
 
 data class ConnectGoogleTasks(
-    override val title = Res.string.settings_label_connect_google_tasks,
+    override val title: StringResource = Res.string.settings_label_connect_google_tasks,
     override val configs: List<String> = listOf("On", "Off")
 ) : Settings
 

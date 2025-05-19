@@ -137,6 +137,7 @@ internal fun TaskScreen(
                             todo = it.title,
                             status = it.status,
                             priority = it.priority,
+                            dueDate = it.dueDate,
                             onClickEdit = {},
                             onClickDuplicate = {
                                 onClickDuplicate(it)
@@ -172,6 +173,7 @@ internal fun TaskScreen(
                             todo = it.title,
                             status = it.status,
                             priority = it.priority,
+                            dueDate = it.dueDate,
                             onClickEdit = {},
                             onClickDuplicate = {
                                 onClickDuplicate(it)
@@ -201,6 +203,7 @@ internal fun TaskScreen(
                             todo = it.title,
                             status = it.status,
                             priority = it.priority,
+                            dueDate = it.dueDate,
                             onClickEdit = {},
                             onClickDuplicate = {
                                 onClickDuplicate(it)
