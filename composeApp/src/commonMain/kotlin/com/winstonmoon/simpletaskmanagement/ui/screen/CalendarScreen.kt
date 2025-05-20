@@ -1,6 +1,7 @@
 package com.winstonmoon.simpletaskmanagement.ui.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
@@ -41,6 +43,10 @@ import com.winstonmoon.simpletaskmanagement.model.Status
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomListItem
+import com.winstonmoon.simpletaskmanagement.ui.theme.DarkJungleGreen
+import com.winstonmoon.simpletaskmanagement.ui.theme.RomanSilver
+import com.winstonmoon.simpletaskmanagement.ui.theme.VampireBlack
+import com.winstonmoon.simpletaskmanagement.ui.theme.White
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -65,7 +71,13 @@ fun CalendarRoute(
     CalendarScreen(
         tasks = tasks,
         drawerState = drawerState,
+        onClickDay = {
+            viewModel.getTasksByDueDate(it)
+        },
         onClickAddButton = onClickAddButton,
+        onClickDelete = {
+            viewModel.deleteTask(it)
+        },
         modifier = modifier,
     )
 }
@@ -74,7 +86,9 @@ fun CalendarRoute(
 internal fun CalendarScreen(
     tasks: List<TaskEntity>,
     drawerState: DrawerState,
+    onClickDay: (Long) -> Unit,
     onClickAddButton: () -> Unit,
+    onClickDelete: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -100,24 +114,30 @@ internal fun CalendarScreen(
             // TODO check
             verticalArrangement = Arrangement.spacedBy(22.dp)
         ) {
-            Calendar()
+            Calendar(
+                onClickDay = onClickDay,
+            )
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth(),
             ) {
                 items(
-                    listOf("WorkOut", "HomeWork")
+                    tasks
                 ) {
                     CustomListItem(
                         modifier = Modifier
                             .padding(horizontal = 16.dp),
-                        todo = it,
-                        status = Status.DONE,
-                        priority = Priority.LOW,
-                        dueDate = 0L,
+                        todo = it.title,
+                        status = it.status,
+                        priority = it.priority,
+                        dueDate = it.dueDate,
                         onClickEdit = {},
-                        onClickDuplicate = {},
-                        onClickDelete = {},
+                        onClickDuplicate = {
+
+                        },
+                        onClickDelete = {
+                            onClickDelete(it.id)
+                        },
                     )
                     Spacer(
                         modifier = Modifier
@@ -132,24 +152,22 @@ internal fun CalendarScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun Calendar(
+    onClickDay: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val localDensity = LocalDensity.current
-
-    var itemWidthDp by remember {
-        mutableStateOf(0.dp)
-    }
-
-    val pagerState = rememberPagerState(pageCount = {
-        30
-    })
+    var itemWidthDp by remember { mutableStateOf(0.dp) }
+    val pagerState = rememberPagerState(pageCount = { 30 })
 
     Column(
         modifier = modifier
             .fillMaxWidth()
             .onGloballyPositioned { layoutCoordinates ->
-                itemWidthDp = with(localDensity) { (layoutCoordinates.size.width.toDp() - 80.dp) / 7 }
+                itemWidthDp = with(localDensity) {
+                    (layoutCoordinates.size.width.toDp() - 80.dp) / 7
+                }
             }
+            .background(color = DarkJungleGreen)
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -169,13 +187,13 @@ private fun Calendar(
                 Text(
 //                    text = stringResource(),
                     text = "December",
-                    color = Color.White,
+                    color = White,
                     style = MaterialTheme.typography.bodyLarge,
                 )
                 Text(
 //                    text = stringResource(status.label),
                     text = "2024",
-                    color = Color.White,
+                    color = RomanSilver,
                     style = MaterialTheme.typography.labelLarge,
                 )
             }
@@ -194,13 +212,17 @@ private fun Calendar(
             pageSize = PageSize.Fixed(itemWidthDp),
             pageSpacing = 10.dp,
         ) { page ->
+
             Card(
+                onClick = {
+                    onClickDay(page.toLong())
+                },
                 modifier = Modifier
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(6.dp),
                 colors = CardColors(
-                    contentColor = Color.Gray,
-                    containerColor = Color.White,
+                    contentColor = White,
+                    containerColor = VampireBlack,
                     disabledContentColor = Color.White,
                     disabledContainerColor = Color.White,
                 )
@@ -211,12 +233,10 @@ private fun Calendar(
                 ) {
                     Text(
                         text = "$page",
-                        color = Color.Black,
                         style = MaterialTheme.typography.labelLarge,
                     )
                     Text(
                         text = "$page",
-                        color = Color.Black,
                         style = MaterialTheme.typography.labelLarge,
                     )
                 }
