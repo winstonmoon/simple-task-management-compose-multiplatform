@@ -1,6 +1,7 @@
 package com.winstonmoon.simpletaskmanagement.ui.component
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,7 +28,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.winstonmoon.simpletaskmanagement.model.Priority
 import com.winstonmoon.simpletaskmanagement.model.Status
+import com.winstonmoon.simpletaskmanagement.ui.theme.ChineseBlack
 import com.winstonmoon.simpletaskmanagement.ui.theme.RomanSilver
+import com.winstonmoon.simpletaskmanagement.ui.theme.White
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -65,10 +68,10 @@ fun CustomListItem(
 
     Card(
         modifier = modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(color = ChineseBlack),
         shape = RoundedCornerShape(4.dp),
-        // TODO change color
-        border = BorderStroke(width = 1.dp, color = Color.White),
+        border = BorderStroke(width = 1.dp, color = RomanSilver),
     ) {
         Column(
             modifier = Modifier
@@ -82,6 +85,7 @@ fun CustomListItem(
             ) {
                 Text(
                     text = todo,
+                    color = White,
                     style = MaterialTheme.typography.bodyLarge,
                 )
                 Box {
