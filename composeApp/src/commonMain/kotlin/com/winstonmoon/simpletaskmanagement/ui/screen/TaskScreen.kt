@@ -112,22 +112,20 @@ internal fun TaskScreen(
             LazyColumn(
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                stickyHeader {
-                    TitleSection(
-                        status = Status.READY,
-                        number = readyTasks.size,
-                        isExpended = true,
-                    )
-                }
-                item {
-                    SortSection()
-                }
-                items(
-                    readyTasks
-                ) {
-                    if (readyTasks.isEmpty()) {
-                        Text("No Task")
-                    } else {
+                if (readyTasks.isNotEmpty()) {
+                    stickyHeader {
+                        TitleSection(
+                            status = Status.READY,
+                            number = readyTasks.size,
+                            isExpended = true,
+                        )
+                    }
+                    item {
+                        SortSection()
+                    }
+                    items(
+                        readyTasks
+                    ) {
                         Spacer(
                             modifier = Modifier.height(18.dp)
                         )
@@ -148,22 +146,22 @@ internal fun TaskScreen(
                         )
                     }
                 }
-                stickyHeader {
-                    TitleSection(
-                        status = Status.IN_PROGRESS,
-                        number = inProgressTasks.size,
-                        isExpended = true,
-                    )
-                }
-                item {
-                    SortSection()
-                }
-                items(
-                    inProgressTasks
-                ) {
-                    if (inProgressTasks.isEmpty()) {
-                        Text("No Task")
-                    } else {
+
+                if (inProgressTasks.isNotEmpty()) {
+                    stickyHeader {
+                        TitleSection(
+                            status = Status.IN_PROGRESS,
+                            number = inProgressTasks.size,
+                            isExpended = true,
+                        )
+                    }
+                    item {
+                        SortSection()
+                    }
+                    items(
+                        inProgressTasks
+                    ) {
+
                         Spacer(
                             modifier = Modifier.height(18.dp)
                         )
@@ -184,19 +182,21 @@ internal fun TaskScreen(
                         )
                     }
                 }
-                stickyHeader {
-                    TitleSection(
-                        status = Status.DONE,
-                        number = doneTasks.size,
-                        isExpended = true,
-                    )
-                }
-                items(
-                    doneTasks
-                ) {
-                    if (doneTasks.isEmpty()) {
-                        Text("No Task")
-                    } else {
+
+                if (doneTasks.isNotEmpty()) {
+                    stickyHeader {
+                        TitleSection(
+                            status = Status.DONE,
+                            number = doneTasks.size,
+                            isExpended = true,
+                        )
+                    }
+                    item {
+                        SortSection()
+                    }
+                    items(
+                        doneTasks
+                    ) {
                         CustomListItem(
                             modifier = Modifier
                                 .padding(horizontal = 16.dp),
