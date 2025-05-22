@@ -3,6 +3,8 @@ package com.winstonmoon.simpletaskmanagement.ui.component
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.ChipColors
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,15 +35,14 @@ fun CustomAssistChipWithIcon(
     label: StringResource,
     icon: DrawableResource,
     modifier: Modifier = Modifier,
+    colors: ChipColors = AssistChipDefaults.assistChipColors(),
 ) {
     AssistChip(
         modifier = modifier,
         onClick = {},
-        enabled = false,
         label = {
             Text(
                 text = stringResource(label),
-                color = MaterialTheme.colorScheme.onSurface,
                 style = MaterialTheme.typography.labelMedium,
             )
         },
@@ -50,10 +51,10 @@ fun CustomAssistChipWithIcon(
                 painter = painterResource(icon),
                 contentDescription = null,
                 modifier = Modifier.size(18.dp),
-                tint = MaterialTheme.colorScheme.primary,
             )
         },
         shape = RoundedCornerShape(24.dp),
+        colors = colors,
     )
 }
 
@@ -61,18 +62,18 @@ fun CustomAssistChipWithIcon(
 fun CustomAssistChip(
     label: String,
     modifier: Modifier = Modifier,
+    colors: ChipColors = AssistChipDefaults.assistChipColors(),
 ) {
     AssistChip(
         modifier = modifier,
         onClick = {},
-        enabled = false,
         label = {
             Text(
                 text = label,
-                color = Color.White,
                 style = MaterialTheme.typography.labelMedium,
             )
         },
         shape = RoundedCornerShape(24.dp),
+        colors = colors,
     )
 }

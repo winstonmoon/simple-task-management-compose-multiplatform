@@ -14,13 +14,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ChipColors
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,11 +29,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.winstonmoon.simpletaskmanagement.database.model.TaskEntity
 import com.winstonmoon.simpletaskmanagement.model.Status
-import com.winstonmoon.simpletaskmanagement.model.Task
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAssistChip
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomListItem
+import com.winstonmoon.simpletaskmanagement.ui.theme.DarkJungleGreen
+import com.winstonmoon.simpletaskmanagement.ui.theme.White
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -161,7 +162,6 @@ internal fun TaskScreen(
                     items(
                         inProgressTasks
                     ) {
-
                         Spacer(
                             modifier = Modifier.height(18.dp)
                         )
@@ -197,6 +197,9 @@ internal fun TaskScreen(
                     items(
                         doneTasks
                     ) {
+                        Spacer(
+                            modifier = Modifier.height(18.dp)
+                        )
                         CustomListItem(
                             modifier = Modifier
                                 .padding(horizontal = 16.dp),
@@ -211,9 +214,6 @@ internal fun TaskScreen(
                             onClickDelete = {
                                 onClickDelete(it.id)
                             },
-                        )
-                        Spacer(
-                            modifier = Modifier.height(18.dp)
                         )
                     }
                 }
@@ -249,7 +249,17 @@ private fun TitleSection(
             )
             CustomAssistChip(
                 modifier = Modifier,
-                label = number.toString()
+                label = number.toString(),
+                colors = ChipColors(
+                    containerColor = DarkJungleGreen,
+                    labelColor = White,
+                    leadingIconContentColor = Color.Transparent,
+                    trailingIconContentColor = Color.Transparent,
+                    disabledContainerColor = Color.Transparent,
+                    disabledLabelColor = Color.Transparent,
+                    disabledLeadingIconContentColor = Color.Transparent,
+                    disabledTrailingIconContentColor = Color.Transparent,
+                )
             )
         }
         Icon(
