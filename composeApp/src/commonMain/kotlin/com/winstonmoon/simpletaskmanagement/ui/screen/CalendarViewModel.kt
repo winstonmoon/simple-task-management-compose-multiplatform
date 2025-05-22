@@ -32,4 +32,10 @@ class CalendarViewModel(
             taskDataSource.deleteTask(id = id)
         }
     }
+
+    data class Month(
+        val year: Int,
+        val month: Int,
+        val days: List<Int>,
+    )
 }
