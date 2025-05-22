@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardColors
+import androidx.compose.material3.ChipColors
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -29,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import com.winstonmoon.simpletaskmanagement.model.Priority
 import com.winstonmoon.simpletaskmanagement.model.Status
 import com.winstonmoon.simpletaskmanagement.ui.theme.ChineseBlack
+import com.winstonmoon.simpletaskmanagement.ui.theme.DarkJungleGreen
 import com.winstonmoon.simpletaskmanagement.ui.theme.RomanSilver
 import com.winstonmoon.simpletaskmanagement.ui.theme.White
 import kotlinx.datetime.Instant
@@ -67,10 +70,14 @@ fun CustomListItem(
     }
 
     Card(
-        modifier = modifier
-            .fillMaxSize()
-            .background(color = ChineseBlack),
+        modifier = modifier.fillMaxSize(),
         shape = RoundedCornerShape(4.dp),
+        colors = CardColors(
+            contentColor = ChineseBlack,
+            containerColor = Color.Transparent,
+            disabledContentColor = Color.Transparent,
+            disabledContainerColor = Color.Transparent,
+        ),
         border = BorderStroke(width = 1.dp, color = RomanSilver),
     ) {
         Column(
@@ -95,6 +102,7 @@ fun CustomListItem(
                             .clickable { isDropDownMenuExpanded = true },
                         painter = painterResource(Res.drawable.ic_more_vert_24),
                         contentDescription = null,
+                        tint = RomanSilver,
                     )
                     DropdownMenu(
                         expanded = isDropDownMenuExpanded,
@@ -135,10 +143,30 @@ fun CustomListItem(
                 CustomAssistChipWithIcon(
                     label = status.label,
                     icon = status.icon,
+                    colors = ChipColors(
+                        containerColor = DarkJungleGreen,
+                        labelColor = White,
+                        leadingIconContentColor = RomanSilver,
+                        trailingIconContentColor = Color.Transparent,
+                        disabledContainerColor = Color.Transparent,
+                        disabledLabelColor = Color.Transparent,
+                        disabledLeadingIconContentColor = Color.Transparent,
+                        disabledTrailingIconContentColor = Color.Transparent,
+                    )
                 )
                 CustomAssistChipWithIcon(
                     label = priority.label,
                     icon = priority.icon,
+                    colors = ChipColors(
+                        containerColor = DarkJungleGreen,
+                        labelColor = White,
+                        leadingIconContentColor = RomanSilver,
+                        trailingIconContentColor = Color.Transparent,
+                        disabledContainerColor = Color.Transparent,
+                        disabledLabelColor = Color.Transparent,
+                        disabledLeadingIconContentColor = Color.Transparent,
+                        disabledTrailingIconContentColor = Color.Transparent,
+                    )
                 )
             }
             Row(
@@ -150,6 +178,7 @@ fun CustomListItem(
                         .size(18.dp),
                     painter = painterResource(Res.drawable.ic_calendar_month_18),
                     contentDescription = null,
+                    tint = RomanSilver,
                 )
                 Text(
                     text = formattedDate,
