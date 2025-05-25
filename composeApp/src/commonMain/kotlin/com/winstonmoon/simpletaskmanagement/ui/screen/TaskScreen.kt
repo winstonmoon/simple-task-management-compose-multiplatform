@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.ChipColors
+import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -250,15 +250,9 @@ private fun TitleSection(
             CustomAssistChip(
                 modifier = Modifier,
                 label = number.toString(),
-                colors = ChipColors(
+                colors = AssistChipDefaults.assistChipColors().copy(
                     containerColor = DarkJungleGreen,
                     labelColor = White,
-                    leadingIconContentColor = Color.Transparent,
-                    trailingIconContentColor = Color.Transparent,
-                    disabledContainerColor = Color.Transparent,
-                    disabledLabelColor = Color.Transparent,
-                    disabledLeadingIconContentColor = Color.Transparent,
-                    disabledTrailingIconContentColor = Color.Transparent,
                 )
             )
         }

@@ -1,7 +1,6 @@
 package com.winstonmoon.simpletaskmanagement.ui.component
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,9 +11,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
-import androidx.compose.material3.ChipColors
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -143,29 +142,19 @@ fun CustomListItem(
                 CustomAssistChipWithIcon(
                     label = status.label,
                     icon = status.icon,
-                    colors = ChipColors(
+                    colors = AssistChipDefaults.assistChipColors().copy(
                         containerColor = DarkJungleGreen,
                         labelColor = White,
                         leadingIconContentColor = RomanSilver,
-                        trailingIconContentColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent,
-                        disabledLabelColor = Color.Transparent,
-                        disabledLeadingIconContentColor = Color.Transparent,
-                        disabledTrailingIconContentColor = Color.Transparent,
                     )
                 )
                 CustomAssistChipWithIcon(
                     label = priority.label,
                     icon = priority.icon,
-                    colors = ChipColors(
+                    colors = AssistChipDefaults.assistChipColors().copy(
                         containerColor = DarkJungleGreen,
                         labelColor = White,
                         leadingIconContentColor = RomanSilver,
-                        trailingIconContentColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent,
-                        disabledLabelColor = Color.Transparent,
-                        disabledLeadingIconContentColor = Color.Transparent,
-                        disabledTrailingIconContentColor = Color.Transparent,
                     )
                 )
             }
