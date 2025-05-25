@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.winstonmoon.simpletaskmanagement.ui.theme.ChineseBlack
 import com.winstonmoon.simpletaskmanagement.ui.theme.RomanSilver
+import com.winstonmoon.simpletaskmanagement.ui.theme.White
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
@@ -42,7 +43,6 @@ fun CustomAppBar(
                 Text(
                     text = stringResource(title),
                     style = MaterialTheme.typography.titleLarge,
-                    color = RomanSilver,
                 )
             },
             navigationIcon = {
@@ -57,7 +57,6 @@ fun CustomAppBar(
                         Icon(
                             imageVector = Icons.Filled.Menu,
                             contentDescription = null,
-                            tint = RomanSilver,
                         )
                     }
                 }
@@ -68,12 +67,15 @@ fun CustomAppBar(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = null,
-                            tint = RomanSilver,
                         )
                     }
                 }
             },
-            colors = TopAppBarDefaults.centerAlignedTopAppBarColors().copy(containerColor = ChineseBlack),
+            colors = TopAppBarDefaults.centerAlignedTopAppBarColors().copy(
+                containerColor = ChineseBlack,
+                navigationIconContentColor = RomanSilver,
+                titleContentColor = White,
+            ),
         )
         HorizontalDivider(
             modifier = Modifier.align(Alignment.BottomStart),
