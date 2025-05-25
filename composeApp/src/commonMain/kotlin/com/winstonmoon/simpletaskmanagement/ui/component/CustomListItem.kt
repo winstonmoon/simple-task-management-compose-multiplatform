@@ -34,6 +34,7 @@ import com.winstonmoon.simpletaskmanagement.ui.theme.DarkJungleGreen
 import com.winstonmoon.simpletaskmanagement.ui.theme.RomanSilver
 import com.winstonmoon.simpletaskmanagement.ui.theme.White
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.painterResource
@@ -59,12 +60,12 @@ fun CustomListItem(
 ) {
     var isDropDownMenuExpanded by remember { mutableStateOf(false) }
     val formattedDate = remember(dueDate) {
-        val instant = Instant.fromEpochMilliseconds(dueDate)
-        val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
-        val year = localDateTime.year.toString().padStart(4, '0')
-        val month = localDateTime.month.toString().substring(0, 1).uppercase() +
-                localDateTime.month.toString().substring(1, 3).lowercase()
-        val day = localDateTime.dayOfMonth.toString().padStart(2, '0')
+        // TODO
+        val localDate = Instant.fromEpochMilliseconds(dueDate).toLocalDateTime(TimeZone.currentSystemDefault()).date
+        val year = localDate.year.toString().padStart(4, '0')
+        val month = localDate.month.toString().substring(0, 1).uppercase() +
+                localDate.month.toString().substring(1, 3).lowercase()
+        val day = localDate.dayOfMonth.toString().padStart(2, '0')
         "$day $month $year"
     }
 

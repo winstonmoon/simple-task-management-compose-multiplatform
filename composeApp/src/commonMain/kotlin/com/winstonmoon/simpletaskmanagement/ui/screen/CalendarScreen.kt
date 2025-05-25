@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,32 +15,33 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PageSize
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CardColors
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DrawerState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.winstonmoon.simpletaskmanagement.database.model.TaskEntity
-import com.winstonmoon.simpletaskmanagement.model.Priority
-import com.winstonmoon.simpletaskmanagement.model.Status
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomListItem
@@ -47,6 +49,7 @@ import com.winstonmoon.simpletaskmanagement.ui.theme.DarkJungleGreen
 import com.winstonmoon.simpletaskmanagement.ui.theme.RomanSilver
 import com.winstonmoon.simpletaskmanagement.ui.theme.VampireBlack
 import com.winstonmoon.simpletaskmanagement.ui.theme.White
+import kotlinx.datetime.*
 import kotlinx.serialization.Serializable
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
@@ -54,10 +57,13 @@ import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.calendar_screen_title
 import simpletaskmanagement.composeapp.generated.resources.floating_action_button_label_new
 import simpletaskmanagement.composeapp.generated.resources.ic_arrow_back_ios_18
+import simpletaskmanagement.composeapp.generated.resources.ic_arrow_drop_down_24
 import simpletaskmanagement.composeapp.generated.resources.ic_arrow_forward_ios_18
 
 @Serializable
 data object CalendarRoute
+
+const val CENTRAL_PAGE_INDEX = Int.MAX_VALUE / 2
 
 @Composable
 fun CalendarRoute(
@@ -66,31 +72,49 @@ fun CalendarRoute(
     modifier: Modifier = Modifier,
     viewModel: CalendarViewModel = koinViewModel<CalendarViewModel>()
 ) {
+    // TODO
+    viewModel.createDisplayedWeekDays()
     val tasks by viewModel.tasks.collectAsStateWithLifecycle()
+    val displayedWeekdays by viewModel.displayedWeekDays.collectAsStateWithLifecycle()
 
     CalendarScreen(
         tasks = tasks,
+        displayedWeekdays = displayedWeekdays,
         drawerState = drawerState,
         onClickDay = {
-            viewModel.getTasksByDueDate(it)
+            viewModel.getTasksByDueDate(it.toEpochDays().toLong())
         },
         onClickAddButton = onClickAddButton,
         onClickDelete = {
             viewModel.deleteTask(it)
         },
+        onPagerStateChanged = {
+            viewModel.createDisplayedWeekDays()
+        },
+        initCalendar = {
+            viewModel.createDisplayedWeekDays()
+        },
         modifier = modifier,
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun CalendarScreen(
     tasks: List<TaskEntity>,
+    displayedWeekdays: List<LocalDate>,
     drawerState: DrawerState,
-    onClickDay: (Long) -> Unit,
+    onClickDay: (LocalDate) -> Unit,
     onClickAddButton: () -> Unit,
     onClickDelete: (Long) -> Unit,
+    onPagerStateChanged: (Int) -> Unit,
+    initCalendar: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    LifecycleEventEffect(Lifecycle.Event.ON_CREATE) {
+//        initCalendar()
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -114,8 +138,15 @@ internal fun CalendarScreen(
             // TODO check
             verticalArrangement = Arrangement.spacedBy(22.dp)
         ) {
+            var shouldShowDatePicker by remember { mutableStateOf(false) }
+            val datePickerState = rememberDatePickerState()
             Calendar(
+                displayedWeekdays = displayedWeekdays,
                 onClickDay = onClickDay,
+                onClickYearMonth = {
+                    shouldShowDatePicker = true
+                },
+                onPagerStateChanged = onPagerStateChanged,
             )
             LazyColumn(
                 modifier = Modifier
@@ -145,6 +176,29 @@ internal fun CalendarScreen(
                     )
                 }
             }
+            if (shouldShowDatePicker) {
+                DatePickerDialog(
+                    onDismissRequest = { shouldShowDatePicker = false },
+//                onDismissRequest = onDismiss,
+                    confirmButton = {
+                        TextButton(onClick = {
+//                            onDateSelected(datePickerState.selectedDateMillis)
+                            shouldShowDatePicker = false
+//                        onDismiss()
+                        }) {
+                            Text("OK")
+                        }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = {  shouldShowDatePicker = false }) {
+//                    TextButton(onClick = onDismiss) {
+                            Text("Cancel")
+                        }
+                    }
+                ) {
+                    DatePicker(state = datePickerState)
+                }
+            }
         }
     }
 }
@@ -152,21 +206,24 @@ internal fun CalendarScreen(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun Calendar(
-    onClickDay: (Long) -> Unit,
+    displayedWeekdays: List<LocalDate>,
+    onClickDay: (LocalDate) -> Unit,
+    onClickYearMonth: (Boolean) -> Unit,
+    onPagerStateChanged: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val localDensity = LocalDensity.current
-    var itemWidthDp by remember { mutableStateOf(0.dp) }
-    val pagerState = rememberPagerState(pageCount = { 30 })
+    val pagerState = rememberPagerState(
+        initialPage = CENTRAL_PAGE_INDEX,
+        pageCount = { Int.MAX_VALUE }
+    )
+
+    LaunchedEffect(pagerState) {
+        onPagerStateChanged(pagerState.currentPage)
+    }
 
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .onGloballyPositioned { layoutCoordinates ->
-                itemWidthDp = with(localDensity) {
-                    (layoutCoordinates.size.width.toDp() - 80.dp) / 7
-                }
-            }
             .background(color = DarkJungleGreen)
     ) {
         Row(
@@ -175,30 +232,44 @@ private fun Calendar(
         ) {
             Icon(
                 modifier = Modifier
+                    .padding(top = 8.dp)
                     .clickable {
 
                     },
                 painter = painterResource(Res.drawable.ic_arrow_back_ios_18),
                 contentDescription = null,
             )
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
+            Row (
+                modifier = Modifier.clickable {
+                    onClickYearMonth(true)
+                },
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text(
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Text(
 //                    text = stringResource(),
-                    text = "December",
-                    color = White,
-                    style = MaterialTheme.typography.bodyLarge,
-                )
-                Text(
+                        text = displayedWeekdays.first().month.toString().substring(0, 1).uppercase() +
+                                displayedWeekdays.first().month.toString().substring(1, 3).lowercase(),
+                        color = White,
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
+                    Text(
 //                    text = stringResource(status.label),
-                    text = "2024",
-                    color = RomanSilver,
-                    style = MaterialTheme.typography.labelLarge,
+                        text = displayedWeekdays.first().year.toString(),
+                        color = RomanSilver,
+                        style = MaterialTheme.typography.labelLarge,
+                    )
+                }
+                Icon(
+                    painter = painterResource(Res.drawable.ic_arrow_drop_down_24),
+                    contentDescription = null,
                 )
             }
             Icon(
                 modifier = Modifier
+                    .padding(top = 8.dp)
                     .clickable {
 
                     },
@@ -209,38 +280,64 @@ private fun Calendar(
 
         HorizontalPager(
             state = pagerState,
-            pageSize = PageSize.Fixed(itemWidthDp),
             pageSpacing = 10.dp,
         ) { page ->
-
-            Card(
-                onClick = {
-                    onClickDay(page.toLong())
-                },
-                modifier = Modifier
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(6.dp),
-                colors = CardColors(
-                    contentColor = White,
-                    containerColor = VampireBlack,
-                    disabledContentColor = Color.White,
-                    disabledContainerColor = Color.White,
-                )
+            Row(
+                modifier = Modifier.padding(horizontal = 8.dp),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Text(
-                        text = "$page",
-                        style = MaterialTheme.typography.labelLarge,
-                    )
-                    Text(
-                        text = "$page",
-                        style = MaterialTheme.typography.labelLarge,
+                val startItemIndex = page * 7
+                val endItemIndex = (startItemIndex + 7).coerceAtMost(Int.MAX_VALUE)
+
+                displayedWeekdays.forEach {
+                    CardItem(
+                        date = it,
+                        onClickDay = onClickDay,
                     )
                 }
+
+                val remainingSlots = 7 - (endItemIndex - startItemIndex)
+                repeat(remainingSlots) {
+                    Spacer(modifier = Modifier.weight(1f))
+                }
             }
+        }
+    }
+}
+
+@Composable
+fun RowScope.CardItem(
+    date: LocalDate,
+    onClickDay: (LocalDate) -> Unit,
+) {
+    Card(
+        onClick = {
+            onClickDay(date)
+        },
+        modifier = Modifier
+            .weight(1f)
+            .padding(4.dp),
+        shape = RoundedCornerShape(6.dp),
+        colors = CardDefaults.cardColors().copy(
+            contentColor = White,
+            containerColor = VampireBlack,
+        )
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Text(
+                // TODO
+                text = date.dayOfWeek.toString().substring(0, 1).uppercase() +
+                        date.dayOfWeek.toString().substring(1, 3).lowercase(),
+                style = MaterialTheme.typography.labelLarge,
+            )
+            Text(
+                text = date.dayOfMonth.toString(),
+                style = MaterialTheme.typography.labelLarge,
+            )
         }
     }
 }
