@@ -72,7 +72,6 @@ fun CalendarRoute(
     modifier: Modifier = Modifier,
     viewModel: CalendarViewModel = koinViewModel<CalendarViewModel>()
 ) {
-    // TODO
     viewModel.createDisplayedWeekDays()
     val tasks by viewModel.tasks.collectAsStateWithLifecycle()
     val displayedWeekdays by viewModel.displayedWeekDays.collectAsStateWithLifecycle()
@@ -112,7 +111,7 @@ internal fun CalendarScreen(
     modifier: Modifier = Modifier,
 ) {
     LifecycleEventEffect(Lifecycle.Event.ON_CREATE) {
-//        initCalendar()
+        initCalendar()
     }
 
     Scaffold(
@@ -287,19 +286,17 @@ private fun Calendar(
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                val startItemIndex = page * 7
-                val endItemIndex = (startItemIndex + 7).coerceAtMost(Int.MAX_VALUE)
-
-                displayedWeekdays.forEach {
-                    CardItem(
-                        date = it,
-                        onClickDay = onClickDay,
-                    )
-                }
-
-                val remainingSlots = 7 - (endItemIndex - startItemIndex)
-                repeat(remainingSlots) {
-                    Spacer(modifier = Modifier.weight(1f))
+                if (displayedWeekdays.isNotEmpty()) {
+                    displayedWeekdays.forEach {
+                        CardItem(
+                            date = it,
+                            onClickDay = onClickDay,
+                        )
+                    }
+                } else {
+                    repeat(7) {
+                        Spacer(modifier = Modifier.weight(1f).padding(4.dp))
+                    }
                 }
             }
         }
