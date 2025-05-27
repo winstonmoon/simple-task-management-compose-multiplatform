@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.winstonmoon.simpletaskmanagement.ui.screen.AchievementRoute
@@ -130,7 +131,19 @@ fun App() {
                         },
                     )
                 }
-                composable<InputTaskRoute> {
+//                composable<InputTaskRoute> {
+//                    val inputTaskRoute: InputTaskRoute = it.toRoute()
+//                    InputTaskRoute(
+//                        title = inputTaskRoute.title,
+//                        status = "",
+//                        priority = "",
+//                        date = inputTaskRoute.date,
+//                        onClickBack = {
+//                            navController.popBackStack()
+//                        },
+//                    )
+//                }
+                dialog<InputTaskRoute> {
                     val inputTaskRoute: InputTaskRoute = it.toRoute()
                     InputTaskRoute(
                         title = inputTaskRoute.title,
