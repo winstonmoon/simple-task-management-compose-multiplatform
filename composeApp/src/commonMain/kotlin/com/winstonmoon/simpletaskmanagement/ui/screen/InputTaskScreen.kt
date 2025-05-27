@@ -5,11 +5,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DropdownMenu
@@ -31,6 +34,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.winstonmoon.simpletaskmanagement.model.Priority
 import com.winstonmoon.simpletaskmanagement.model.Status
@@ -123,151 +128,163 @@ internal fun InputTaskScreen(
 ) {
     val focusManager = LocalFocusManager.current
 
-    Scaffold(
-        modifier = modifier,
-        topBar = {
-            CustomAppBar(
-                title = Res.string.input_task_screen_title,
-                onClickBack = onClickBack,
-            )
-        },
-        floatingActionButton = {
-            CustomFloatingActionButton(
-                modifier = Modifier,
-                onClick = onClickRegisterButton,
-                title = Res.string.floating_action_button_label_register,
-            )
-        },
-    ) { paddingValues ->
-        Column(
+//    Scaffold(
+//        modifier = modifier,
+//        topBar = {
+//            CustomAppBar(
+//                title = Res.string.input_task_screen_title,
+//                onClickBack = onClickBack,
+//            )
+//        },
+//        floatingActionButton = {
+//            CustomFloatingActionButton(
+//                modifier = Modifier,
+//                onClick = onClickRegisterButton,
+//                title = Res.string.floating_action_button_label_register,
+//            )
+//        },
+//    ) { paddingValues ->
+    Dialog(
+        onDismissRequest = {},
+        DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
+    ) {
+        Card(
             modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize()
-                .addFocusCleaner(focusManager),
+                .fillMaxWidth()
+                .height(375.dp)
+                .padding(16.dp),
+            shape = RoundedCornerShape(16.dp),
         ) {
-            var statusExpanded by remember { mutableStateOf(false) }
-            var priorityExpanded by remember { mutableStateOf(false) }
-            var shouldShowDatePicker by remember { mutableStateOf(false) }
-            val datePickerState = rememberDatePickerState()
-            val formattedDate = remember(date) {
-                val instant = Instant.fromEpochMilliseconds(date)
-                val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
-                val year = localDateTime.year.toString().padStart(4, '0')
-                val month = localDateTime.monthNumber.toString().padStart(2, '0')
-                val day = localDateTime.dayOfMonth.toString().padStart(2, '0')
-                "$year/$month/$day"
-            }
-
-            TextField(
-                value = title,
-                onValueChange = { onTitleChanged(it) },
-                placeholder = { Text("Task") },
-                keyboardOptions = KeyboardOptions(
-                    imeAction = ImeAction.Done,
-                ),
-                keyboardActions = KeyboardActions(onDone = {
-                    focusManager.clearFocus()
-                })
-            )
-
-            Box (
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
+//                .padding(paddingValues)
+                    .fillMaxSize()
+                    .addFocusCleaner(focusManager),
             ) {
+                var statusExpanded by remember { mutableStateOf(false) }
+                var priorityExpanded by remember { mutableStateOf(false) }
+                var shouldShowDatePicker by remember { mutableStateOf(false) }
+                val datePickerState = rememberDatePickerState()
+                val formattedDate = remember(date) {
+                    val instant = Instant.fromEpochMilliseconds(date)
+                    val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+                    val year = localDateTime.year.toString().padStart(4, '0')
+                    val month = localDateTime.monthNumber.toString().padStart(2, '0')
+                    val day = localDateTime.dayOfMonth.toString().padStart(2, '0')
+                    "$year/$month/$day"
+                }
+
+                TextField(
+                    value = title,
+                    onValueChange = { onTitleChanged(it) },
+                    placeholder = { Text("Task") },
+                    keyboardOptions = KeyboardOptions(
+                        imeAction = ImeAction.Done,
+                    ),
+                    keyboardActions = KeyboardActions(onDone = {
+                        focusManager.clearFocus()
+                    })
+                )
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Button(
+                        onClick = {
+                            statusExpanded = true
+                        }
+                    ) {
+                        Text(text = "status:$status")
+                    }
+
+                    DropdownMenu(
+                        modifier = Modifier
+                            .wrapContentSize(),
+                        expanded = statusExpanded,
+                        onDismissRequest = { statusExpanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text(text = "Ready") },
+                            onClick = { onClickStatus(Status.READY) }
+                        )
+                        DropdownMenuItem(
+                            text = { Text(text = "In Progress") },
+                            onClick = { onClickStatus(Status.IN_PROGRESS) }
+                        )
+                        DropdownMenuItem(
+                            text = { Text(text = "Done") },
+                            onClick = { onClickStatus(Status.DONE) }
+                        )
+                    }
+                }
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Button(
+                        onClick = {
+                            priorityExpanded = true
+                        }
+                    ) {
+                        Text(text = "priority:$priority")
+                    }
+
+                    DropdownMenu(
+                        modifier = Modifier
+                            .wrapContentSize(),
+                        expanded = priorityExpanded,
+                        onDismissRequest = { priorityExpanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text(text = "Low") },
+                            onClick = { onClickPriority(Priority.LOW) }
+                        )
+                        DropdownMenuItem(
+                            text = { Text(text = "Medium") },
+                            onClick = { onClickPriority(Priority.MEDIUM) }
+                        )
+                        DropdownMenuItem(
+                            text = { Text(text = "High") },
+                            onClick = { onClickPriority(Priority.HIGH) }
+                        )
+                    }
+                }
+
+                // TODO
                 Button(
                     onClick = {
-                        statusExpanded = true
+                        shouldShowDatePicker = true
                     }
                 ) {
-                    Text(text = "status:$status")
+                    Text(text = "date:$formattedDate")
                 }
 
-                DropdownMenu(
-                    modifier = Modifier
-                        .wrapContentSize(),
-                    expanded = statusExpanded,
-                    onDismissRequest = { statusExpanded = false }
-                ) {
-                    DropdownMenuItem(
-                        text = { Text(text = "Ready") },
-                        onClick = { onClickStatus(Status.READY) }
-                    )
-                    DropdownMenuItem(
-                        text = { Text(text = "In Progress") },
-                        onClick = { onClickStatus(Status.IN_PROGRESS) }
-                    )
-                    DropdownMenuItem(
-                        text = { Text(text = "Done") },
-                        onClick = { onClickStatus(Status.DONE) }
-                    )
-                }
-            }
-
-            Box (
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                Button(
-                    onClick = {
-                        priorityExpanded = true
-                    }
-                ) {
-                    Text(text = "priority:$priority")
-                }
-
-                DropdownMenu(
-                    modifier = Modifier
-                        .wrapContentSize(),
-                    expanded = priorityExpanded,
-                    onDismissRequest = { priorityExpanded = false }
-                ) {
-                    DropdownMenuItem(
-                        text = { Text(text = "Low") },
-                        onClick = { onClickPriority(Priority.LOW) }
-                    )
-                    DropdownMenuItem(
-                        text = { Text(text = "Medium") },
-                        onClick = { onClickPriority(Priority.MEDIUM) }
-                    )
-                    DropdownMenuItem(
-                        text = { Text(text = "High") },
-                        onClick = { onClickPriority(Priority.HIGH) }
-                    )
-                }
-            }
-
-            // TODO
-            Button(
-                onClick = {
-                    shouldShowDatePicker = true
-                }
-            ) {
-                Text(text = "date:$formattedDate")
-            }
-
-            if (shouldShowDatePicker) {
-                DatePickerDialog(
-                    onDismissRequest = { shouldShowDatePicker = false },
+                if (shouldShowDatePicker) {
+                    DatePickerDialog(
+                        onDismissRequest = { shouldShowDatePicker = false },
 //                onDismissRequest = onDismiss,
-                    confirmButton = {
-                        TextButton(onClick = {
-                            onDateSelected(datePickerState.selectedDateMillis)
-                            shouldShowDatePicker = false
+                        confirmButton = {
+                            TextButton(onClick = {
+                                onDateSelected(datePickerState.selectedDateMillis)
+                                shouldShowDatePicker = false
 //                        onDismiss()
-                        }) {
-                            Text("OK")
-                        }
-                    },
-                    dismissButton = {
-                        TextButton(onClick = {  shouldShowDatePicker = false }) {
+                            }) {
+                                Text("OK")
+                            }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { shouldShowDatePicker = false }) {
 //                    TextButton(onClick = onDismiss) {
-                            Text("Cancel")
+                                Text("Cancel")
+                            }
                         }
+                    ) {
+                        DatePicker(state = datePickerState)
                     }
-                ) {
-                    DatePicker(state = datePickerState)
                 }
             }
         }
