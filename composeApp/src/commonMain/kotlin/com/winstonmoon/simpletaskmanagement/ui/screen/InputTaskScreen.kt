@@ -5,20 +5,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
@@ -34,13 +31,11 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.winstonmoon.simpletaskmanagement.model.Priority
 import com.winstonmoon.simpletaskmanagement.model.Status
-import com.winstonmoon.simpletaskmanagement.ui.component.CustomAppBar
 import com.winstonmoon.simpletaskmanagement.ui.component.CustomFloatingActionButton
+import com.winstonmoon.simpletaskmanagement.ui.theme.RomanSilver
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
@@ -48,7 +43,6 @@ import kotlinx.serialization.Serializable
 import org.koin.compose.viewmodel.koinViewModel
 import simpletaskmanagement.composeapp.generated.resources.Res
 import simpletaskmanagement.composeapp.generated.resources.floating_action_button_label_register
-import simpletaskmanagement.composeapp.generated.resources.input_task_screen_title
 
 @Serializable
 data class InputTaskRoute(
@@ -144,20 +138,18 @@ internal fun InputTaskScreen(
 //            )
 //        },
 //    ) { paddingValues ->
-    Dialog(
-        onDismissRequest = {},
-        DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
-    ) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(375.dp)
-                .padding(16.dp),
-            shape = RoundedCornerShape(16.dp),
-        ) {
+    AlertDialog(
+//        properties = DialogProperties(usePlatformDefaultWidth = false),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(20.dp),
+        onDismissRequest = onClickBack,
+        title = {
+            Text(text = "Input Task")
+        },
+        text = {
             Column(
                 modifier = Modifier
-//                .padding(paddingValues)
                     .fillMaxSize()
                     .addFocusCleaner(focusManager),
             ) {
@@ -287,8 +279,158 @@ internal fun InputTaskScreen(
                     }
                 }
             }
+        },
+        containerColor = RomanSilver,
+        confirmButton = {
+            CustomFloatingActionButton(
+                modifier = Modifier,
+                onClick = onClickRegisterButton,
+                title = Res.string.floating_action_button_label_register,
+            )
         }
-    }
+    )
+//    Dialog(
+//        onDismissRequest = {},
+//        DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true)
+//    ) {
+//        Card(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .height(375.dp)
+//                .padding(16.dp),
+//            shape = RoundedCornerShape(16.dp),
+//        ) {
+//            Column(
+//                modifier = Modifier
+////                .padding(paddingValues)
+//                    .fillMaxSize()
+//                    .addFocusCleaner(focusManager),
+//            ) {
+//                var statusExpanded by remember { mutableStateOf(false) }
+//                var priorityExpanded by remember { mutableStateOf(false) }
+//                var shouldShowDatePicker by remember { mutableStateOf(false) }
+//                val datePickerState = rememberDatePickerState()
+//                val formattedDate = remember(date) {
+//                    val instant = Instant.fromEpochMilliseconds(date)
+//                    val localDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+//                    val year = localDateTime.year.toString().padStart(4, '0')
+//                    val month = localDateTime.monthNumber.toString().padStart(2, '0')
+//                    val day = localDateTime.dayOfMonth.toString().padStart(2, '0')
+//                    "$year/$month/$day"
+//                }
+//
+//                TextField(
+//                    value = title,
+//                    onValueChange = { onTitleChanged(it) },
+//                    placeholder = { Text("Task") },
+//                    keyboardOptions = KeyboardOptions(
+//                        imeAction = ImeAction.Done,
+//                    ),
+//                    keyboardActions = KeyboardActions(onDone = {
+//                        focusManager.clearFocus()
+//                    })
+//                )
+//
+//                Box(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(16.dp)
+//                ) {
+//                    Button(
+//                        onClick = {
+//                            statusExpanded = true
+//                        }
+//                    ) {
+//                        Text(text = "status:$status")
+//                    }
+//
+//                    DropdownMenu(
+//                        modifier = Modifier
+//                            .wrapContentSize(),
+//                        expanded = statusExpanded,
+//                        onDismissRequest = { statusExpanded = false }
+//                    ) {
+//                        DropdownMenuItem(
+//                            text = { Text(text = "Ready") },
+//                            onClick = { onClickStatus(Status.READY) }
+//                        )
+//                        DropdownMenuItem(
+//                            text = { Text(text = "In Progress") },
+//                            onClick = { onClickStatus(Status.IN_PROGRESS) }
+//                        )
+//                        DropdownMenuItem(
+//                            text = { Text(text = "Done") },
+//                            onClick = { onClickStatus(Status.DONE) }
+//                        )
+//                    }
+//                }
+//
+//                Box(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(16.dp)
+//                ) {
+//                    Button(
+//                        onClick = {
+//                            priorityExpanded = true
+//                        }
+//                    ) {
+//                        Text(text = "priority:$priority")
+//                    }
+//
+//                    DropdownMenu(
+//                        modifier = Modifier
+//                            .wrapContentSize(),
+//                        expanded = priorityExpanded,
+//                        onDismissRequest = { priorityExpanded = false }
+//                    ) {
+//                        DropdownMenuItem(
+//                            text = { Text(text = "Low") },
+//                            onClick = { onClickPriority(Priority.LOW) }
+//                        )
+//                        DropdownMenuItem(
+//                            text = { Text(text = "Medium") },
+//                            onClick = { onClickPriority(Priority.MEDIUM) }
+//                        )
+//                        DropdownMenuItem(
+//                            text = { Text(text = "High") },
+//                            onClick = { onClickPriority(Priority.HIGH) }
+//                        )
+//                    }
+//                }
+//
+//                // TODO
+//                Button(
+//                    onClick = {
+//                        shouldShowDatePicker = true
+//                    }
+//                ) {
+//                    Text(text = "date:$formattedDate")
+//                }
+//
+//                if (shouldShowDatePicker) {
+//                    DatePickerDialog(
+//                        onDismissRequest = { shouldShowDatePicker = false },
+//                        confirmButton = {
+//                            TextButton(onClick = {
+//                                onDateSelected(datePickerState.selectedDateMillis)
+//                                shouldShowDatePicker = false
+//                            }) {
+//                                Text("OK")
+//                            }
+//                        },
+//                        dismissButton = {
+//                            TextButton(onClick = { shouldShowDatePicker = false }) {
+//                                Text("Cancel")
+//                            }
+//                        }
+//                    ) {
+//                        DatePicker(state = datePickerState)
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
 
 private fun Modifier.addFocusCleaner(
